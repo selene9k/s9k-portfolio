@@ -297,7 +297,7 @@ p, span, a {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('images/snow-landscape.jpeg.png') no-repeat center center;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/images/snow-landscape.jpeg.png') no-repeat center center;
     background-size: cover;
     z-index: -1;
     pointer-events: none;
@@ -858,7 +858,7 @@ footer {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('images/music-bg.jpeg') no-repeat center center;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/images/music-bg.jpeg') no-repeat center center;
     background-size: cover;
     z-index: -1;
     pointer-events: none;
