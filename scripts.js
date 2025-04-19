@@ -139,20 +139,34 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Function to handle PDF load
     window.handlePdfLoad = function() {
+        const pdfFallbackLink = document.getElementById('pdfFallbackLink');
+        const fullPdfPath = window.location.origin + '/your-pdf-file.pdf';
+
         if (isMobile) {
-            // On mobile, redirect to Google Docs Viewer
-            const pdfUrl = encodeURIComponent(window.location.origin + '/your-pdf-file.pdf');
-            window.location.href = `https://drive.google.com/viewerng/viewer?embedded=true&url=${pdfUrl}`;
+            // On mobile, set the fallback link and show the fallback message
+            const viewerUrl = `https://drive.google.com/viewerng/viewer?embedded=true&url=${encodeURIComponent(fullPdfPath)}`;
+            if(pdfFallbackLink) pdfFallbackLink.href = viewerUrl;
+
+            // Show fallback immediately instead of trying iframe which might fail silently
+            pdfLoading.style.display = 'none';
+            pdfFallback.style.display = 'flex';
+            pdfViewer.style.display = 'none';
             return;
         }
+        // For desktop, proceed with iframe loading
         pdfLoading.style.display = 'none';
         pdfFallback.style.display = 'none';
         pdfViewer.style.display = 'block';
     };
 
-    // Function to handle PDF load error
+    // Function to handle PDF load error (for desktop iframe)
     window.handlePdfError = function() {
-        console.log('Showing PDF fallback options');
+        console.log('Iframe PDF load error. Showing PDF fallback options.');
+        const pdfFallbackLink = document.getElementById('pdfFallbackLink');
+        const fullPdfPath = window.location.origin + '/your-pdf-file.pdf';
+        const viewerUrl = `https://drive.google.com/viewerng/viewer?embedded=true&url=${encodeURIComponent(fullPdfPath)}`;
+        if(pdfFallbackLink) pdfFallbackLink.href = viewerUrl;
+
         pdfLoading.style.display = 'none';
         pdfFallback.style.display = 'flex';
         pdfViewer.style.display = 'none';
@@ -160,28 +174,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Check if PDF exists and is accessible
     function checkPDF() {
-        const pdfUrl = 'your-pdf-file.pdf';
-        
+        const pdfUrl = '/your-pdf-file.pdf'; // Use root path
+        const pdfFallbackLink = document.getElementById('pdfFallbackLink');
+        const fullPdfPath = window.location.origin + pdfUrl;
+
         if (isMobile) {
-            // On mobile, redirect to Google Docs Viewer
-            const fullPdfUrl = encodeURIComponent(window.location.origin + '/' + pdfUrl);
-            window.location.href = `https://drive.google.com/viewerng/viewer?embedded=true&url=${fullPdfUrl}`;
-            return;
+             // On mobile, immediately set fallback link and show fallback section
+            const viewerUrl = `https://drive.google.com/viewerng/viewer?embedded=true&url=${encodeURIComponent(fullPdfPath)}`;
+            if(pdfFallbackLink) pdfFallbackLink.href = viewerUrl;
+            pdfLoading.style.display = 'none';
+            pdfFallback.style.display = 'flex';
+            pdfViewer.style.display = 'none';
+            return; // Don't attempt iframe load on mobile
         }
         
-        // For desktop, try to load the PDF in the iframe
+        // For desktop, set the iframe src
+        // The onload/onerror handlers attached in HTML will manage visibility
         pdfViewer.src = pdfUrl + '#view=FitH&toolbar=0&navpanes=0&scrollbar=0';
-        
-        // Set a timeout to hide loading if PDF takes too long
-        setTimeout(() => {
-            if (pdfLoading.style.display !== 'none') {
-                handlePdfLoad();
-            }
-        }, 5000);
+
+        // Simplified timeout for loading indicator (optional)
+        // setTimeout(() => {
+        //     if (pdfLoading.style.display !== 'none') {
+        //        console.log("PDF loading timeout, attempting fallback.");
+        //        handlePdfError(); // Trigger fallback if loading takes too long
+        //     }
+        // }, 8000); // Increased timeout
     }
 
-    // Add error handling
-    pdfViewer.addEventListener('error', handlePdfError);
+    // Add error handling (already attached in HTML via onerror)
+    // pdfViewer.addEventListener('error', handlePdfError);
 
     // Fullscreen functionality
     fullscreenBtn.addEventListener('click', function() {
