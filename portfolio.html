@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PORTFOLIO | S9K</title>
+    <link rel="icon" type="image/png" href="images/s9k-logo.png.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="portfolio-page">
+    <!-- Minimal Header with Logo and Navigation -->
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/s9k-logo.png.png" alt="S9K Logo">
+            </a>
+        </div>
+        <div class="mobile-menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="header-right">
+            <nav class="nav-buttons">
+                <a href="index.html">Home</a>
+                <a href="portfolio.html" class="active">Portfolio</a>
+                <a href="about.html">Info</a>
+            </nav>
+            <div class="header-social-icons">
+                <a href="music.html" class="header-social-icon">
+                    <i class="fas fa-music"></i>
+                </a>
+                <a href="https://instagram.com/selene9k" target="_blank" class="header-social-icon">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/selene9k" target="_blank" class="header-social-icon">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://www.behance.net/selene9k" target="_blank" class="header-social-icon">
+                    <i class="fab fa-behance"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="portfolio-content">
+            <div class="pdf-container">
+                <div class="pdf-wrapper" id="pdfWrapper">
+                    <div class="pdf-loading" id="pdfLoading">
+                        <div class="loading-spinner"></div>
+                        <p>Loading PDF...</p>
+                    </div>
+                    <div class="pdf-controls">
+                        <button id="fullscreenBtn" class="pdf-control-btn" title="Toggle Fullscreen">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                    <div id="pdfViewerContainer">
+                        <iframe 
+                            id="pdfViewer"
+                            src="your-pdf-file.pdf#view=FitH&toolbar=0&navpanes=0&scrollbar=0"
+                            type="application/pdf"
+                            width="100%" 
+                            height="100%"
+                            onload="handlePdfLoad()"
+                            onerror="handlePdfError()"
+                        ></iframe>
+                        <div class="pdf-fallback" id="pdfFallback">
+                            <p>Viewing PDF on mobile device</p>
+                            <div class="pdf-actions">
+                                <a href="https://drive.google.com/viewerng/viewer?embedded=true&url=https://yourdomain.com/your-pdf-file.pdf" class="pdf-action-button" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i> Open PDF Viewer
+                                </a>
+                            </div>
+                            <p class="pdf-instructions">For the best viewing experience on mobile, we'll open the PDF in a mobile-friendly viewer.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="pdf-instructions">Click the expand icon <i class="fas fa-expand"></i> to view full screen</div>
+            </div>
+            
+            <div class="video-showcase">
+                <h2>Video Projects</h2>
+                <div class="video-grid">
+                    <div class="video-row">
+                        <div class="video-item">
+                            <iframe src="https://www.youtube.com/embed/JagMGoWpJ0Y" title="Video Project 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-item">
+                            <iframe src="https://www.youtube.com/embed/3azyRt9ab8A" title="Video Project 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-item">
+                            <iframe src="https://www.youtube.com/embed/DuChTtpNxQI" title="Video Project 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="video-row">
+                        <div class="video-item">
+                            <iframe src="https://www.youtube.com/embed/AeJ-61yx6IM" title="Video Project 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-item">
+                            <iframe src="https://www.youtube.com/embed/R516vOFZ97Y" title="Video Project 5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-item">
+                            <iframe src="https://www.youtube.com/embed/Pa2m8SZuhuQ" title="Video Project 6" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Minimal Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-contact">
+                <div class="footer-contact-item">
+                    <i class="far fa-envelope"></i>
+                    <span>selene9kdesign@gmail.com</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>KUALA LUMPUR, MALAYSIA</span>
+                </div>
+            </div>
+            <p>&copy; 2024 S9K. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+</body>
+</html>
