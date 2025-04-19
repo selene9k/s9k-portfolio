@@ -341,6 +341,7 @@ p, span, a {
     font-size: 3em;
     margin-bottom: 10px;
     font-weight: 700;
+    color: #fff;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
     transition: all 0.4s ease;
 }
@@ -359,10 +360,41 @@ p, span, a {
 }
 
 .about-content p {
-    font-size: 1.1em;
-    line-height: 1.6;
+    color: #fff;
+    font-size: 18px;
     margin-bottom: 20px;
-    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Add styles for the CTA button */
+.about-content .cta-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 25px;
+    background-color: transparent;
+    color: #fff; /* Set text and icon color to white */
+    border: 2px solid #fff;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.about-content .cta-button i {
+    margin-right: 8px;
+}
+
+.about-content .cta-button:hover {
+    background-color: #fff;
+    color: #000; /* Change text color on hover for contrast */
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
 }
 
 /* Social Links */
@@ -602,48 +634,15 @@ footer {
 }
 
 .pdf-control-btn:hover {
-    background: white;
-    transform: translateY(-1px);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-}
-
-.pdf-fallback {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: #f5f5f5;
-    padding: 2rem;
-    text-align: center;
-}
-
-.fallback-download-btn {
-    margin-top: 1rem;
-    padding: 0.75rem 1.5rem;
-    background: #3498db;
-    color: white;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: background 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.fallback-download-btn:hover {
-    background: #2980b9;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
 }
 
 .pdf-instructions {
+    color: #aaa;
+    margin-top: 15px;
+    font-size: 14px;
     text-align: center;
-    margin-top: 1rem;
-    color: #666;
-    font-size: 0.9rem;
 }
 
 /* Video Showcase Enhanced */
@@ -798,6 +797,10 @@ footer {
     .home-logo-link {
         width: 350px;
     }
+
+    .pdf-instructions {
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -841,6 +844,15 @@ footer {
 
     .home-logo-link {
         width: 280px;
+    }
+
+    .pdf-instructions {
+        font-size: 11px;
+    }
+    
+    .pdf-instructions a {
+        padding: 8px 15px;
+        font-size: 13px;
     }
 }
 
@@ -1380,14 +1392,8 @@ footer {
         padding: 0.4rem;
     }
     
-    /* Improve PDF fallback visibility on mobile */
-    .pdf-fallback {
-        padding: 20px;
-        font-size: 14px;
-    }
-    
     .pdf-instructions {
-        margin: 10px 0;
+        font-size: 12px;
     }
 }
 
@@ -1408,40 +1414,12 @@ footer {
     }
     
     .pdf-instructions {
-        font-size: 0.8rem;
-    }
-    
-    /* Further improve PDF fallback visibility on small mobile */
-    .pdf-fallback {
-        padding: 15px;
-        font-size: 12px;
+        font-size: 11px;
     }
     
     .pdf-instructions a {
-        display: inline-block;
-        margin-top: 5px;
-        padding: 5px 10px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
-    }
-}
-
-/* Add specific styles for mobile devices */
-@media (hover: none) and (pointer: coarse) {
-    .pdf-container {
-        height: 65vh;
-    }
-    
-    .pdf-fallback {
-        padding: 20px;
-    }
-    
-    .pdf-instructions a {
-        display: inline-block;
-        margin-top: 5px;
-        padding: 5px 10px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
+        padding: 8px 15px;
+        font-size: 13px;
     }
 }
 
@@ -1449,9 +1427,9 @@ footer {
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 30px;
-    height: 21px;
+    height: 25px;
     cursor: pointer;
     z-index: 1001;
 }
@@ -1747,31 +1725,6 @@ footer {
 
     .wheel-button {
         font-size: 9px;
-    }
-}
-
-/* Touch Device Optimizations */
-@media (hover: none) {
-    .vinyl:hover {
-        transform: none;
-    }
-
-    .vinyl:hover ~ .vinyl {
-        transform: none;
-    }
-
-    .vinyl .title {
-        opacity: 1;
-        bottom: -20px;
-        background: rgba(0, 0, 0, 0.8);
-    }
-
-    .ipod-container:hover {
-        transform: none;
-    }
-
-    .social-icon:hover {
-        transform: none;
     }
 }
 
