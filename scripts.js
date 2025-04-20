@@ -124,16 +124,31 @@ document.addEventListener('DOMContentLoaded', function() {
 // Video interaction functionality
 document.addEventListener('DOMContentLoaded', function() {
     const videoItems = document.querySelectorAll('.video-item');
+    let activeVideo = null;
     
     function handleVideoInteraction(item, isActive) {
         const row = item.closest('.video-row');
         
         if (isActive) {
+            // Remove active state from all other videos first
+            videoItems.forEach(video => {
+                if (video !== item) {
+                    video.classList.remove('active');
+                    video.closest('.video-row')?.classList.remove('has-active');
+                }
+            });
+            
+            // Add active state to current video
             item.classList.add('active');
             row.classList.add('has-active');
+            activeVideo = item;
         } else {
-            item.classList.remove('active');
-            row.classList.remove('has-active');
+            // Only remove active state if this is the currently active video
+            if (activeVideo === item) {
+                item.classList.remove('active');
+                row.classList.remove('has-active');
+                activeVideo = null;
+            }
         }
     }
     
@@ -170,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Keep the effect for a moment after touch
             touchTimeout = setTimeout(() => {
                 handleVideoInteraction(this, false);
-            }, 1500); // Effect remains for 1.5 seconds after touch
+            }, 2000); // Effect remains for 2 seconds after touch
         });
     });
 });
