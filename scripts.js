@@ -266,8 +266,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let autoScrollInterval;
     let isUserInteracting = false;
     let lastInteractionTime = Date.now();
-    const interactionTimeout = 3000; // 3 seconds
-    const scrollSpeed = 2; // pixels per frame
+    const interactionTimeout = 5000; // Resume auto-scroll after 5 seconds of no interaction
+    const scrollSpeed = 1; // Pixels per frame for smooth scrolling
 
     // Set total count
     totalCounter.textContent = galleryItems.length;
@@ -347,29 +347,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const maxScroll = galleryContainer.scrollWidth - galleryContainer.clientWidth;
             
             if (currentScroll >= maxScroll) {
-                // Reset to beginning with a smooth transition
+                // Reset to beginning
                 galleryContainer.scrollTo({
                     left: 0,
                     behavior: 'smooth'
                 });
-                setTimeout(() => {
-                    updateUI(1);
-                    updateActiveState(1);
-                }, 500);
             } else {
                 // Smooth scroll right
-                const nextScroll = currentScroll + scrollSpeed;
-                galleryContainer.scrollTo({
-                    left: nextScroll,
+                galleryContainer.scrollBy({
+                    left: scrollSpeed,
                     behavior: 'smooth'
                 });
-                
-                // Update UI based on current scroll position
-                const currentIndex = Math.floor(nextScroll / galleryContainer.clientWidth) + 1;
-                if (currentIndex !== parseInt(currentCounter.textContent)) {
-                    updateUI(currentIndex);
-                    updateActiveState(currentIndex);
-                }
             }
         }, 16); // ~60fps
     }
