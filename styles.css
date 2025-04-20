@@ -521,6 +521,7 @@ footer {
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .portfolio-content {
@@ -530,6 +531,7 @@ footer {
     flex: 1;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .pdf-container {
@@ -649,11 +651,10 @@ footer {
     text-align: center;
 }
 
-/* Video Showcase Enhanced */
+/* Video Showcase section */
 .video-showcase {
-    padding: 20px 0 40px;
-    position: relative;
-    min-height: 100vh;
+    padding: 20px 0;
+    width: 100%;
 }
 
 .video-grid {
@@ -661,38 +662,23 @@ footer {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 60px;
-    position: relative;
+    gap: 30px;
+    width: 100%;
 }
 
 .video-row {
     display: flex;
-    gap: 40px;
+    gap: 20px;
     justify-content: center;
-    align-items: center;
-    position: relative;
-    padding: 40px 0;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 .video-item {
     flex: 1;
+    min-width: 280px;
     max-width: 450px;
     aspect-ratio: 16/9;
-    position: relative;
-    border-radius: 16px;
-    overflow: hidden;
-    background: rgba(0, 0, 0, 0.3);
-    transition: all 0.4s ease;
-    cursor: pointer;
-    transform: translateZ(0);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.video-item iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    transition: all 0.4s ease;
 }
 
 /* Active state for the video being interacted with */
@@ -749,114 +735,112 @@ footer {
 }
 
 /* Responsive adjustments */
-@media (max-width: 1200px) {
-    .video-item.active {
-        transform: scale(1.1) translateY(-8px);
+@media (max-width: 1024px) {
+    .portfolio-page {
+        padding-top: 70px;
+    }
+
+    .swiper {
+        height: 55vh;
+        padding: 10px;
     }
 }
 
 @media (max-width: 768px) {
-    header {
-        padding: 12px 15px;
+    .portfolio-page {
+        padding-top: 60px;
     }
 
-    header .header-right {
-        gap: 15px;
+    .portfolio-content {
+        padding: 0.5rem;
     }
 
-    header .nav-buttons {
-        gap: 15px;
+    .art-showcase {
+        padding: 5px 0;
     }
 
-    header .nav-buttons a {
-        font-size: 14px;
-        padding: 6px 0;
+    .swiper {
+        height: 40vh;
+        padding: 5px;
     }
 
-    header .header-social-icons {
-        gap: 12px;
+    .swiper-slide img {
+        border-radius: 8px;
     }
 
-    header .header-social-icon {
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 30px;
+        height: 30px;
+        transform: translateZ(0);
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
         font-size: 16px;
     }
 
-    .logo {
-        width: 100px;
+    .video-showcase {
+        padding: 10px 0;
+    }
+
+    .video-grid {
+        gap: 15px;
     }
 
     .video-row {
-        flex-direction: column;
-        gap: 30px;
+        gap: 10px;
     }
 
     .video-item {
-        max-width: 100%;
-    }
-
-    .video-item.active {
-        transform: scale(1.08) translateY(-5px);
-    }
-
-    .home-logo-link {
-        width: 350px;
-    }
-
-    .pdf-instructions {
-        font-size: 12px;
+        min-width: 100%;
+        margin: 0;
     }
 }
 
 @media (max-width: 480px) {
-    header {
-        padding: 10px;
+    .portfolio-page {
+        padding-top: 50px;
     }
 
-    header .header-right {
-        gap: 10px;
+    .portfolio-content {
+        padding: 0.25rem;
     }
 
-    header .nav-buttons {
-        gap: 10px;
+    .art-showcase {
+        padding: 2px 0;
     }
 
-    header .nav-buttons a {
-        font-size: 12px;
-        padding: 4px 0;
-        letter-spacing: 0.5px;
+    .swiper {
+        height: 35vh;
+        padding: 3px;
     }
 
-    header .header-social-icons {
-        gap: 8px;
+    .swiper-slide img {
+        border-radius: 6px;
     }
 
-    header .header-social-icon {
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 25px;
+        height: 25px;
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
         font-size: 14px;
     }
 
-    .logo {
-        width: 90px;
+    .video-showcase {
+        padding: 5px 0;
     }
 
-    .about-content h1 {
-        font-size: 2em;
+    .video-grid {
+        gap: 10px;
     }
 
-    .about-content h2 {
-        font-size: 1.1em;
-    }
-
-    .home-logo-link {
-        width: 280px;
-    }
-
-    .pdf-instructions {
-        font-size: 11px;
-    }
-    
-    .pdf-instructions a {
-        padding: 8px 15px;
-        font-size: 13px;
+    .video-row {
+        gap: 8px;
     }
 }
 
@@ -1814,6 +1798,7 @@ footer {
     perspective: 1000px;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .art-showcase h2 {
@@ -1824,7 +1809,7 @@ footer {
 
 .swiper {
     width: 100%;
-    height: 65vh;
+    height: 60vh;
     margin: 0 auto;
     padding: 15px;
     transform-style: preserve-3d;
@@ -1839,9 +1824,8 @@ footer {
     transform-origin: center center;
     z-index: 1;
     position: relative;
-    transform-style: preserve-3d;
-    will-change: transform;
     height: 100%;
+    width: 100%;
 }
 
 .swiper-slide img {
@@ -1850,12 +1834,11 @@ footer {
     width: auto;
     height: auto;
     object-fit: contain;
-    border-radius: 15px;
+    border-radius: 12px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     transform: translateZ(0);
     backface-visibility: hidden;
-    will-change: transform;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -1914,7 +1897,7 @@ footer {
     }
 
     .swiper {
-        height: 60vh;
+        height: 55vh;
         padding: 10px;
     }
 
@@ -1941,38 +1924,7 @@ footer {
     }
 
     .swiper {
-        height: 50vh;
-        padding: 8px;
-    }
-
-    .swiper-slide img {
-        border-radius: 10px;
-    }
-
-    .swiper-slide:hover {
-        transform: translateY(-8px) scale(1.03);
-    }
-
-    .swiper-button-next,
-    .swiper-button-prev {
-        width: 35px;
-        height: 35px;
-    }
-
-    .swiper-button-next:after,
-    .swiper-button-prev:after {
-        font-size: 18px;
-    }
-}
-
-@media (max-width: 480px) {
-    .art-showcase {
-        padding: 3px 0;
-        min-height: calc(100vh - 60px);
-    }
-
-    .swiper {
-        height: 45vh;
+        height: 40vh;
         padding: 5px;
     }
 
@@ -1981,7 +1933,7 @@ footer {
     }
 
     .swiper-slide:hover {
-        transform: translateY(-5px) scale(1.02);
+        transform: translateY(-8px) scale(1.03);
     }
 
     .swiper-button-next,
@@ -1993,5 +1945,36 @@ footer {
     .swiper-button-next:after,
     .swiper-button-prev:after {
         font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .art-showcase {
+        padding: 3px 0;
+        min-height: calc(100vh - 60px);
+    }
+
+    .swiper {
+        height: 35vh;
+        padding: 3px;
+    }
+
+    .swiper-slide img {
+        border-radius: 6px;
+    }
+
+    .swiper-slide:hover {
+        transform: translateY(-5px) scale(1.02);
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 25px;
+        height: 25px;
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+        font-size: 14px;
     }
 }
