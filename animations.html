@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animations - Portfolio</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="transitions.css">
     <style>
         .animation-container {
             min-height: 100vh;
@@ -78,25 +79,28 @@
     </style>
 </head>
 <body>
-    <a href="portfolio.html" class="back-button">← Back</a>
-    <div class="animation-container">
-        <h1 class="animated-text">Smooth Animations</h1>
-        <div class="grid-container">
-            <div class="animated-card">
-                <h2>Fade In</h2>
-                <p>Elegant fade-in animation with smooth transitions</p>
-            </div>
-            <div class="animated-card">
-                <h2>Slide Up</h2>
-                <p>Beautiful slide-up effect with custom timing</p>
-            </div>
-            <div class="animated-card">
-                <h2>Blur Effect</h2>
-                <p>Modern glassmorphism with blur backdrop</p>
+    <main>
+        <a href="portfolio.html" class="back-button">← Back</a>
+        <div class="animation-container">
+            <h1 class="animated-text">Smooth Animations</h1>
+            <div class="grid-container">
+                <div class="animated-card">
+                    <h2>Fade In</h2>
+                    <p>Elegant fade-in animation with smooth transitions</p>
+                </div>
+                <div class="animated-card">
+                    <h2>Slide Up</h2>
+                    <p>Beautiful slide-up effect with custom timing</p>
+                </div>
+                <div class="animated-card">
+                    <h2>Blur Effect</h2>
+                    <p>Modern glassmorphism with blur backdrop</p>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 
+    <script src="transitions.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const cards = document.querySelectorAll('.animated-card');
