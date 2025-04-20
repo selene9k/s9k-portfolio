@@ -57,7 +57,7 @@ main {
 }
 
 /* Background for all pages except about */
-body:not(.about-page)::before {
+body:not(.about-page):not(.music-page):not(.portfolio-page)::before {
     content: '';
     position: fixed;
     top: 0;
@@ -527,6 +527,19 @@ footer {
     position: relative;
 }
 
+.portfolio-page::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('/images/snowflake-bg.jpg') no-repeat center center;
+    background-size: cover;
+    z-index: -1;
+    pointer-events: none;
+}
+
 .portfolio-content {
     width: 100%;
     max-width: 1200px;
@@ -839,7 +852,7 @@ footer {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/images/music-bg.jpeg') no-repeat center center;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('/images/snowflake-bg.jpg') no-repeat center center;
     background-size: cover;
     z-index: -1;
     pointer-events: none;
