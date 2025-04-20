@@ -691,14 +691,17 @@ footer {
     max-width: 400px;
     border-radius: 15px;
     overflow: hidden;
-    transform: translateY(0);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(0) scale(1);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    filter: brightness(1);
 }
 
 .video-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transform: translateY(-15px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(255, 255, 255, 0.2);
+    z-index: 2;
 }
 
 .video-item iframe {
@@ -706,7 +709,8 @@ footer {
     height: 225px;
     border: none;
     border-radius: 15px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1);
 }
 
 .video-item:hover iframe {
@@ -720,14 +724,67 @@ footer {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.5s ease;
     pointer-events: none;
 }
 
 .video-item:hover::after {
     opacity: 1;
+}
+
+/* Active state for the video being interacted with */
+.video-item.active {
+    transform: translateY(-15px) scale(1.05);
+    z-index: 10;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(255, 255, 255, 0.2),
+        0 0 50px rgba(255, 255, 255, 0.1);
+}
+
+/* Glow effect for active video */
+.video-item.active::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 16px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.3),
+        0 0 40px rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    animation: glowPulse 2s infinite;
+}
+
+/* Blur effect for other videos when one is active */
+.video-row.has-active .video-item:not(.active) {
+    filter: blur(5px) brightness(0.7);
+    transform: scale(0.95);
+    opacity: 0.8;
+}
+
+@keyframes glowPulse {
+    0% {
+        box-shadow: 
+            0 0 20px rgba(255, 255, 255, 0.3),
+            0 0 40px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+        box-shadow: 
+            0 0 30px rgba(255, 255, 255, 0.4),
+            0 0 60px rgba(255, 255, 255, 0.2);
+    }
+    100% {
+        box-shadow: 
+            0 0 20px rgba(255, 255, 255, 0.3),
+            0 0 40px rgba(255, 255, 255, 0.1);
+    }
 }
 
 @media (max-width: 768px) {
@@ -755,7 +812,12 @@ footer {
     }
 
     .video-item:hover {
-        transform: translateY(-5px);
+        transform: translateY(-10px) scale(1.03);
+    }
+
+    .video-row.has-active .video-item:not(.active) {
+        filter: blur(3px) brightness(0.8);
+        transform: scale(0.98);
     }
 }
 
