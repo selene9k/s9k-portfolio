@@ -98,6 +98,29 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Page transition animation
+document.addEventListener('DOMContentLoaded', function() {
+    const homeLogoLink = document.querySelector('.home-logo-link');
+    const transitionOverlay = document.createElement('div');
+    transitionOverlay.className = 'page-transition';
+    document.body.appendChild(transitionOverlay);
+
+    if (homeLogoLink) {
+        homeLogoLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetUrl = this.getAttribute('href');
+            
+            // Activate the transition overlay
+            transitionOverlay.classList.add('active');
+            
+            // Wait for the transition to complete before navigating
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 500); // Match this with the CSS transition duration
+        });
+    }
+});
+
 // PDF Viewer Functionality
 document.addEventListener('DOMContentLoaded', function() {
     const pdfContainer = document.querySelector('.pdf-container');
