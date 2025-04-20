@@ -344,29 +344,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentCounter = document.querySelector('.image-counter .current');
     const totalCounter = document.querySelector('.image-counter .total');
 
-    // Clone items for infinite loop
     const items = document.querySelectorAll('.gallery-item');
-    items.forEach(item => {
-        const clone = item.cloneNode(true);
-        galleryGrid.appendChild(clone);
-    });
-
-    const allItems = document.querySelectorAll('.gallery-item');
-    const itemWidth = allItems[0].offsetWidth;
-    const gap = 20;
-    let currentIndex = 0;
-    let isAnimating = false;
-    let startX = 0;
-    let scrollLeft = 0;
-    let autoplayInterval;
-    const autoplaySpeed = 50; // Lower number = faster animation
-    let autoplayFrame;
-    let isDragging = false;
-    let startPos = 0;
-    let currentTranslate = 0;
+    const numberOfItems = items.length;
+    const theta = (2 * Math.PI) / numberOfItems;
+    const radius = 800; // Adjust this value to change the circle radius
 
     // Set total count
-    if (totalCounter) totalCounter.textContent = items.length;
+    if (totalCounter) totalCounter.textContent = numberOfItems;
+
+    // Position items in 3D space
+    items.forEach((item, i) => {
+        const angle = theta * i;
+        const x = Math.sin(angle) * radius;
+        const z = Math.cos(angle) * radius;
+        item.style.transform = `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) rotateY(${(angle * 180) / Math.PI}deg)`;
+    });
 
     // Create navigation dots
     const galleryNav = document.querySelector('.gallery-nav');
@@ -375,10 +367,18 @@ document.addEventListener('DOMContentLoaded', function() {
         dot.className = 'nav-dot';
         dot.setAttribute('data-index', index);
         dot.addEventListener('click', () => {
-            goToSlide(index);
+            rotateToIndex(index);
         });
         galleryNav.appendChild(dot);
     });
+
+    let currentRotation = 0;
+    let targetRotation = 0;
+    let currentIndex = 0;
+    let isAnimating = false;
+    let isDragging = false;
+    let startX = 0;
+    let currentX = 0;
 
     function updateUI(index) {
         // Update nav dots
@@ -393,119 +393,73 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Update progress bar
         if (progressBar) {
-            const progress = ((index + 1) / items.length) * 100;
+            const progress = ((index + 1) / numberOfItems) * 100;
             progressBar.style.width = `${progress}%`;
         }
 
         // Update active states
-        allItems.forEach(item => item.classList.remove('active'));
-        allItems[index].classList.add('active');
-        allItems[index + items.length].classList.add('active');
+        items.forEach((item, i) => {
+            item.classList.toggle('active', i === index);
+        });
     }
 
-    function animate() {
-        if (!isAnimating) return;
-        
-        scrollLeft += 1;
-        if (scrollLeft >= itemWidth + gap) {
-            scrollLeft = 0;
-            galleryGrid.style.transform = `translateX(0)`;
-            currentIndex = (currentIndex + 1) % items.length;
-            updateUI(currentIndex);
-        } else {
-            galleryGrid.style.transform = `translateX(-${scrollLeft}px)`;
-        }
-        
-        autoplayFrame = requestAnimationFrame(animate);
-    }
-
-    function startAutoplay() {
-        if (!isAnimating) {
-            isAnimating = true;
-            animate();
-        }
-    }
-
-    function stopAutoplay() {
-        isAnimating = false;
-        if (autoplayFrame) {
-            cancelAnimationFrame(autoplayFrame);
-        }
-    }
-
-    function goToSlide(index) {
+    function rotateToIndex(index) {
+        targetRotation = -(index * (360 / numberOfItems));
         currentIndex = index;
-        scrollLeft = 0;
-        galleryGrid.style.transform = `translateX(0)`;
         updateUI(currentIndex);
+        galleryGrid.style.transform = `rotateY(${targetRotation}deg)`;
     }
 
-    // Touch and mouse events
-    allItems.forEach(item => {
-        item.addEventListener('mouseenter', () => {
-            stopAutoplay();
-            item.classList.add('active');
-        });
+    // Mouse/Touch Events
+    function handleDragStart(e) {
+        isDragging = true;
+        startX = e.type === 'mousedown' ? e.pageX : e.touches[0].pageX;
+        currentX = startX;
+        galleryGrid.style.animationPlayState = 'paused';
+    }
 
-        item.addEventListener('mouseleave', () => {
-            if (!isDragging) {
-                item.classList.remove('active');
-                startAutoplay();
-            }
-        });
+    function handleDragMove(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        currentX = e.type === 'mousemove' ? e.pageX : e.touches[0].pageX;
+        const diff = currentX - startX;
+        const newRotation = currentRotation + (diff * 0.5);
+        galleryGrid.style.transform = `rotateY(${newRotation}deg)`;
+    }
 
-        item.addEventListener('click', (e) => {
+    function handleDragEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+        currentRotation = targetRotation;
+        galleryGrid.style.animationPlayState = 'running';
+    }
+
+    // Event Listeners
+    galleryContainer.addEventListener('mousedown', handleDragStart);
+    galleryContainer.addEventListener('touchstart', handleDragStart, { passive: true });
+    galleryContainer.addEventListener('mousemove', handleDragMove);
+    galleryContainer.addEventListener('touchmove', handleDragMove, { passive: false });
+    galleryContainer.addEventListener('mouseup', handleDragEnd);
+    galleryContainer.addEventListener('touchend', handleDragEnd);
+    galleryContainer.addEventListener('mouseleave', handleDragEnd);
+
+    // Click events for items
+    items.forEach((item, index) => {
+        item.addEventListener('click', () => {
             if (!isDragging) {
-                const index = Array.from(allItems).indexOf(item) % items.length;
-                goToSlide(index);
+                rotateToIndex(index);
             }
         });
     });
 
-    // Mouse drag functionality
-    galleryContainer.addEventListener('mousedown', dragStart);
-    galleryContainer.addEventListener('touchstart', dragStart);
-    galleryContainer.addEventListener('mouseup', dragEnd);
-    galleryContainer.addEventListener('touchend', dragEnd);
-    galleryContainer.addEventListener('mousemove', drag);
-    galleryContainer.addEventListener('touchmove', drag);
-    galleryContainer.addEventListener('mouseleave', dragEnd);
-
-    function dragStart(e) {
-        isDragging = true;
-        startPos = e.type === 'mousedown' ? e.pageX : e.touches[0].pageX;
-        stopAutoplay();
-    }
-
-    function drag(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-        const currentPosition = e.type === 'mousemove' ? e.pageX : e.touches[0].pageX;
-        const diff = currentPosition - startPos;
-        currentTranslate = scrollLeft - diff;
-        galleryGrid.style.transform = `translateX(-${currentTranslate}px)`;
-    }
-
-    function dragEnd() {
-        if (!isDragging) return;
-        isDragging = false;
-        const slideProgress = currentTranslate / (itemWidth + gap);
-        const targetIndex = Math.round(slideProgress);
-        goToSlide(targetIndex % items.length);
-        startAutoplay();
-    }
-
-    // Start autoplay
-    startAutoplay();
-
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') {
-            currentIndex = (currentIndex - 1 + items.length) % items.length;
-            goToSlide(currentIndex);
+            currentIndex = (currentIndex - 1 + numberOfItems) % numberOfItems;
+            rotateToIndex(currentIndex);
         } else if (e.key === 'ArrowRight') {
-            currentIndex = (currentIndex + 1) % items.length;
-            goToSlide(currentIndex);
+            currentIndex = (currentIndex + 1) % numberOfItems;
+            rotateToIndex(currentIndex);
         }
     });
 
