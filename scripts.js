@@ -254,4 +254,103 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Art Gallery Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const galleryContainer = document.querySelector('.gallery-container');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const galleryNav = document.querySelector('.gallery-nav');
+    const progressBar = document.querySelector('.progress-bar');
+    const currentCounter = document.querySelector('.image-counter .current');
+    const totalCounter = document.querySelector('.image-counter .total');
+
+    // Set total count
+    totalCounter.textContent = galleryItems.length;
+
+    // Create navigation dots
+    galleryItems.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'nav-dot';
+        dot.setAttribute('data-index', index + 1);
+        dot.addEventListener('click', () => {
+            galleryItems[index].scrollIntoView({ behavior: 'smooth' });
+        });
+        galleryNav.appendChild(dot);
+    });
+
+    const navDots = document.querySelectorAll('.nav-dot');
+
+    // Intersection Observer for gallery items
+    const options = {
+        root: galleryContainer,
+        threshold: 0.7
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const index = entry.target.getAttribute('data-index');
+                updateUI(index);
+            }
+        });
+    }, options);
+
+    galleryItems.forEach(item => observer.observe(item));
+
+    // Update UI elements
+    function updateUI(index) {
+        // Update nav dots
+        navDots.forEach(dot => dot.classList.remove('active'));
+        navDots[index - 1].classList.add('active');
+
+        // Update counter
+        currentCounter.textContent = index;
+
+        // Update progress bar
+        const progress = (index / galleryItems.length) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        const currentIndex = parseInt(currentCounter.textContent);
+        
+        if (e.key === 'ArrowUp' && currentIndex > 1) {
+            galleryItems[currentIndex - 2].scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'ArrowDown' && currentIndex < galleryItems.length) {
+            galleryItems[currentIndex].scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+
+    // Touch swipe handling
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    galleryContainer.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
+    }, false);
+
+    galleryContainer.addEventListener('touchmove', (e) => {
+        touchEndY = e.touches[0].clientY;
+    }, false);
+
+    galleryContainer.addEventListener('touchend', () => {
+        const currentIndex = parseInt(currentCounter.textContent);
+        const swipeDistance = touchStartY - touchEndY;
+        const minSwipeDistance = 50;
+
+        if (Math.abs(swipeDistance) > minSwipeDistance) {
+            if (swipeDistance > 0 && currentIndex < galleryItems.length) {
+                // Swipe up
+                galleryItems[currentIndex].scrollIntoView({ behavior: 'smooth' });
+            } else if (swipeDistance < 0 && currentIndex > 1) {
+                // Swipe down
+                galleryItems[currentIndex - 2].scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    }, false);
+
+    // Initial UI update
+    updateUI(1);
+});
+
 // ... existing code ...

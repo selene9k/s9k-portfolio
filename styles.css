@@ -1802,83 +1802,174 @@ footer {
 
 /* Art Showcase Styles */
 .art-showcase {
-    padding: 120px 40px 60px;
+    padding: 0;
     background-color: #000;
     color: #fff;
+    min-height: 100vh;
+    position: relative;
 }
 
 .art-showcase h2 {
     font-size: 2.5rem;
-    margin-bottom: 40px;
+    padding: 120px 40px 40px;
     text-transform: uppercase;
     letter-spacing: 2px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    margin: 0;
+    z-index: 2;
+    pointer-events: none;
 }
 
 .gallery-container {
-    max-width: 1800px;
-    margin: 0 auto;
-    padding: 0 20px;
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    position: relative;
 }
 
 .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
 }
 
 .gallery-item {
     position: relative;
+    width: 100%;
+    height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
-    border-radius: 8px;
-    background: #1a1a1a;
-    aspect-ratio: unset;
-    transition: all 0.3s ease;
-}
-
-.gallery-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
 }
 
 .gallery-item img {
     width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 8s ease;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
 }
 
-.gallery-item:hover img {
-    transform: translateY(calc(-100% + 100vh));
+/* Navigation arrows */
+.gallery-nav {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 3;
 }
 
+.nav-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-dot.active {
+    background: #fff;
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+/* Progress bar */
+.scroll-progress {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    z-index: 3;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #fff;
+    width: 0;
+    transition: width 0.1s ease;
+}
+
+/* Image counter */
+.image-counter {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    z-index: 3;
+    background: rgba(0,0,0,0.5);
+    padding: 8px 15px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+/* Mobile optimizations */
 @media (max-width: 768px) {
-    .gallery-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 15px;
-    }
-    
     .art-showcase h2 {
         font-size: 2rem;
-        margin-bottom: 30px;
+        padding: 100px 20px 30px;
     }
 
-    .gallery-item:hover img {
-        transform: translateY(calc(-100% + 50vh));
+    .gallery-nav {
+        right: 10px;
+    }
+
+    .nav-dot {
+        width: 8px;
+        height: 8px;
+    }
+
+    .image-counter {
+        left: 15px;
+        bottom: 15px;
+        font-size: 1rem;
     }
 }
 
 @media (max-width: 480px) {
-    .gallery-grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 10px;
-    }
-    
-    .art-showcase {
-        padding: 100px 20px 40px;
+    .art-showcase h2 {
+        font-size: 1.5rem;
+        padding: 90px 15px 25px;
     }
 
-    .gallery-item:hover img {
-        transform: translateY(calc(-100% + 30vh));
+    .gallery-nav {
+        right: 5px;
     }
+
+    .nav-dot {
+        width: 6px;
+        height: 6px;
+    }
+
+    .image-counter {
+        left: 10px;
+        bottom: 10px;
+        font-size: 0.9rem;
+        padding: 6px 12px;
+    }
+}
+
+/* Hide scrollbar but keep functionality */
+.gallery-container {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.gallery-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
