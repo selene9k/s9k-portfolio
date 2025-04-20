@@ -35,7 +35,7 @@ html {
 /* Default styles for all pages */
 body {
     font-family: 'DM Sans', sans-serif;
-    color: #000000;
+    color: #ffffff;
     line-height: 1.6;
     font-size: 16px;
     text-align: center;
@@ -46,6 +46,7 @@ body {
     flex-direction: column;
     margin: 0;
     padding: 0;
+    background-color: #000000;
 }
 
 /* Main content wrapper */
@@ -56,10 +57,6 @@ main {
 }
 
 /* Background for all pages except about */
-body:not(.about-page) {
-    position: relative;
-}
-
 body:not(.about-page)::before {
     content: '';
     position: fixed;
@@ -67,8 +64,7 @@ body:not(.about-page)::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/images/music-bg.jpeg') no-repeat center center;
-    background-size: cover;
+    background: #000000;
     z-index: -1;
     pointer-events: none;
 }
@@ -462,51 +458,26 @@ p, span, a {
 
 /* Footer Styles */
 footer {
-    position: relative;
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    background-color: #000000;
     padding: 15px 0;
-    z-index: 100;
-    margin-top: auto;
-    flex-shrink: 0;
+    z-index: 99;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-}
-
-.footer-contact {
-    display: flex;
-    gap: 30px;
-    font-size: 0.9em;
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.footer-contact-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s ease;
-}
-
-.footer-contact-item i {
-    font-size: 0.9em;
-}
-
-.footer-contact-item span {
-    font-size: 0.9em;
-    letter-spacing: 0.5px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .footer-content p {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.8em;
-    letter-spacing: 0.5px;
+    color: #ffffff;
+    font-size: 14px;
+    margin: 0;
 }
 
 /* Responsive adjustments for footer */
@@ -1935,4 +1906,36 @@ footer {
     .swiper-button-prev:after {
         font-size: 14px;
     }
+}
+
+/* Homepage CTA Button */
+.home-cta {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+}
+
+.submit-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+.submit-button:hover {
+    background-color: #000000;
+    color: #ffffff;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
 }
