@@ -650,154 +650,112 @@ footer {
 
 /* Video Showcase Enhanced */
 .video-showcase {
-    width: 100%;
-    padding: 40px 0;
-    position: relative;
-    overflow: hidden;
+    padding: 80px 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    margin: 40px 0;
+    border-radius: 20px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .video-showcase h2 {
     color: #fff;
-    margin-bottom: 30px;
-    font-size: 2rem;
-    padding: 0 20px;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
 }
 
 .video-grid {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .video-row {
     display: flex;
-    gap: 20px;
-    width: 100%;
     justify-content: center;
-    flex-wrap: wrap;
+    gap: 30px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .video-item {
-    flex: 1;
-    min-width: 280px;
-    max-width: 400px;
-    aspect-ratio: 16/9;
     position: relative;
+    flex: 1;
+    max-width: 400px;
+    border-radius: 15px;
     overflow: hidden;
+    transform: translateY(0);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.video-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .video-item iframe {
     width: 100%;
-    height: 100%;
+    height: 225px;
     border: none;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Active state for the video being interacted with */
-.video-item.active {
-    transform: scale(1.15) translateY(-10px);
-    z-index: 10;
-    box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.4),
-        0 0 30px rgba(255, 255, 255, 0.2),
-        0 0 50px rgba(255, 255, 255, 0.1);
+.video-item:hover iframe {
+    transform: scale(1.02);
 }
 
-/* Glow effect for active video */
-.video-item.active::after {
+.video-item::after {
     content: '';
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: 16px;
-    background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 
-        0 0 20px rgba(255, 255, 255, 0.3),
-        0 0 40px rgba(255, 255, 255, 0.1);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    opacity: 0;
+    transition: opacity 0.4s ease;
     pointer-events: none;
-    animation: glowPulse 2s infinite;
 }
 
-/* Blur effect for other videos when one is active */
-.video-row.has-active .video-item:not(.active) {
-    filter: blur(5px) brightness(0.5);
-    transform: scale(0.95);
-    opacity: 0.7;
+.video-item:hover::after {
+    opacity: 1;
 }
 
-@keyframes glowPulse {
-    0% {
-        box-shadow: 
-            0 0 20px rgba(255, 255, 255, 0.3),
-            0 0 40px rgba(255, 255, 255, 0.1);
-    }
-    50% {
-        box-shadow: 
-            0 0 30px rgba(255, 255, 255, 0.4),
-            0 0 60px rgba(255, 255, 255, 0.2);
-    }
-    100% {
-        box-shadow: 
-            0 0 20px rgba(255, 255, 255, 0.3),
-            0 0 40px rgba(255, 255, 255, 0.1);
-    }
-}
-
-/* Mobile Responsive Adjustments for Videos */
 @media (max-width: 768px) {
     .video-showcase {
-        padding: 30px 0;
-    }
-
-    .video-grid {
-        padding: 0 15px;
-        gap: 30px;
-    }
-
-    .video-row {
-        gap: 30px;
-    }
-
-    .video-item {
-        min-width: 100%;
-        max-width: none;
-        margin: 0;
-    }
-
-    .video-item iframe {
-        border-radius: 6px;
-    }
-}
-
-@media (max-width: 480px) {
-    .video-showcase {
-        padding: 20px 0;
+        padding: 40px 0;
+        margin: 20px 0;
     }
 
     .video-showcase h2 {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
+        font-size: 2rem;
+        margin-bottom: 30px;
     }
 
     .video-grid {
-        padding: 0 10px;
         gap: 20px;
     }
 
     .video-row {
+        flex-direction: column;
         gap: 20px;
     }
 
-    .video-item iframe {
-        border-radius: 4px;
+    .video-item {
+        max-width: 100%;
+    }
+
+    .video-item:hover {
+        transform: translateY(-5px);
     }
 }
 
