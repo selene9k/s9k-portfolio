@@ -339,126 +339,175 @@ document.addEventListener('DOMContentLoaded', function() {
 // Art Gallery Functionality
 document.addEventListener('DOMContentLoaded', function() {
     const galleryContainer = document.querySelector('.gallery-container');
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    const galleryNav = document.querySelector('.gallery-nav');
+    const galleryGrid = document.querySelector('.gallery-grid');
     const progressBar = document.querySelector('.progress-bar');
     const currentCounter = document.querySelector('.image-counter .current');
     const totalCounter = document.querySelector('.image-counter .total');
 
+    // Clone items for infinite loop
+    const items = document.querySelectorAll('.gallery-item');
+    items.forEach(item => {
+        const clone = item.cloneNode(true);
+        galleryGrid.appendChild(clone);
+    });
+
+    const allItems = document.querySelectorAll('.gallery-item');
+    const itemWidth = allItems[0].offsetWidth;
+    const gap = 20;
     let currentIndex = 0;
+    let isAnimating = false;
+    let startX = 0;
+    let scrollLeft = 0;
     let autoplayInterval;
-    const autoplayDelay = 3000; // 3 seconds between slides
+    const autoplaySpeed = 50; // Lower number = faster animation
+    let autoplayFrame;
+    let isDragging = false;
+    let startPos = 0;
+    let currentTranslate = 0;
 
     // Set total count
-    if (totalCounter) totalCounter.textContent = galleryItems.length;
+    if (totalCounter) totalCounter.textContent = items.length;
 
     // Create navigation dots
-    galleryItems.forEach((_, index) => {
+    const galleryNav = document.querySelector('.gallery-nav');
+    items.forEach((_, index) => {
         const dot = document.createElement('div');
         dot.className = 'nav-dot';
         dot.setAttribute('data-index', index);
         dot.addEventListener('click', () => {
             goToSlide(index);
-            resetAutoplay();
         });
         galleryNav.appendChild(dot);
     });
 
-    const navDots = document.querySelectorAll('.nav-dot');
-
     function updateUI(index) {
         // Update nav dots
-        navDots.forEach(dot => dot.classList.remove('active'));
-        navDots[index].classList.add('active');
+        document.querySelectorAll('.nav-dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
 
         // Update counter
-        if (currentCounter) currentCounter.textContent = index + 1;
+        if (currentCounter) {
+            currentCounter.textContent = index + 1;
+        }
 
         // Update progress bar
         if (progressBar) {
-            const progress = ((index + 1) / galleryItems.length) * 100;
+            const progress = ((index + 1) / items.length) * 100;
             progressBar.style.width = `${progress}%`;
         }
 
-        // Update slides
-        galleryItems.forEach((item, i) => {
-            item.style.transform = `translateX(${100 * (i - index)}%)`;
-        });
+        // Update active states
+        allItems.forEach(item => item.classList.remove('active'));
+        allItems[index].classList.add('active');
+        allItems[index + items.length].classList.add('active');
+    }
+
+    function animate() {
+        if (!isAnimating) return;
+        
+        scrollLeft += 1;
+        if (scrollLeft >= itemWidth + gap) {
+            scrollLeft = 0;
+            galleryGrid.style.transform = `translateX(0)`;
+            currentIndex = (currentIndex + 1) % items.length;
+            updateUI(currentIndex);
+        } else {
+            galleryGrid.style.transform = `translateX(-${scrollLeft}px)`;
+        }
+        
+        autoplayFrame = requestAnimationFrame(animate);
+    }
+
+    function startAutoplay() {
+        if (!isAnimating) {
+            isAnimating = true;
+            animate();
+        }
+    }
+
+    function stopAutoplay() {
+        isAnimating = false;
+        if (autoplayFrame) {
+            cancelAnimationFrame(autoplayFrame);
+        }
     }
 
     function goToSlide(index) {
         currentIndex = index;
+        scrollLeft = 0;
+        galleryGrid.style.transform = `translateX(0)`;
         updateUI(currentIndex);
     }
 
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % galleryItems.length;
-        updateUI(currentIndex);
+    // Touch and mouse events
+    allItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            stopAutoplay();
+            item.classList.add('active');
+        });
+
+        item.addEventListener('mouseleave', () => {
+            if (!isDragging) {
+                item.classList.remove('active');
+                startAutoplay();
+            }
+        });
+
+        item.addEventListener('click', (e) => {
+            if (!isDragging) {
+                const index = Array.from(allItems).indexOf(item) % items.length;
+                goToSlide(index);
+            }
+        });
+    });
+
+    // Mouse drag functionality
+    galleryContainer.addEventListener('mousedown', dragStart);
+    galleryContainer.addEventListener('touchstart', dragStart);
+    galleryContainer.addEventListener('mouseup', dragEnd);
+    galleryContainer.addEventListener('touchend', dragEnd);
+    galleryContainer.addEventListener('mousemove', drag);
+    galleryContainer.addEventListener('touchmove', drag);
+    galleryContainer.addEventListener('mouseleave', dragEnd);
+
+    function dragStart(e) {
+        isDragging = true;
+        startPos = e.type === 'mousedown' ? e.pageX : e.touches[0].pageX;
+        stopAutoplay();
     }
 
-    function previousSlide() {
-        currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
-        updateUI(currentIndex);
+    function drag(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        const currentPosition = e.type === 'mousemove' ? e.pageX : e.touches[0].pageX;
+        const diff = currentPosition - startPos;
+        currentTranslate = scrollLeft - diff;
+        galleryGrid.style.transform = `translateX(-${currentTranslate}px)`;
     }
 
-    function startAutoplay() {
-        if (autoplayInterval) clearInterval(autoplayInterval);
-        autoplayInterval = setInterval(nextSlide, autoplayDelay);
-    }
-
-    function resetAutoplay() {
-        if (autoplayInterval) clearInterval(autoplayInterval);
+    function dragEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+        const slideProgress = currentTranslate / (itemWidth + gap);
+        const targetIndex = Math.round(slideProgress);
+        goToSlide(targetIndex % items.length);
         startAutoplay();
     }
 
-    function pauseAutoplay() {
-        if (autoplayInterval) clearInterval(autoplayInterval);
-    }
-
-    // Initialize autoplay
+    // Start autoplay
     startAutoplay();
-
-    // Pause on hover
-    galleryContainer.addEventListener('mouseenter', pauseAutoplay);
-    galleryContainer.addEventListener('mouseleave', startAutoplay);
 
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') {
-            previousSlide();
-            resetAutoplay();
+            currentIndex = (currentIndex - 1 + items.length) % items.length;
+            goToSlide(currentIndex);
         } else if (e.key === 'ArrowRight') {
-            nextSlide();
-            resetAutoplay();
+            currentIndex = (currentIndex + 1) % items.length;
+            goToSlide(currentIndex);
         }
     });
-
-    // Touch handling
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    galleryContainer.addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].clientX;
-        pauseAutoplay();
-    }, { passive: true });
-
-    galleryContainer.addEventListener('touchmove', (e) => {
-        touchEndX = e.touches[0].clientX;
-    }, { passive: true });
-
-    galleryContainer.addEventListener('touchend', () => {
-        const swipeDistance = touchStartX - touchEndX;
-        const minSwipeDistance = 50;
-
-        if (Math.abs(swipeDistance) > minSwipeDistance) {
-            if (swipeDistance > 0) {
-                nextSlide();
-            } else {
-                previousSlide();
-            }
-        }
-        startAutoplay();
-    }, { passive: true });
 
     // Initial UI update
     updateUI(currentIndex);
