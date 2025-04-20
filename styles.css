@@ -1769,7 +1769,7 @@ footer {
 .art-showcase {
     width: 100%;
     margin: 0 auto;
-    padding: 0;
+    padding: 100px 0 0 0;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -1781,6 +1781,10 @@ footer {
     text-align: center;
     margin-bottom: 40px;
     font-size: 2.5rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .swiper {
@@ -1837,8 +1841,7 @@ footer {
 /* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
     .art-showcase {
-        padding: 10px;
-        min-height: calc(100vh - 180px);
+        padding: 80px 0 0 0;
     }
     
     .swiper {
@@ -1870,8 +1873,7 @@ footer {
 
 @media (max-width: 480px) {
     .art-showcase {
-        padding: 5px;
-        min-height: calc(100vh - 160px);
+        padding: 60px 0 0 0;
     }
     
     .swiper {
