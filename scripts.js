@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Page transition animation
 document.addEventListener('DOMContentLoaded', function() {
     const homeLogoLink = document.querySelector('.home-logo-link');
+    const homeLogoImg = document.querySelector('.home-logo-link img');
     const transitionOverlay = document.createElement('div');
     transitionOverlay.className = 'page-transition';
     document.body.appendChild(transitionOverlay);
@@ -110,13 +111,20 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const targetUrl = this.getAttribute('href');
             
-            // Activate the transition overlay
-            transitionOverlay.classList.add('active');
+            // Add zoom-out effect to the logo
+            homeLogoImg.style.transform = 'scale(0)';
+            homeLogoImg.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
             
-            // Wait for the transition to complete before navigating
+            // Wait for logo animation to complete before showing overlay
             setTimeout(() => {
-                window.location.href = targetUrl;
-            }, 500); // Match this with the CSS transition duration
+                // Activate the transition overlay
+                transitionOverlay.classList.add('active');
+                
+                // Wait for the transition to complete before navigating
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 500); // Match this with the CSS transition duration
+            }, 300); // Match this with the logo animation duration
         });
     }
 });

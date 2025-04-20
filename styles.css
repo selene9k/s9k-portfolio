@@ -23,14 +23,13 @@ html {
     height: 100%;
     background-color: #000;
     z-index: 9999;
-    transform: scaleY(0);
-    transform-origin: bottom;
+    transform: scale(0);
+    transform-origin: center;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .page-transition.active {
-    transform: scaleY(1);
-    transform-origin: top;
+    transform: scale(1);
 }
 
 /* Default styles for all pages */
