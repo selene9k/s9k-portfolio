@@ -1397,27 +1397,32 @@ footer {
     height: 25px;
     cursor: pointer;
     z-index: 1001;
+    padding: 10px;
+    margin: -10px;  /* Compensate for padding to maintain original position */
 }
 
 .mobile-menu-toggle span {
     display: block;
-    height: 3px;
-    width: 100%;
+    height: 2px;  /* Slightly thinner lines */
+    width: 30px;  /* Fixed width */
     background-color: #fff;
-    border-radius: 3px;
+    border-radius: 2px;
     transition: all 0.3s ease;
+    position: relative;  /* Add position relative */
+    transform-origin: center;  /* Set transform origin to center */
 }
 
 .mobile-menu-toggle.active span:nth-child(1) {
-    transform: translateY(6px) rotate(45deg);
+    transform: translateY(8px) rotate(45deg);  /* Adjusted translation */
 }
 
 .mobile-menu-toggle.active span:nth-child(2) {
     opacity: 0;
+    transform: translateX(-10px);  /* Slide out effect */
 }
 
 .mobile-menu-toggle.active span:nth-child(3) {
-    transform: translateY(-6px) rotate(-45deg);
+    transform: translateY(-8px) rotate(-45deg);  /* Adjusted translation */
 }
 
 /* Enhanced Mobile Responsive Styles */
