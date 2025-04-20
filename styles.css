@@ -2027,12 +2027,79 @@ footer {
     bottom: 0;
     left: 0;
     z-index: 1;
-    pointer-events: none;
+    pointer-events: auto;
+    transform-origin: bottom left;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .headphone-wire {
-    width: 300px;
+    width: 400px;
     height: auto;
-    transform: translate(-30%, 20%) rotate(15deg);
-    opacity: 0.9;
+    transform: translate(-40%, 30%) rotate(45deg);
+    opacity: 0.85;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover animation */
+.headphone-container:hover .headphone-wire {
+    transform: translate(-35%, 25%) rotate(40deg) scale(1.05);
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+    opacity: 1;
+}
+
+/* Floating animation */
+@keyframes floatingHeadphone {
+    0% {
+        transform: translate(-40%, 30%) rotate(45deg);
+    }
+    50% {
+        transform: translate(-38%, 28%) rotate(43deg);
+    }
+    100% {
+        transform: translate(-40%, 30%) rotate(45deg);
+    }
+}
+
+.headphone-container:hover .headphone-wire {
+    animation: floatingHeadphone 2s ease-in-out infinite;
+}
+
+/* Responsive adjustments for headphone wire */
+@media (max-width: 768px) {
+    .headphone-wire {
+        width: 300px;
+        transform: translate(-40%, 30%) rotate(40deg);
+    }
+    
+    @keyframes floatingHeadphone {
+        0% {
+            transform: translate(-40%, 30%) rotate(40deg);
+        }
+        50% {
+            transform: translate(-38%, 28%) rotate(38deg);
+        }
+        100% {
+            transform: translate(-40%, 30%) rotate(40deg);
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .headphone-wire {
+        width: 250px;
+        transform: translate(-40%, 30%) rotate(35deg);
+    }
+    
+    @keyframes floatingHeadphone {
+        0% {
+            transform: translate(-40%, 30%) rotate(35deg);
+        }
+        50% {
+            transform: translate(-38%, 28%) rotate(33deg);
+        }
+        100% {
+            transform: translate(-40%, 30%) rotate(35deg);
+        }
+    }
 }
