@@ -1802,12 +1802,11 @@ footer {
 
 /* Art Showcase Styles */
 .art-showcase {
-    padding: 20px 0;
-    background-color: #000;
-    color: #fff;
-    min-height: 100vh;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
     position: relative;
-    perspective: 1000px;
 }
 
 .art-showcase h2 {
@@ -1818,165 +1817,60 @@ footer {
 
 .swiper {
     width: 100%;
-    height: 80vh;
-    margin: 0 auto;
-    padding: 20px;
-    transform-style: preserve-3d;
+    height: auto;
+    max-height: 80vh;
 }
 
 .swiper-slide {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    cursor: pointer;
-    transform-origin: center center;
-    z-index: 1;
-    position: relative;
-    transform-style: preserve-3d;
-    will-change: transform;
+    width: 100%;
+    height: auto;
+    padding: 10px;
 }
 
 .swiper-slide img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    max-height: 70vh;
     object-fit: contain;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    will-change: transform;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.swiper-slide:hover {
-    transform: translateY(-15px) scale(1.08);
-    z-index: 2;
-}
-
-.swiper-slide:hover img {
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.4);
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-/* Touch device optimizations */
-@media (hover: none) {
-    .swiper-slide {
-        transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-    
-    .swiper-slide:active {
-        transform: scale(1.05);
-    }
-    
-    .swiper-slide img {
-        transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-}
-
-/* Swiper Navigation */
-.swiper-button-next,
-.swiper-button-prev {
-    color: #fff;
-    background: rgba(0, 0, 0, 0.5);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-    transform: translateZ(20px);
-}
-
-.swiper-button-next:hover,
-.swiper-button-prev:hover {
-    background: rgba(0, 0, 0, 0.8);
-    transform: translateZ(20px) scale(1.1);
-}
-
-.swiper-button-next:after,
-.swiper-button-prev:after {
-    font-size: 24px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-    .swiper {
-        height: 70vh;
-        padding: 15px;
-    }
-
-    .swiper-slide:hover {
-        transform: translateY(-10px) scale(1.05);
-    }
-
-    .swiper-button-next,
-    .swiper-button-prev {
-        width: 40px;
-        height: 40px;
-    }
-
-    .swiper-button-next:after,
-    .swiper-button-prev:after {
-        font-size: 20px;
-    }
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 768px) {
     .art-showcase {
-        padding: 15px 0;
-    }
-
-    .swiper {
-        height: 60vh;
         padding: 10px;
     }
-
+    
+    .swiper {
+        max-height: 70vh;
+    }
+    
+    .swiper-slide {
+        padding: 5px;
+    }
+    
     .swiper-slide img {
-        border-radius: 10px;
-    }
-
-    .swiper-slide:hover {
-        transform: translateY(-8px) scale(1.03);
-    }
-
-    .swiper-button-next,
-    .swiper-button-prev {
-        width: 35px;
-        height: 35px;
-    }
-
-    .swiper-button-next:after,
-    .swiper-button-prev:after {
-        font-size: 18px;
+        max-height: 60vh;
     }
 }
 
 @media (max-width: 480px) {
     .art-showcase {
-        padding: 10px 0;
-    }
-
-    .swiper {
-        height: 50vh;
         padding: 5px;
     }
-
+    
+    .swiper {
+        max-height: 60vh;
+    }
+    
+    .swiper-slide {
+        padding: 2px;
+    }
+    
     .swiper-slide img {
-        border-radius: 8px;
-    }
-
-    .swiper-slide:hover {
-        transform: translateY(-5px) scale(1.02);
-    }
-
-    .swiper-button-next,
-    .swiper-button-prev {
-        width: 30px;
-        height: 30px;
-    }
-
-    .swiper-button-next:after,
-    .swiper-button-prev:after {
-        font-size: 16px;
+        max-height: 50vh;
     }
 }
