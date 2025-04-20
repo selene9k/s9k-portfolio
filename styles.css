@@ -1392,44 +1392,42 @@ footer {
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 30px;
-    height: 25px;
+    height: 20px;
     cursor: pointer;
     z-index: 1001;
-    padding: 10px;
-    margin: -10px;  /* Compensate for padding to maintain original position */
+    position: relative;
 }
 
 .mobile-menu-toggle span {
     display: block;
-    height: 2px;  /* Slightly thinner lines */
-    width: 30px;  /* Fixed width */
+    height: 2px;
+    width: 100%;
     background-color: #fff;
     border-radius: 2px;
     transition: all 0.3s ease;
-    position: relative;  /* Add position relative */
-    transform-origin: center;  /* Set transform origin to center */
+    transform-origin: 0;
 }
 
 .mobile-menu-toggle.active span:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);  /* Adjusted translation */
+    transform: rotate(45deg);
 }
 
 .mobile-menu-toggle.active span:nth-child(2) {
     opacity: 0;
-    transform: translateX(-10px);  /* Slide out effect */
+    transform: translateX(-10px);
 }
 
 .mobile-menu-toggle.active span:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);  /* Adjusted translation */
+    transform: rotate(-45deg);
 }
 
 /* Enhanced Mobile Responsive Styles */
 @media (max-width: 768px) {
     /* Header Mobile Optimization */
     header {
-        padding: 10px 15px;
+        padding: 15px 20px;
     }
 
     .mobile-menu-toggle {
