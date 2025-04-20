@@ -521,7 +521,6 @@ footer {
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    width: 100%;
 }
 
 .portfolio-content {
@@ -531,7 +530,6 @@ footer {
     flex: 1;
     display: flex;
     flex-direction: column;
-    width: 100%;
 }
 
 .pdf-container {
@@ -651,10 +649,11 @@ footer {
     text-align: center;
 }
 
-/* Video Showcase section */
+/* Video Showcase Enhanced */
 .video-showcase {
-    padding: 20px 0;
-    width: 100%;
+    padding: 20px 0 40px;
+    position: relative;
+    min-height: 100vh;
 }
 
 .video-grid {
@@ -662,23 +661,38 @@ footer {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    width: 100%;
+    gap: 60px;
+    position: relative;
 }
 
 .video-row {
     display: flex;
-    gap: 20px;
+    gap: 40px;
     justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
+    align-items: center;
+    position: relative;
+    padding: 40px 0;
 }
 
 .video-item {
     flex: 1;
-    min-width: 280px;
     max-width: 450px;
     aspect-ratio: 16/9;
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3);
+    transition: all 0.4s ease;
+    cursor: pointer;
+    transform: translateZ(0);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.video-item iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    transition: all 0.4s ease;
 }
 
 /* Active state for the video being interacted with */
@@ -735,112 +749,114 @@ footer {
 }
 
 /* Responsive adjustments */
-@media (max-width: 1024px) {
-    .portfolio-page {
-        padding-top: 70px;
-    }
-
-    .swiper {
-        height: 55vh;
-        padding: 10px;
+@media (max-width: 1200px) {
+    .video-item.active {
+        transform: scale(1.1) translateY(-8px);
     }
 }
 
 @media (max-width: 768px) {
-    .portfolio-page {
-        padding-top: 60px;
+    header {
+        padding: 12px 15px;
     }
 
-    .portfolio-content {
-        padding: 0.5rem;
-    }
-
-    .art-showcase {
-        padding: 5px 0;
-    }
-
-    .swiper {
-        height: 40vh;
-        padding: 5px;
-    }
-
-    .swiper-slide img {
-        border-radius: 8px;
-    }
-
-    .swiper-button-next,
-    .swiper-button-prev {
-        width: 30px;
-        height: 30px;
-        transform: translateZ(0);
-    }
-
-    .swiper-button-next:after,
-    .swiper-button-prev:after {
-        font-size: 16px;
-    }
-
-    .video-showcase {
-        padding: 10px 0;
-    }
-
-    .video-grid {
+    header .header-right {
         gap: 15px;
     }
 
+    header .nav-buttons {
+        gap: 15px;
+    }
+
+    header .nav-buttons a {
+        font-size: 14px;
+        padding: 6px 0;
+    }
+
+    header .header-social-icons {
+        gap: 12px;
+    }
+
+    header .header-social-icon {
+        font-size: 16px;
+    }
+
+    .logo {
+        width: 100px;
+    }
+
     .video-row {
-        gap: 10px;
+        flex-direction: column;
+        gap: 30px;
     }
 
     .video-item {
-        min-width: 100%;
-        margin: 0;
+        max-width: 100%;
+    }
+
+    .video-item.active {
+        transform: scale(1.08) translateY(-5px);
+    }
+
+    .home-logo-link {
+        width: 350px;
+    }
+
+    .pdf-instructions {
+        font-size: 12px;
     }
 }
 
 @media (max-width: 480px) {
-    .portfolio-page {
-        padding-top: 50px;
+    header {
+        padding: 10px;
     }
 
-    .portfolio-content {
-        padding: 0.25rem;
-    }
-
-    .art-showcase {
-        padding: 2px 0;
-    }
-
-    .swiper {
-        height: 35vh;
-        padding: 3px;
-    }
-
-    .swiper-slide img {
-        border-radius: 6px;
-    }
-
-    .swiper-button-next,
-    .swiper-button-prev {
-        width: 25px;
-        height: 25px;
-    }
-
-    .swiper-button-next:after,
-    .swiper-button-prev:after {
-        font-size: 14px;
-    }
-
-    .video-showcase {
-        padding: 5px 0;
-    }
-
-    .video-grid {
+    header .header-right {
         gap: 10px;
     }
 
-    .video-row {
+    header .nav-buttons {
+        gap: 10px;
+    }
+
+    header .nav-buttons a {
+        font-size: 12px;
+        padding: 4px 0;
+        letter-spacing: 0.5px;
+    }
+
+    header .header-social-icons {
         gap: 8px;
+    }
+
+    header .header-social-icon {
+        font-size: 14px;
+    }
+
+    .logo {
+        width: 90px;
+    }
+
+    .about-content h1 {
+        font-size: 2em;
+    }
+
+    .about-content h2 {
+        font-size: 1.1em;
+    }
+
+    .home-logo-link {
+        width: 280px;
+    }
+
+    .pdf-instructions {
+        font-size: 11px;
+    }
+    
+    .pdf-instructions a {
+        padding: 8px 15px;
+        font-size: 13px;
     }
 }
 
@@ -1798,7 +1814,6 @@ footer {
     perspective: 1000px;
     display: flex;
     flex-direction: column;
-    width: 100%;
 }
 
 .art-showcase h2 {
@@ -1809,7 +1824,7 @@ footer {
 
 .swiper {
     width: 100%;
-    height: 60vh;
+    height: 65vh;
     margin: 0 auto;
     padding: 15px;
     transform-style: preserve-3d;
@@ -1824,8 +1839,9 @@ footer {
     transform-origin: center center;
     z-index: 1;
     position: relative;
+    transform-style: preserve-3d;
+    will-change: transform;
     height: 100%;
-    width: 100%;
 }
 
 .swiper-slide img {
@@ -1834,11 +1850,12 @@ footer {
     width: auto;
     height: auto;
     object-fit: contain;
-    border-radius: 12px;
+    border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     transform: translateZ(0);
     backface-visibility: hidden;
+    will-change: transform;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -1897,7 +1914,7 @@ footer {
     }
 
     .swiper {
-        height: 55vh;
+        height: 60vh;
         padding: 10px;
     }
 
@@ -1924,7 +1941,38 @@ footer {
     }
 
     .swiper {
-        height: 40vh;
+        height: 50vh;
+        padding: 8px;
+    }
+
+    .swiper-slide img {
+        border-radius: 10px;
+    }
+
+    .swiper-slide:hover {
+        transform: translateY(-8px) scale(1.03);
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 35px;
+        height: 35px;
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .art-showcase {
+        padding: 3px 0;
+        min-height: calc(100vh - 60px);
+    }
+
+    .swiper {
+        height: 45vh;
         padding: 5px;
     }
 
@@ -1933,7 +1981,7 @@ footer {
     }
 
     .swiper-slide:hover {
-        transform: translateY(-8px) scale(1.03);
+        transform: translateY(-5px) scale(1.02);
     }
 
     .swiper-button-next,
@@ -1945,36 +1993,5 @@ footer {
     .swiper-button-next:after,
     .swiper-button-prev:after {
         font-size: 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .art-showcase {
-        padding: 3px 0;
-        min-height: calc(100vh - 60px);
-    }
-
-    .swiper {
-        height: 35vh;
-        padding: 3px;
-    }
-
-    .swiper-slide img {
-        border-radius: 6px;
-    }
-
-    .swiper-slide:hover {
-        transform: translateY(-5px) scale(1.02);
-    }
-
-    .swiper-button-next,
-    .swiper-button-prev {
-        width: 25px;
-        height: 25px;
-    }
-
-    .swiper-button-next:after,
-    .swiper-button-prev:after {
-        font-size: 14px;
     }
 }
