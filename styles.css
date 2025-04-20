@@ -1802,7 +1802,7 @@ footer {
 
 /* Art Showcase Styles */
 .art-showcase {
-    padding: 40px 0;
+    padding: 20px 0;
     background-color: #000;
     color: #fff;
     min-height: 100vh;
@@ -1828,8 +1828,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), 
-                box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     cursor: pointer;
     transform-origin: center center;
     z-index: 1;
@@ -1843,15 +1842,12 @@ footer {
     height: 100%;
     object-fit: contain;
     border-radius: 15px;
-    box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.4),
-        0 0 40px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     transform: translateZ(0);
     backface-visibility: hidden;
-    will-change: transform, filter;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    filter: brightness(0.95);
+    will-change: transform;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .swiper-slide:hover {
@@ -1860,12 +1856,8 @@ footer {
 }
 
 .swiper-slide:hover img {
-    box-shadow: 
-        0 30px 60px rgba(0, 0, 0, 0.6),
-        0 0 50px rgba(255, 255, 255, 0.2),
-        0 0 100px rgba(255, 255, 255, 0.1);
-    filter: brightness(1.1);
-    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Touch device optimizations */
@@ -1906,26 +1898,11 @@ footer {
     font-size: 24px;
 }
 
-/* Swiper Pagination */
-.swiper-pagination-bullet {
-    background: #fff;
-    opacity: 0.5;
-}
-
-.swiper-pagination-bullet-active {
-    opacity: 1;
-    background: #fff;
-}
-
 /* Responsive adjustments */
-@media (max-width: 768px) {
-    .art-showcase h2 {
-        font-size: 2rem;
-        margin-bottom: 30px;
-    }
-
+@media (max-width: 1024px) {
     .swiper {
         height: 70vh;
+        padding: 15px;
     }
 
     .swiper-slide:hover {
@@ -1944,17 +1921,62 @@ footer {
     }
 }
 
-@media (max-width: 480px) {
-    .art-showcase h2 {
-        font-size: 1.8rem;
-        margin-bottom: 20px;
+@media (max-width: 768px) {
+    .art-showcase {
+        padding: 15px 0;
     }
 
     .swiper {
         height: 60vh;
+        padding: 10px;
+    }
+
+    .swiper-slide img {
+        border-radius: 10px;
     }
 
     .swiper-slide:hover {
-        transform: translateY(-5px) scale(1.03);
+        transform: translateY(-8px) scale(1.03);
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 35px;
+        height: 35px;
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .art-showcase {
+        padding: 10px 0;
+    }
+
+    .swiper {
+        height: 50vh;
+        padding: 5px;
+    }
+
+    .swiper-slide img {
+        border-radius: 8px;
+    }
+
+    .swiper-slide:hover {
+        transform: translateY(-5px) scale(1.02);
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 30px;
+        height: 30px;
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+        font-size: 16px;
     }
 }
