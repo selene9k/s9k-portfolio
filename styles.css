@@ -229,7 +229,7 @@ header .header-social-icon:hover {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 20px;
     padding: 20px;
-    background: #000;
+    background: transparent;
     filter: none;
     -webkit-filter: none;
     box-shadow: none;
@@ -237,7 +237,7 @@ header .header-social-icon:hover {
 }
 
 .home-logo-link:hover img {
-    background: #000;
+    background: transparent;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
@@ -280,7 +280,7 @@ header .header-social-icon:hover {
     -webkit-backdrop-filter: none !important;
     transform-style: flat;
     -webkit-transform-style: flat;
-    background: #000;
+    background: transparent;
 }
 
 /* Logo in header */
