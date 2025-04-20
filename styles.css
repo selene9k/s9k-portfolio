@@ -1807,6 +1807,7 @@ footer {
     color: #fff;
     min-height: 100vh;
     position: relative;
+    overflow: hidden;
 }
 
 .art-showcase h2 {
@@ -1826,39 +1827,35 @@ footer {
 
 .gallery-container {
     height: 100vh;
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
+    width: 100%;
     position: relative;
+    overflow: hidden;
 }
 
 .gallery-grid {
     display: flex;
-    flex-direction: column;
-    padding: 0;
-    margin: 0;
+    width: 100%;
+    height: 100vh;
+    position: relative;
 }
 
 .gallery-item {
-    position: relative;
+    flex: 0 0 100%;
     width: 100%;
-    height: 100vh;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 100%;
+    position: relative;
     overflow: hidden;
+    transition: transform 0.5s ease-in-out;
 }
 
 .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    transition: transform 0.5s ease;
+    transition: transform 0.5s ease-in-out;
 }
 
-/* Navigation arrows */
+/* Navigation dots */
 .gallery-nav {
     position: fixed;
     right: 20px;
@@ -1888,33 +1885,34 @@ footer {
 /* Progress bar */
 .scroll-progress {
     position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 3px;
-    background: rgba(255,255,255,0.1);
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
     z-index: 3;
 }
 
 .progress-bar {
     height: 100%;
     background: #fff;
-    width: 0;
-    transition: width 0.1s ease;
+    border-radius: 2px;
+    transition: width 0.3s ease;
 }
 
 /* Image counter */
 .image-counter {
     position: fixed;
-    left: 20px;
-    bottom: 20px;
-    color: #fff;
-    font-size: 1.2rem;
-    font-weight: 500;
+    bottom: 30px;
+    right: 20px;
+    color: white;
+    font-size: 14px;
     z-index: 3;
-    background: rgba(0,0,0,0.5);
-    padding: 8px 15px;
-    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 4px;
     backdrop-filter: blur(10px);
 }
 

@@ -345,94 +345,123 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentCounter = document.querySelector('.image-counter .current');
     const totalCounter = document.querySelector('.image-counter .total');
 
+    let currentIndex = 0;
+    let autoplayInterval;
+    const autoplayDelay = 3000; // 3 seconds between slides
+
     // Set total count
-    totalCounter.textContent = galleryItems.length;
+    if (totalCounter) totalCounter.textContent = galleryItems.length;
 
     // Create navigation dots
     galleryItems.forEach((_, index) => {
         const dot = document.createElement('div');
         dot.className = 'nav-dot';
-        dot.setAttribute('data-index', index + 1);
+        dot.setAttribute('data-index', index);
         dot.addEventListener('click', () => {
-            galleryItems[index].scrollIntoView({ behavior: 'smooth' });
+            goToSlide(index);
+            resetAutoplay();
         });
         galleryNav.appendChild(dot);
     });
 
     const navDots = document.querySelectorAll('.nav-dot');
 
-    // Intersection Observer for gallery items
-    const options = {
-        root: galleryContainer,
-        threshold: 0.7
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const index = entry.target.getAttribute('data-index');
-                updateUI(index);
-            }
-        });
-    }, options);
-
-    galleryItems.forEach(item => observer.observe(item));
-
-    // Update UI elements
     function updateUI(index) {
         // Update nav dots
         navDots.forEach(dot => dot.classList.remove('active'));
-        navDots[index - 1].classList.add('active');
+        navDots[index].classList.add('active');
 
         // Update counter
-        currentCounter.textContent = index;
+        if (currentCounter) currentCounter.textContent = index + 1;
 
         // Update progress bar
-        const progress = (index / galleryItems.length) * 100;
-        progressBar.style.width = `${progress}%`;
+        if (progressBar) {
+            const progress = ((index + 1) / galleryItems.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Update slides
+        galleryItems.forEach((item, i) => {
+            item.style.transform = `translateX(${100 * (i - index)}%)`;
+        });
     }
+
+    function goToSlide(index) {
+        currentIndex = index;
+        updateUI(currentIndex);
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % galleryItems.length;
+        updateUI(currentIndex);
+    }
+
+    function previousSlide() {
+        currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+        updateUI(currentIndex);
+    }
+
+    function startAutoplay() {
+        if (autoplayInterval) clearInterval(autoplayInterval);
+        autoplayInterval = setInterval(nextSlide, autoplayDelay);
+    }
+
+    function resetAutoplay() {
+        if (autoplayInterval) clearInterval(autoplayInterval);
+        startAutoplay();
+    }
+
+    function pauseAutoplay() {
+        if (autoplayInterval) clearInterval(autoplayInterval);
+    }
+
+    // Initialize autoplay
+    startAutoplay();
+
+    // Pause on hover
+    galleryContainer.addEventListener('mouseenter', pauseAutoplay);
+    galleryContainer.addEventListener('mouseleave', startAutoplay);
 
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
-        const currentIndex = parseInt(currentCounter.textContent);
-        
-        if (e.key === 'ArrowUp' && currentIndex > 1) {
-            galleryItems[currentIndex - 2].scrollIntoView({ behavior: 'smooth' });
-        } else if (e.key === 'ArrowDown' && currentIndex < galleryItems.length) {
-            galleryItems[currentIndex].scrollIntoView({ behavior: 'smooth' });
+        if (e.key === 'ArrowLeft') {
+            previousSlide();
+            resetAutoplay();
+        } else if (e.key === 'ArrowRight') {
+            nextSlide();
+            resetAutoplay();
         }
     });
 
-    // Touch swipe handling
-    let touchStartY = 0;
-    let touchEndY = 0;
+    // Touch handling
+    let touchStartX = 0;
+    let touchEndX = 0;
 
     galleryContainer.addEventListener('touchstart', (e) => {
-        touchStartY = e.touches[0].clientY;
-    }, false);
+        touchStartX = e.touches[0].clientX;
+        pauseAutoplay();
+    }, { passive: true });
 
     galleryContainer.addEventListener('touchmove', (e) => {
-        touchEndY = e.touches[0].clientY;
-    }, false);
+        touchEndX = e.touches[0].clientX;
+    }, { passive: true });
 
     galleryContainer.addEventListener('touchend', () => {
-        const currentIndex = parseInt(currentCounter.textContent);
-        const swipeDistance = touchStartY - touchEndY;
+        const swipeDistance = touchStartX - touchEndX;
         const minSwipeDistance = 50;
 
         if (Math.abs(swipeDistance) > minSwipeDistance) {
-            if (swipeDistance > 0 && currentIndex < galleryItems.length) {
-                // Swipe up
-                galleryItems[currentIndex].scrollIntoView({ behavior: 'smooth' });
-            } else if (swipeDistance < 0 && currentIndex > 1) {
-                // Swipe down
-                galleryItems[currentIndex - 2].scrollIntoView({ behavior: 'smooth' });
+            if (swipeDistance > 0) {
+                nextSlide();
+            } else {
+                previousSlide();
             }
         }
-    }, false);
+        startAutoplay();
+    }, { passive: true });
 
     // Initial UI update
-    updateUI(1);
+    updateUI(currentIndex);
 });
 
 // ... existing code ...
