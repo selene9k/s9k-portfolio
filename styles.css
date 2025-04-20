@@ -1834,6 +1834,7 @@ footer {
     scroll-behavior: smooth;
     display: flex;
     align-items: center;
+    -webkit-overflow-scrolling: touch;
 }
 
 .gallery-grid {
@@ -1843,6 +1844,7 @@ footer {
     margin: 0;
     gap: 2px;
     height: 100vh;
+    width: max-content;
 }
 
 .gallery-item {
