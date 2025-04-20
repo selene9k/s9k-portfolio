@@ -1807,6 +1807,7 @@ footer {
     color: #fff;
     min-height: 100vh;
     position: relative;
+    overflow: hidden;
 }
 
 .art-showcase h2 {
@@ -1827,24 +1828,28 @@ footer {
 
 .gallery-container {
     height: 100vh;
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
     position: relative;
     scroll-behavior: smooth;
+    display: flex;
+    align-items: center;
 }
 
 .gallery-grid {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding: 0;
     margin: 0;
-    gap: 2px; /* Minimal gap between images */
+    gap: 2px;
+    height: 100vh;
 }
 
 .gallery-item {
     position: relative;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
+    flex: 0 0 100vw;
     scroll-snap-align: start;
     scroll-snap-stop: always;
     background: #000;
@@ -1867,7 +1872,7 @@ footer {
     object-fit: contain;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
-    transform: scale(0.95); /* Slightly smaller by default */
+    transform: scale(0.95);
 }
 
 .gallery-item.active img {
@@ -1877,11 +1882,10 @@ footer {
 /* Navigation dots */
 .gallery-nav {
     position: fixed;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    flex-direction: column;
     gap: 8px;
     z-index: 3;
     padding: 10px;
@@ -1926,7 +1930,7 @@ footer {
 /* Image counter */
 .image-counter {
     position: fixed;
-    left: 20px;
+    right: 20px;
     bottom: 20px;
     color: #fff;
     font-size: 0.9rem;
@@ -1952,7 +1956,7 @@ footer {
     }
 
     .gallery-nav {
-        right: 10px;
+        bottom: 15px;
         gap: 6px;
         padding: 8px;
     }
@@ -1963,7 +1967,7 @@ footer {
     }
 
     .image-counter {
-        left: 15px;
+        right: 15px;
         bottom: 15px;
         font-size: 0.8rem;
         padding: 5px 10px;
@@ -1981,7 +1985,7 @@ footer {
     }
 
     .gallery-nav {
-        right: 5px;
+        bottom: 10px;
         gap: 4px;
         padding: 6px;
     }
@@ -1992,7 +1996,7 @@ footer {
     }
 
     .image-counter {
-        left: 10px;
+        right: 10px;
         bottom: 10px;
         font-size: 0.7rem;
         padding: 4px 8px;

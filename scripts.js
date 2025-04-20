@@ -267,6 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let isUserInteracting = false;
     let lastInteractionTime = Date.now();
     const interactionTimeout = 5000; // Resume auto-scroll after 5 seconds of no interaction
+    const scrollSpeed = 1; // Pixels per frame for smooth scrolling
 
     // Set total count
     totalCounter.textContent = galleryItems.length;
@@ -278,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function() {
         dot.setAttribute('data-index', index + 1);
         dot.addEventListener('click', () => {
             stopAutoScroll();
-            galleryItems[index].scrollIntoView({ behavior: 'smooth' });
+            scrollToIndex(index);
             updateActiveState(index + 1);
         });
         galleryNav.appendChild(dot);
@@ -323,6 +324,18 @@ document.addEventListener('DOMContentLoaded', function() {
         galleryItems[index - 1].classList.add('active');
     }
 
+    // Smooth scroll to specific index
+    function scrollToIndex(index) {
+        const item = galleryItems[index];
+        const containerWidth = galleryContainer.clientWidth;
+        const scrollPosition = item.offsetLeft - (containerWidth - item.offsetWidth) / 2;
+        
+        galleryContainer.scrollTo({
+            left: scrollPosition,
+            behavior: 'smooth'
+        });
+    }
+
     // Auto-scroll functionality
     function startAutoScroll() {
         if (autoScrollInterval) return;
@@ -330,11 +343,23 @@ document.addEventListener('DOMContentLoaded', function() {
         autoScrollInterval = setInterval(() => {
             if (isUserInteracting) return;
             
-            const currentIndex = parseInt(currentCounter.textContent);
-            const nextIndex = currentIndex >= galleryItems.length ? 1 : currentIndex + 1;
+            const currentScroll = galleryContainer.scrollLeft;
+            const maxScroll = galleryContainer.scrollWidth - galleryContainer.clientWidth;
             
-            galleryItems[nextIndex - 1].scrollIntoView({ behavior: 'smooth' });
-        }, 3000); // Scroll every 3 seconds
+            if (currentScroll >= maxScroll) {
+                // Reset to beginning
+                galleryContainer.scrollTo({
+                    left: 0,
+                    behavior: 'smooth'
+                });
+            } else {
+                // Smooth scroll right
+                galleryContainer.scrollBy({
+                    left: scrollSpeed,
+                    behavior: 'smooth'
+                });
+            }
+        }, 16); // ~60fps
     }
 
     function stopAutoScroll() {
@@ -357,43 +382,43 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('keydown', (e) => {
         const currentIndex = parseInt(currentCounter.textContent);
         
-        if (e.key === 'ArrowUp' && currentIndex > 1) {
+        if (e.key === 'ArrowLeft' && currentIndex > 1) {
             stopAutoScroll();
-            galleryItems[currentIndex - 2].scrollIntoView({ behavior: 'smooth' });
+            scrollToIndex(currentIndex - 2);
             updateActiveState(currentIndex - 1);
-        } else if (e.key === 'ArrowDown' && currentIndex < galleryItems.length) {
+        } else if (e.key === 'ArrowRight' && currentIndex < galleryItems.length) {
             stopAutoScroll();
-            galleryItems[currentIndex].scrollIntoView({ behavior: 'smooth' });
+            scrollToIndex(currentIndex);
             updateActiveState(currentIndex + 1);
         }
     });
 
     // Touch and mouse interaction
-    let touchStartY = 0;
-    let touchEndY = 0;
+    let touchStartX = 0;
+    let touchEndX = 0;
 
     galleryContainer.addEventListener('touchstart', (e) => {
         stopAutoScroll();
-        touchStartY = e.touches[0].clientY;
+        touchStartX = e.touches[0].clientX;
         const index = parseInt(currentCounter.textContent);
         updateActiveState(index);
     }, false);
 
     galleryContainer.addEventListener('touchmove', (e) => {
-        touchEndY = e.touches[0].clientY;
+        touchEndX = e.touches[0].clientX;
     }, false);
 
     galleryContainer.addEventListener('touchend', () => {
         const currentIndex = parseInt(currentCounter.textContent);
-        const swipeDistance = touchStartY - touchEndY;
+        const swipeDistance = touchStartX - touchEndX;
         const minSwipeDistance = 50;
 
         if (Math.abs(swipeDistance) > minSwipeDistance) {
             if (swipeDistance > 0 && currentIndex < galleryItems.length) {
-                galleryItems[currentIndex].scrollIntoView({ behavior: 'smooth' });
+                scrollToIndex(currentIndex);
                 updateActiveState(currentIndex + 1);
             } else if (swipeDistance < 0 && currentIndex > 1) {
-                galleryItems[currentIndex - 2].scrollIntoView({ behavior: 'smooth' });
+                scrollToIndex(currentIndex - 2);
                 updateActiveState(currentIndex - 1);
             }
         }
