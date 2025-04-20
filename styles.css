@@ -200,10 +200,12 @@ header .header-social-icon:hover {
 .logo-container {
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 80px 20px;
     perspective: 1000px;
+    position: relative;
 }
 
 .home-logo-link {
@@ -1911,10 +1913,11 @@ footer {
 /* Homepage CTA Button */
 .home-cta {
     position: absolute;
-    bottom: 40%;
+    bottom: 30%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
+    margin-top: 20px;
 }
 
 .submit-button {
