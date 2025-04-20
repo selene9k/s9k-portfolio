@@ -1832,24 +1832,24 @@ footer {
     overflow: hidden;
     border-radius: 8px;
     background: #1a1a1a;
-    aspect-ratio: 1;
-    transition: transform 0.3s ease;
+    aspect-ratio: unset;
+    transition: all 0.3s ease;
 }
 
 .gallery-item:hover {
-    transform: scale(1.02);
+    transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0,0,0,0.3);
 }
 
 .gallery-item img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
+    height: auto;
+    display: block;
+    transition: transform 8s ease;
 }
 
 .gallery-item:hover img {
-    transform: scale(1.1);
+    transform: translateY(calc(-100% + 100vh));
 }
 
 @media (max-width: 768px) {
@@ -1862,6 +1862,10 @@ footer {
         font-size: 2rem;
         margin-bottom: 30px;
     }
+
+    .gallery-item:hover img {
+        transform: translateY(calc(-100% + 50vh));
+    }
 }
 
 @media (max-width: 480px) {
@@ -1872,5 +1876,9 @@ footer {
     
     .art-showcase {
         padding: 100px 20px 40px;
+    }
+
+    .gallery-item:hover img {
+        transform: translateY(calc(-100% + 30vh));
     }
 }
