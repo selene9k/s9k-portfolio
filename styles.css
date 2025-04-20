@@ -1891,6 +1891,7 @@ footer {
     height: auto;
     max-height: 80vh;
     overflow: hidden;
+    padding: 20px 0;
 }
 
 .swiper-wrapper {
@@ -1907,14 +1908,17 @@ footer {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    padding: 0 10px;
 }
 
 .swiper-slide img {
     width: auto;
     height: auto;
-    max-width: 100%;
+    max-width: 90%;
     max-height: 70vh;
     object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Navigation buttons */
@@ -1930,9 +1934,10 @@ footer {
 
 .swiper-button-next:after,
 .swiper-button-prev:after {
-    font-size: 20px;
+    font-size: 18px;
 }
 
+/* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
     .art-showcase {
         padding: 10px;
@@ -1940,20 +1945,18 @@ footer {
     }
     
     .swiper {
-        max-height: calc(100vh - 200px);
-        width: 100%;
+        padding: 10px 0;
+        max-height: 70vh;
     }
     
     .swiper-slide {
-        padding: 5px;
-        height: auto;
+        padding: 0 5px;
     }
     
     .swiper-slide img {
-        max-height: calc(100vh - 250px);
-        width: auto;
         max-width: 95%;
-        margin: 0 auto;
+        max-height: 60vh;
+        border-radius: 6px;
     }
 
     .swiper-button-next,
@@ -1964,7 +1967,7 @@ footer {
 
     .swiper-button-next:after,
     .swiper-button-prev:after {
-        font-size: 18px;
+        font-size: 16px;
     }
 }
 
@@ -1975,7 +1978,8 @@ footer {
     }
     
     .swiper {
-        max-height: calc(100vh - 180px);
+        padding: 5px 0;
+        max-height: 60vh;
     }
     
     .swiper-slide {
@@ -1983,9 +1987,9 @@ footer {
     }
     
     .swiper-slide img {
-        max-height: calc(100vh - 220px);
-        width: auto;
-        max-width: 92%;
+        max-width: 98%;
+        max-height: 50vh;
+        border-radius: 4px;
     }
 
     .swiper-button-next,
@@ -1996,6 +2000,6 @@ footer {
 
     .swiper-button-next:after,
     .swiper-button-prev:after {
-        font-size: 16px;
+        font-size: 14px;
     }
 }
