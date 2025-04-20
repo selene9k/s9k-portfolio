@@ -695,6 +695,7 @@ footer {
     height: 100%;
     border: none;
     border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Active state for the video being interacted with */
@@ -750,177 +751,53 @@ footer {
     }
 }
 
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-    .video-item.active {
-        transform: scale(1.1) translateY(-8px);
-    }
-}
-
+/* Mobile Responsive Adjustments for Videos */
 @media (max-width: 768px) {
-    .portfolio-page {
-        padding-top: 80px;
-    }
-
-    .portfolio-content {
-        padding: 0;
-    }
-
-    .art-showcase {
-        padding: 0;
-    }
-
-    .swiper {
-        max-height: 60vh;
-    }
-
-    .swiper-slide img {
-        max-height: 55vh;
-        max-width: 95%;
-    }
-
     .video-showcase {
         padding: 30px 0;
     }
 
-    .video-showcase h2 {
-        font-size: 1.8rem;
-        margin-bottom: 20px;
-    }
-
     .video-grid {
-        gap: 20px;
         padding: 0 15px;
+        gap: 30px;
     }
 
     .video-row {
-        gap: 15px;
+        gap: 30px;
     }
 
     .video-item {
         min-width: 100%;
+        max-width: none;
         margin: 0;
     }
 
-    header {
-        padding: 12px 15px;
-    }
-
-    header .header-right {
-        gap: 15px;
-    }
-
-    header .nav-buttons {
-        gap: 15px;
-    }
-
-    header .nav-buttons a {
-        font-size: 14px;
-        padding: 6px 0;
-    }
-
-    header .header-social-icons {
-        gap: 12px;
-    }
-
-    header .header-social-icon {
-        font-size: 16px;
-    }
-
-    .logo {
-        width: 100px;
-    }
-
-    .home-logo-link {
-        width: 350px;
-    }
-
-    .pdf-instructions {
-        font-size: 12px;
+    .video-item iframe {
+        border-radius: 6px;
     }
 }
 
 @media (max-width: 480px) {
-    .portfolio-page {
-        padding-top: 70px;
-    }
-
-    .swiper {
-        max-height: 50vh;
-    }
-
-    .swiper-slide img {
-        max-height: 45vh;
-        max-width: 92%;
-    }
-
     .video-showcase {
         padding: 20px 0;
     }
 
     .video-showcase h2 {
         font-size: 1.5rem;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
 
     .video-grid {
-        gap: 15px;
         padding: 0 10px;
+        gap: 20px;
     }
 
-    .video-item {
-        min-width: 100%;
+    .video-row {
+        gap: 20px;
     }
 
-    header {
-        padding: 10px;
-    }
-
-    header .header-right {
-        gap: 10px;
-    }
-
-    header .nav-buttons {
-        gap: 10px;
-    }
-
-    header .nav-buttons a {
-        font-size: 12px;
-        padding: 4px 0;
-        letter-spacing: 0.5px;
-    }
-
-    header .header-social-icons {
-        gap: 8px;
-    }
-
-    header .header-social-icon {
-        font-size: 14px;
-    }
-
-    .logo {
-        width: 90px;
-    }
-
-    .about-content h1 {
-        font-size: 2em;
-    }
-
-    .about-content h2 {
-        font-size: 1.1em;
-    }
-
-    .home-logo-link {
-        width: 280px;
-    }
-
-    .pdf-instructions {
-        font-size: 11px;
-    }
-    
-    .pdf-instructions a {
-        padding: 8px 15px;
-        font-size: 13px;
+    .video-item iframe {
+        border-radius: 4px;
     }
 }
 
