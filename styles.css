@@ -55,9 +55,22 @@ main {
     flex-direction: column;
 }
 
-/* Black background for all pages except about */
+/* Background for all pages except about */
 body:not(.about-page) {
-    background-color: #000;
+    position: relative;
+}
+
+body:not(.about-page)::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/images/music-bg.jpeg') no-repeat center center;
+    background-size: cover;
+    z-index: -1;
+    pointer-events: none;
 }
 
 a {
