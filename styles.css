@@ -2020,3 +2020,19 @@ footer {
     box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
 }
+
+/* Headphone Wire Styles */
+.headphone-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.headphone-wire {
+    width: 300px;
+    height: auto;
+    transform: translate(-30%, 20%) rotate(15deg);
+    opacity: 0.9;
+}
