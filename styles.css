@@ -1808,6 +1808,9 @@ footer {
     min-height: 100vh;
     position: relative;
     perspective: 1000px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .art-showcase h2 {
@@ -1818,7 +1821,7 @@ footer {
 
 .swiper {
     width: 100%;
-    height: 80vh;
+    height: 70vh;
     margin: 0 auto;
     padding: 20px;
     transform-style: preserve-3d;
@@ -1900,8 +1903,12 @@ footer {
 
 /* Responsive adjustments */
 @media (max-width: 1024px) {
+    .art-showcase {
+        padding: 15px 0;
+    }
+
     .swiper {
-        height: 70vh;
+        height: 65vh;
         padding: 15px;
     }
 
@@ -1923,7 +1930,8 @@ footer {
 
 @media (max-width: 768px) {
     .art-showcase {
-        padding: 15px 0;
+        padding: 10px 0;
+        min-height: calc(100vh - 80px);
     }
 
     .swiper {
@@ -1953,11 +1961,12 @@ footer {
 
 @media (max-width: 480px) {
     .art-showcase {
-        padding: 10px 0;
+        padding: 5px 0;
+        min-height: calc(100vh - 60px);
     }
 
     .swiper {
-        height: 50vh;
+        height: 55vh;
         padding: 5px;
     }
 
