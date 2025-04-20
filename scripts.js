@@ -263,6 +263,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentCounter = document.querySelector('.image-counter .current');
     const totalCounter = document.querySelector('.image-counter .total');
 
+    let autoScrollInterval;
+    let isUserInteracting = false;
+    let lastInteractionTime = Date.now();
+    const interactionTimeout = 5000; // Resume auto-scroll after 5 seconds of no interaction
+
     // Set total count
     totalCounter.textContent = galleryItems.length;
 
@@ -272,7 +277,9 @@ document.addEventListener('DOMContentLoaded', function() {
         dot.className = 'nav-dot';
         dot.setAttribute('data-index', index + 1);
         dot.addEventListener('click', () => {
+            stopAutoScroll();
             galleryItems[index].scrollIntoView({ behavior: 'smooth' });
+            updateActiveState(index + 1);
         });
         galleryNav.appendChild(dot);
     });
@@ -310,23 +317,66 @@ document.addEventListener('DOMContentLoaded', function() {
         progressBar.style.width = `${progress}%`;
     }
 
+    // Update active state of gallery items
+    function updateActiveState(index) {
+        galleryItems.forEach(item => item.classList.remove('active'));
+        galleryItems[index - 1].classList.add('active');
+    }
+
+    // Auto-scroll functionality
+    function startAutoScroll() {
+        if (autoScrollInterval) return;
+        
+        autoScrollInterval = setInterval(() => {
+            if (isUserInteracting) return;
+            
+            const currentIndex = parseInt(currentCounter.textContent);
+            const nextIndex = currentIndex >= galleryItems.length ? 1 : currentIndex + 1;
+            
+            galleryItems[nextIndex - 1].scrollIntoView({ behavior: 'smooth' });
+        }, 3000); // Scroll every 3 seconds
+    }
+
+    function stopAutoScroll() {
+        if (autoScrollInterval) {
+            clearInterval(autoScrollInterval);
+            autoScrollInterval = null;
+        }
+        isUserInteracting = true;
+        lastInteractionTime = Date.now();
+    }
+
+    function checkResumeAutoScroll() {
+        if (Date.now() - lastInteractionTime > interactionTimeout) {
+            isUserInteracting = false;
+            startAutoScroll();
+        }
+    }
+
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
         const currentIndex = parseInt(currentCounter.textContent);
         
         if (e.key === 'ArrowUp' && currentIndex > 1) {
+            stopAutoScroll();
             galleryItems[currentIndex - 2].scrollIntoView({ behavior: 'smooth' });
+            updateActiveState(currentIndex - 1);
         } else if (e.key === 'ArrowDown' && currentIndex < galleryItems.length) {
+            stopAutoScroll();
             galleryItems[currentIndex].scrollIntoView({ behavior: 'smooth' });
+            updateActiveState(currentIndex + 1);
         }
     });
 
-    // Touch swipe handling
+    // Touch and mouse interaction
     let touchStartY = 0;
     let touchEndY = 0;
 
     galleryContainer.addEventListener('touchstart', (e) => {
+        stopAutoScroll();
         touchStartY = e.touches[0].clientY;
+        const index = parseInt(currentCounter.textContent);
+        updateActiveState(index);
     }, false);
 
     galleryContainer.addEventListener('touchmove', (e) => {
@@ -340,14 +390,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (Math.abs(swipeDistance) > minSwipeDistance) {
             if (swipeDistance > 0 && currentIndex < galleryItems.length) {
-                // Swipe up
                 galleryItems[currentIndex].scrollIntoView({ behavior: 'smooth' });
+                updateActiveState(currentIndex + 1);
             } else if (swipeDistance < 0 && currentIndex > 1) {
-                // Swipe down
                 galleryItems[currentIndex - 2].scrollIntoView({ behavior: 'smooth' });
+                updateActiveState(currentIndex - 1);
             }
         }
+
+        setTimeout(checkResumeAutoScroll, interactionTimeout);
     }, false);
+
+    // Mouse interaction
+    galleryItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            stopAutoScroll();
+            const index = parseInt(item.getAttribute('data-index'));
+            updateActiveState(index);
+        });
+
+        item.addEventListener('mouseleave', () => {
+            setTimeout(checkResumeAutoScroll, interactionTimeout);
+        });
+    });
+
+    // Scroll interaction
+    let scrollTimeout;
+    galleryContainer.addEventListener('scroll', () => {
+        stopAutoScroll();
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(checkResumeAutoScroll, interactionTimeout);
+    });
+
+    // Start auto-scroll on page load
+    setTimeout(startAutoScroll, 1000);
 
     // Initial UI update
     updateUI(1);

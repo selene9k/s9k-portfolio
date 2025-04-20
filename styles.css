@@ -1810,18 +1810,19 @@ footer {
 }
 
 .art-showcase h2 {
-    font-size: 2.5rem;
-    padding: 120px 40px 40px;
+    font-size: 2rem;
+    padding: 100px 40px 20px;
     text-transform: uppercase;
     letter-spacing: 2px;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
     margin: 0;
     z-index: 2;
     pointer-events: none;
+    text-align: center;
 }
 
 .gallery-container {
@@ -1829,6 +1830,7 @@ footer {
     overflow-y: auto;
     scroll-snap-type: y mandatory;
     position: relative;
+    scroll-behavior: smooth;
 }
 
 .gallery-grid {
@@ -1836,6 +1838,7 @@ footer {
     flex-direction: column;
     padding: 0;
     margin: 0;
+    gap: 2px; /* Minimal gap between images */
 }
 
 .gallery-item {
@@ -1849,30 +1852,47 @@ footer {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.5s;
+    will-change: transform, z-index;
+}
+
+.gallery-item.active {
+    z-index: 10;
+    transform: scale(1.1) translateZ(0);
 }
 
 .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    transition: transform 0.5s ease;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    transform: scale(0.95); /* Slightly smaller by default */
 }
 
-/* Navigation arrows */
+.gallery-item.active img {
+    transform: scale(1);
+}
+
+/* Navigation dots */
 .gallery-nav {
     position: fixed;
-    right: 20px;
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 8px;
     z-index: 3;
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
 }
 
 .nav-dot {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.3);
     cursor: pointer;
@@ -1891,7 +1911,7 @@ footer {
     left: 0;
     top: 0;
     width: 100%;
-    height: 3px;
+    height: 2px;
     background: rgba(255,255,255,0.1);
     z-index: 3;
 }
@@ -1900,7 +1920,7 @@ footer {
     height: 100%;
     background: #fff;
     width: 0;
-    transition: width 0.1s ease;
+    transition: width 0.3s ease;
 }
 
 /* Image counter */
@@ -1909,46 +1929,32 @@ footer {
     left: 20px;
     bottom: 20px;
     color: #fff;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     font-weight: 500;
     z-index: 3;
     background: rgba(0,0,0,0.5);
-    padding: 8px 15px;
+    padding: 6px 12px;
     border-radius: 20px;
     backdrop-filter: blur(10px);
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.image-counter:hover {
+    opacity: 1;
 }
 
 /* Mobile optimizations */
 @media (max-width: 768px) {
     .art-showcase h2 {
-        font-size: 2rem;
-        padding: 100px 20px 30px;
+        font-size: 1.5rem;
+        padding: 80px 20px 20px;
     }
 
     .gallery-nav {
         right: 10px;
-    }
-
-    .nav-dot {
-        width: 8px;
-        height: 8px;
-    }
-
-    .image-counter {
-        left: 15px;
-        bottom: 15px;
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .art-showcase h2 {
-        font-size: 1.5rem;
-        padding: 90px 15px 25px;
-    }
-
-    .gallery-nav {
-        right: 5px;
+        gap: 6px;
+        padding: 8px;
     }
 
     .nav-dot {
@@ -1957,19 +1963,48 @@ footer {
     }
 
     .image-counter {
+        left: 15px;
+        bottom: 15px;
+        font-size: 0.8rem;
+        padding: 5px 10px;
+    }
+
+    .gallery-item.active {
+        transform: scale(1.05) translateZ(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .art-showcase h2 {
+        font-size: 1.2rem;
+        padding: 70px 15px 15px;
+    }
+
+    .gallery-nav {
+        right: 5px;
+        gap: 4px;
+        padding: 6px;
+    }
+
+    .nav-dot {
+        width: 4px;
+        height: 4px;
+    }
+
+    .image-counter {
         left: 10px;
         bottom: 10px;
-        font-size: 0.9rem;
-        padding: 6px 12px;
+        font-size: 0.7rem;
+        padding: 4px 8px;
     }
 }
 
 /* Hide scrollbar but keep functionality */
 .gallery-container {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .gallery-container::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+    display: none;
 }
