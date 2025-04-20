@@ -344,21 +344,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentCounter = document.querySelector('.image-counter .current');
     const totalCounter = document.querySelector('.image-counter .total');
 
+    // Clone items for infinite loop
     const items = document.querySelectorAll('.gallery-item');
-    const numberOfItems = items.length;
-    const theta = (2 * Math.PI) / numberOfItems;
-    const radius = 800; // Adjust this value to change the circle radius
+    const itemWidth = items[0].offsetWidth;
+    const gap = 20;
+    
+    // Clone first set of items
+    items.forEach(item => {
+        const clone = item.cloneNode(true);
+        galleryGrid.appendChild(clone);
+    });
+
+    const allItems = document.querySelectorAll('.gallery-item');
+    let currentIndex = 0;
+    let isAnimating = true;
+    let animationFrame;
+    let currentTranslate = 0;
+    const slideSpeed = 1; // Pixels per frame
 
     // Set total count
-    if (totalCounter) totalCounter.textContent = numberOfItems;
-
-    // Position items in 3D space
-    items.forEach((item, i) => {
-        const angle = theta * i;
-        const x = Math.sin(angle) * radius;
-        const z = Math.cos(angle) * radius;
-        item.style.transform = `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) rotateY(${(angle * 180) / Math.PI}deg)`;
-    });
+    if (totalCounter) totalCounter.textContent = items.length;
 
     // Create navigation dots
     const galleryNav = document.querySelector('.gallery-nav');
@@ -367,18 +372,10 @@ document.addEventListener('DOMContentLoaded', function() {
         dot.className = 'nav-dot';
         dot.setAttribute('data-index', index);
         dot.addEventListener('click', () => {
-            rotateToIndex(index);
+            jumpToSlide(index);
         });
         galleryNav.appendChild(dot);
     });
-
-    let currentRotation = 0;
-    let targetRotation = 0;
-    let currentIndex = 0;
-    let isAnimating = false;
-    let isDragging = false;
-    let startX = 0;
-    let currentX = 0;
 
     function updateUI(index) {
         // Update nav dots
@@ -393,73 +390,75 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Update progress bar
         if (progressBar) {
-            const progress = ((index + 1) / numberOfItems) * 100;
+            const progress = ((index + 1) / items.length) * 100;
             progressBar.style.width = `${progress}%`;
         }
 
-        // Update active states
-        items.forEach((item, i) => {
-            item.classList.toggle('active', i === index);
-        });
+        // Update center state
+        allItems.forEach(item => item.classList.remove('center'));
+        const centerIndex = Math.floor(allItems.length / 2);
+        allItems[centerIndex].classList.add('center');
     }
 
-    function rotateToIndex(index) {
-        targetRotation = -(index * (360 / numberOfItems));
-        currentIndex = index;
-        updateUI(currentIndex);
-        galleryGrid.style.transform = `rotateY(${targetRotation}deg)`;
+    function animate() {
+        if (!isAnimating) return;
+
+        currentTranslate -= slideSpeed;
+        const totalWidth = itemWidth + gap;
+
+        if (Math.abs(currentTranslate) >= totalWidth) {
+            currentTranslate = 0;
+            galleryGrid.style.transform = `translateX(0)`;
+            
+            // Move first item to end
+            const firstItem = galleryGrid.firstElementChild;
+            galleryGrid.appendChild(firstItem);
+            
+            // Update index
+            currentIndex = (currentIndex + 1) % items.length;
+            updateUI(currentIndex);
+        } else {
+            galleryGrid.style.transform = `translateX(${currentTranslate}px)`;
+        }
+
+        animationFrame = requestAnimationFrame(animate);
     }
 
-    // Mouse/Touch Events
-    function handleDragStart(e) {
-        isDragging = true;
-        startX = e.type === 'mousedown' ? e.pageX : e.touches[0].pageX;
-        currentX = startX;
-        galleryGrid.style.animationPlayState = 'paused';
-    }
+    function jumpToSlide(index) {
+        // Calculate difference between current and target index
+        const diff = index - currentIndex;
+        if (diff === 0) return;
 
-    function handleDragMove(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-        currentX = e.type === 'mousemove' ? e.pageX : e.touches[0].pageX;
-        const diff = currentX - startX;
-        const newRotation = currentRotation + (diff * 0.5);
-        galleryGrid.style.transform = `rotateY(${newRotation}deg)`;
-    }
-
-    function handleDragEnd() {
-        if (!isDragging) return;
-        isDragging = false;
-        currentRotation = targetRotation;
-        galleryGrid.style.animationPlayState = 'running';
-    }
-
-    // Event Listeners
-    galleryContainer.addEventListener('mousedown', handleDragStart);
-    galleryContainer.addEventListener('touchstart', handleDragStart, { passive: true });
-    galleryContainer.addEventListener('mousemove', handleDragMove);
-    galleryContainer.addEventListener('touchmove', handleDragMove, { passive: false });
-    galleryContainer.addEventListener('mouseup', handleDragEnd);
-    galleryContainer.addEventListener('touchend', handleDragEnd);
-    galleryContainer.addEventListener('mouseleave', handleDragEnd);
-
-    // Click events for items
-    items.forEach((item, index) => {
-        item.addEventListener('click', () => {
-            if (!isDragging) {
-                rotateToIndex(index);
+        // Move items in the grid
+        if (diff > 0) {
+            for (let i = 0; i < diff; i++) {
+                const firstItem = galleryGrid.firstElementChild;
+                galleryGrid.appendChild(firstItem);
             }
-        });
-    });
+        } else {
+            for (let i = 0; i < Math.abs(diff); i++) {
+                const lastItem = galleryGrid.lastElementChild;
+                galleryGrid.prepend(lastItem);
+            }
+        }
+
+        currentIndex = index;
+        currentTranslate = 0;
+        galleryGrid.style.transform = `translateX(0)`;
+        updateUI(currentIndex);
+    }
+
+    // Start animation
+    animate();
 
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') {
-            currentIndex = (currentIndex - 1 + numberOfItems) % numberOfItems;
-            rotateToIndex(currentIndex);
+            const prevIndex = (currentIndex - 1 + items.length) % items.length;
+            jumpToSlide(prevIndex);
         } else if (e.key === 'ArrowRight') {
-            currentIndex = (currentIndex + 1) % numberOfItems;
-            rotateToIndex(currentIndex);
+            const nextIndex = (currentIndex + 1) % items.length;
+            jumpToSlide(nextIndex);
         }
     });
 
