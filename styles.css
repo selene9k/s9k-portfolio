@@ -1973,3 +1973,66 @@ footer {
 .gallery-container::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
 }
+
+/* Gallery Animation Styles */
+.gallery-grid {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.gallery-item {
+    flex: 0 0 100%;
+    transition: transform 0.5s ease;
+    position: relative;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Animation States */
+.gallery-grid.animating .gallery-item {
+    transform: translateX(-100%);
+}
+
+/* Hover Pause State */
+.gallery-grid:hover .gallery-item {
+    animation-play-state: paused;
+}
+
+/* Progress Bar Styles */
+.scroll-progress {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    z-index: 1000;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #fff;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Image Counter Styles */
+.image-counter {
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    color: white;
+    font-size: 14px;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 4px;
+}

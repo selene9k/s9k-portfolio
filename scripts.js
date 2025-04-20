@@ -1,4 +1,86 @@
-// ... existing code ...
+// Gallery Animation
+document.addEventListener('DOMContentLoaded', function() {
+    const galleryGrid = document.querySelector('.gallery-grid');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const progressBar = document.querySelector('.progress-bar');
+    const currentCounter = document.querySelector('.current');
+    const totalCounter = document.querySelector('.total');
+    
+    let currentIndex = 0;
+    const slideInterval = 3000; // 3 seconds per slide
+    let slideTimer;
+
+    // Initialize counters
+    if (totalCounter) totalCounter.textContent = galleryItems.length;
+    if (currentCounter) currentCounter.textContent = currentIndex + 1;
+
+    function updateProgress() {
+        if (progressBar) {
+            const progress = ((currentIndex + 1) / galleryItems.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+    }
+
+    function showSlide(index) {
+        galleryItems.forEach((item, i) => {
+            item.style.transform = `translateX(${100 * (i - index)}%)`;
+        });
+        
+        if (currentCounter) currentCounter.textContent = index + 1;
+        updateProgress();
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % galleryItems.length;
+        showSlide(currentIndex);
+    }
+
+    function startSlideshow() {
+        slideTimer = setInterval(nextSlide, slideInterval);
+    }
+
+    function pauseSlideshow() {
+        clearInterval(slideTimer);
+    }
+
+    // Initialize first slide
+    showSlide(0);
+
+    // Start automatic slideshow
+    startSlideshow();
+
+    // Pause on hover
+    if (galleryGrid) {
+        galleryGrid.addEventListener('mouseenter', pauseSlideshow);
+        galleryGrid.addEventListener('mouseleave', startSlideshow);
+    }
+
+    // Touch events for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    galleryGrid.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        pauseSlideshow();
+    }, { passive: true });
+
+    galleryGrid.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const difference = touchStartX - touchEndX;
+
+        if (Math.abs(difference) > 50) { // Minimum swipe distance
+            if (difference > 0) {
+                // Swipe left
+                currentIndex = (currentIndex + 1) % galleryItems.length;
+            } else {
+                // Swipe right
+                currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+            }
+            showSlide(currentIndex);
+        }
+        startSlideshow();
+    }, { passive: true });
+});
 
 // Logo click animation
 document.addEventListener('DOMContentLoaded', function() {
