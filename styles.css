@@ -1828,12 +1828,14 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     cursor: pointer;
     transform-origin: center center;
     z-index: 1;
     position: relative;
     transform-style: preserve-3d;
+    will-change: transform;
 }
 
 .swiper-slide img {
@@ -1844,7 +1846,7 @@ footer {
     box-shadow: 
         0 20px 40px rgba(0, 0, 0, 0.4),
         0 0 40px rgba(255, 255, 255, 0.1);
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     transform: translateZ(0);
     backface-visibility: hidden;
     will-change: transform, filter;
@@ -1853,7 +1855,7 @@ footer {
 }
 
 .swiper-slide:hover {
-    transform: translateY(-20px) scale(1.05) rotateX(5deg);
+    transform: translateY(-15px) scale(1.08);
     z-index: 2;
 }
 
@@ -1866,6 +1868,21 @@ footer {
     border-color: rgba(255, 255, 255, 0.3);
 }
 
+/* Touch device optimizations */
+@media (hover: none) {
+    .swiper-slide {
+        transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    
+    .swiper-slide:active {
+        transform: scale(1.05);
+    }
+    
+    .swiper-slide img {
+        transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+}
+
 /* Swiper Navigation */
 .swiper-button-next,
 .swiper-button-prev {
@@ -1874,7 +1891,7 @@ footer {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    transition: all 0.3s ease;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
     transform: translateZ(20px);
 }
 
@@ -1938,6 +1955,6 @@ footer {
     }
 
     .swiper-slide:hover {
-        transform: translateY(-5px) scale(1.05);
+        transform: translateY(-5px) scale(1.03);
     }
 }
