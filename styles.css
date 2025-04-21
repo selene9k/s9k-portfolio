@@ -1146,12 +1146,6 @@ footer {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.ipod-container:hover .ipod-screen {
-    box-shadow: 
-        inset 0 0 15px rgba(0, 0, 0, 0.9),
-        0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
 #spotify-player {
     width: 100%;
     height: 100%;
@@ -1237,27 +1231,215 @@ footer {
     color: #b3b3b3 !important;
 }
 
-/* Responsive adjustments */
+/* iPod Wheel Styles */
+.ipod-wheel {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        -5px -5px 10px rgba(255, 255, 255, 0.7),
+        5px 5px 10px rgba(0, 0, 0, 0.15),
+        inset 2px 2px 5px rgba(255, 255, 255, 0.5),
+        inset -2px -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.wheel-center {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(145deg, #e6e6e6, #f0f0f0);
+    border-radius: 50%;
+    position: absolute;
+    box-shadow: 
+        -3px -3px 6px rgba(255, 255, 255, 0.7),
+        3px 3px 6px rgba(0, 0, 0, 0.15),
+        inset 1px 1px 3px rgba(255, 255, 255, 0.5),
+        inset -1px -1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.wheel-button {
+    position: absolute;
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.wheel-button:hover {
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.menu {
+    top: 20px;
+}
+
+.prev {
+    left: 20px;
+}
+
+.next {
+    right: 20px;
+}
+
+.play {
+    bottom: 20px;
+}
+
+/* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
+    .ipod-container {
+        width: 260px;
+        height: 440px;
+        padding: 15px;
+        margin: 20px auto;
+    }
+
     .ipod-screen {
         width: 220px;
         height: 165px;
+        margin-bottom: 30px;
     }
 
     #spotify-player {
         transform: scale(1.15);
     }
+
+    #spotify-player iframe {
+        transform: scale(1.15);
+    }
+
+    .ipod-wheel {
+        width: 180px;
+        height: 180px;
+        margin: 0 auto;
+    }
+
+    .wheel-center {
+        width: 60px;
+        height: 60px;
+    }
+
+    .wheel-button {
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .menu {
+        top: 15px;
+    }
+
+    .prev {
+        left: 15px;
+    }
+
+    .next {
+        right: 15px;
+    }
+
+    .play {
+        bottom: 15px;
+    }
 }
 
 @media (max-width: 480px) {
+    .ipod-container {
+        width: 240px;
+        height: 400px;
+        padding: 12px;
+        margin: 15px auto;
+    }
+
     .ipod-screen {
         width: 200px;
         height: 150px;
+        margin-bottom: 25px;
     }
 
     #spotify-player {
         transform: scale(1.2);
     }
+
+    #spotify-player iframe {
+        transform: scale(1.2);
+    }
+
+    .ipod-wheel {
+        width: 160px;
+        height: 160px;
+        margin: 0 auto;
+    }
+
+    .wheel-center {
+        width: 50px;
+        height: 50px;
+    }
+
+    .wheel-button {
+        font-size: 11px;
+        padding: 4px;
+    }
+
+    .menu {
+        top: 12px;
+    }
+
+    .prev {
+        left: 12px;
+    }
+
+    .next {
+        right: 12px;
+    }
+
+    .play {
+        bottom: 12px;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+    .wheel-button {
+        padding: 8px;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .wheel-button:active {
+        transform: scale(0.95);
+        color: #333;
+    }
+
+    .ipod-container {
+        transform: none !important;
+    }
+
+    .ipod-container:active {
+        transform: scale(0.98) !important;
+    }
+}
+
+/* Ensure proper touch handling */
+.wheel-button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Prevent text selection on buttons */
+.wheel-button, .ipod-container {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* Music Player Section */
@@ -1644,6 +1826,7 @@ footer {
 
     .music-player-section {
         padding: 0 15px;
+    }
     }
 
     .ipod-container {
