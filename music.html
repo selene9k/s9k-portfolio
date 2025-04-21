@@ -37,6 +37,26 @@
                 document.getElementById('player-status').textContent = 'Failed to load Spotify SDK. Please refresh the page.';
             }
         }, 5000);
+
+        // Add click handler for the login button
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginButton = document.getElementById('login-button');
+            if (loginButton) {
+                loginButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Login button clicked');
+                    if (typeof initializeSpotify === 'function') {
+                        console.log('initializeSpotify function exists');
+                        initializeSpotify();
+                    } else {
+                        console.error('initializeSpotify function not found');
+                        document.getElementById('player-status').textContent = 'Error: Player initialization failed';
+                    }
+                });
+            } else {
+                console.error('Login button not found');
+            }
+        });
     </script>
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
 </head>

@@ -149,7 +149,12 @@ function setVolume(volume) {
 // Initialize Spotify authentication
 function initializeSpotify() {
     debug('Initializing Spotify authentication...');
+    console.log('Current origin:', window.location.origin);
+    console.log('Redirect URI:', SPOTIFY_REDIRECT_URI);
+    
     const url = `https://accounts.spotify.com/authorize?client_id=${SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(SPOTIFY_REDIRECT_URI)}&scope=${encodeURIComponent(SPOTIFY_SCOPES)}`;
+    console.log('Auth URL:', url);
+    
     window.location.href = url;
 }
 
