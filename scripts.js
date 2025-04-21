@@ -573,6 +573,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const prevButton = document.querySelector('.wheel-button.prev');
     const nextButton = document.querySelector('.wheel-button.next');
     const menuButton = document.querySelector('.wheel-button.menu');
+    let isPlaying = false;
 
     // Function to send message to Spotify iframe
     function sendMessageToSpotify(action) {
@@ -585,38 +586,101 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Play/Pause button
     if (playButton) {
+        // Click event for desktop
         playButton.addEventListener('click', function() {
             sendMessageToSpotify('togglePlay');
-            this.textContent = this.textContent === '▶❚❚' ? '❚❚' : '▶❚❚';
+            isPlaying = !isPlaying;
+            this.textContent = isPlaying ? '❚❚' : '▶❚❚';
+        });
+
+        // Touch event for mobile
+        playButton.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            sendMessageToSpotify('togglePlay');
+            isPlaying = !isPlaying;
+            this.textContent = isPlaying ? '❚❚' : '▶❚❚';
         });
     }
 
     // Previous track button
     if (prevButton) {
+        // Click event for desktop
         prevButton.addEventListener('click', function() {
+            sendMessageToSpotify('previousTrack');
+        });
+
+        // Touch event for mobile
+        prevButton.addEventListener('touchstart', function(e) {
+            e.preventDefault();
             sendMessageToSpotify('previousTrack');
         });
     }
 
     // Next track button
     if (nextButton) {
+        // Click event for desktop
         nextButton.addEventListener('click', function() {
+            sendMessageToSpotify('nextTrack');
+        });
+
+        // Touch event for mobile
+        nextButton.addEventListener('touchstart', function(e) {
+            e.preventDefault();
             sendMessageToSpotify('nextTrack');
         });
     }
 
     // Menu button (can be used for additional controls if needed)
     if (menuButton) {
+        // Click event for desktop
         menuButton.addEventListener('click', function() {
-            // Add any menu functionality here
-            console.log('Menu button clicked');
+            // Toggle playlist view
+            sendMessageToSpotify('togglePlaylist');
+        });
+
+        // Touch event for mobile
+        menuButton.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            sendMessageToSpotify('togglePlaylist');
         });
     }
 
     // Listen for messages from Spotify iframe
     window.addEventListener('message', function(event) {
         if (event.origin === 'https://open.spotify.com') {
-            console.log('Message from Spotify:', event.data);
+            // Update play/pause button state based on player status
+            if (event.data.type === 'playerStateChanged') {
+                isPlaying = event.data.isPlaying;
+                if (playButton) {
+                    playButton.textContent = isPlaying ? '❚❚' : '▶❚❚';
+                }
+            }
         }
+    });
+
+    // Add visual feedback for button presses
+    const wheelButtons = document.querySelectorAll('.wheel-button');
+    wheelButtons.forEach(button => {
+        // Desktop hover effect
+        button.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1)';
+            this.style.color = '#333';
+        });
+
+        button.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+            this.style.color = '#666';
+        });
+
+        // Mobile touch feedback
+        button.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.95)';
+            this.style.color = '#333';
+        });
+
+        button.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
+            this.style.color = '#666';
+        });
     });
 });
