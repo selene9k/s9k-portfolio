@@ -552,4 +552,128 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// ... existing code ...
+// Headphone Wire Interaction
+document.addEventListener('DOMContentLoaded', () => {
+    const headphoneContainer = document.querySelector('.headphone-container');
+    const headphoneWire = document.querySelector('.headphone-wire');
+    let isDragging = false;
+    let startX, startY, initialRotate, initialScale;
+    let currentRotate = 55; // Initial rotation
+    let currentScale = 1;
+
+    // Initialize touch points
+    let initialTouchDistance = 0;
+
+    // Prevent default drag behavior
+    headphoneWire.addEventListener('dragstart', (e) => e.preventDefault());
+
+    // Mouse Events
+    headphoneContainer.addEventListener('mousedown', startDragging);
+    document.addEventListener('mousemove', handleDrag);
+    document.addEventListener('mouseup', stopDragging);
+
+    // Touch Events
+    headphoneContainer.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchend', handleTouchEnd);
+
+    function startDragging(e) {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        initialRotate = currentRotate;
+        initialScale = currentScale;
+        headphoneContainer.style.cursor = 'grabbing';
+        // Disable hover animation while dragging
+        headphoneWire.style.animation = 'none';
+    }
+
+    function handleDrag(e) {
+        if (!isDragging) return;
+
+        const deltaX = e.clientX - startX;
+        const deltaY = e.clientY - startY;
+
+        // Calculate new rotation based on horizontal movement
+        currentRotate = initialRotate + (deltaX * 0.5);
+        // Limit rotation
+        currentRotate = Math.max(0, Math.min(90, currentRotate));
+
+        // Calculate scale based on vertical movement (stretching effect)
+        const scaleFactor = 1 + (deltaY * 0.002);
+        currentScale = Math.max(0.8, Math.min(1.5, initialScale * scaleFactor));
+
+        updateHeadphoneTransform();
+    }
+
+    function stopDragging() {
+        if (!isDragging) return;
+        isDragging = false;
+        headphoneContainer.style.cursor = 'grab';
+        // Re-enable hover animation
+        headphoneWire.style.animation = '';
+    }
+
+    // Touch event handlers
+    function handleTouchStart(e) {
+        if (e.touches.length === 1) {
+            // Single touch - handle like mouse drag
+            const touch = e.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+            initialRotate = currentRotate;
+            initialScale = currentScale;
+            isDragging = true;
+        } else if (e.touches.length === 2) {
+            // Pinch to stretch
+            initialTouchDistance = getTouchDistance(e.touches);
+            initialScale = currentScale;
+        }
+        headphoneWire.style.animation = 'none';
+    }
+
+    function handleTouchMove(e) {
+        if (!isDragging) return;
+
+        if (e.touches.length === 1) {
+            // Single touch movement
+            const touch = e.touches[0];
+            const deltaX = touch.clientX - startX;
+            const deltaY = touch.clientY - startY;
+
+            currentRotate = initialRotate + (deltaX * 0.5);
+            currentRotate = Math.max(0, Math.min(90, currentRotate));
+
+            const scaleFactor = 1 + (deltaY * 0.002);
+            currentScale = Math.max(0.8, Math.min(1.5, initialScale * scaleFactor));
+        } else if (e.touches.length === 2) {
+            // Pinch movement
+            const currentDistance = getTouchDistance(e.touches);
+            const scaleFactor = currentDistance / initialTouchDistance;
+            currentScale = Math.max(0.8, Math.min(1.5, initialScale * scaleFactor));
+        }
+
+        updateHeadphoneTransform();
+        e.preventDefault(); // Prevent scrolling while dragging
+    }
+
+    function handleTouchEnd() {
+        isDragging = false;
+        headphoneWire.style.animation = '';
+    }
+
+    function getTouchDistance(touches) {
+        return Math.hypot(
+            touches[1].clientX - touches[0].clientX,
+            touches[1].clientY - touches[0].clientY
+        );
+    }
+
+    function updateHeadphoneTransform() {
+        headphoneWire.style.transform = `
+            translate(-15%, 15%) 
+            rotate(${currentRotate}deg) 
+            scale(${currentScale})
+        `;
+    }
+});

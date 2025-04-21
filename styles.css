@@ -2025,28 +2025,40 @@ footer {
 /* Headphone Wire Styles */
 .headphone-container {
     position: fixed;
-    bottom: 40px;    /* Moved up more */
-    left: 60px;      /* Moved right more */
+    bottom: 40px;
+    left: 60px;
     z-index: 0;
     pointer-events: auto;
     transform-origin: bottom left;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+}
+
+.headphone-container:active {
+    cursor: grabbing;
 }
 
 .headphone-wire {
     width: 800px;
     height: auto;
-    transform: translate(-15%, 15%) rotate(55deg); /* Increased rotation angle and adjusted translation */
+    transform: translate(-15%, 15%) rotate(55deg);
     opacity: 0.95;
     filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: filter 0.3s ease;
+    will-change: transform;
 }
 
-/* Hover animation */
+/* Hover and active states */
 .headphone-container:hover .headphone-wire {
-    transform: translate(-13%, 13%) rotate(53deg) scale(1.02);
     filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
     opacity: 1;
+}
+
+.headphone-container:active .headphone-wire {
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
 }
 
 /* Floating animation */
@@ -2062,27 +2074,15 @@ footer {
     }
 }
 
-.headphone-container:hover .headphone-wire {
+.headphone-container:hover .headphone-wire:not(:active) {
     animation: floatingHeadphone 2.5s ease-in-out infinite;
 }
 
-/* Responsive adjustments for headphone wire */
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .headphone-wire {
         width: 600px;
         transform: translate(-15%, 15%) rotate(50deg);
-    }
-    
-    @keyframes floatingHeadphone {
-        0% {
-            transform: translate(-15%, 15%) rotate(50deg);
-        }
-        50% {
-            transform: translate(-13%, 13%) rotate(48deg);
-        }
-        100% {
-            transform: translate(-15%, 15%) rotate(50deg);
-        }
     }
 }
 
@@ -2090,17 +2090,5 @@ footer {
     .headphone-wire {
         width: 400px;
         transform: translate(-15%, 15%) rotate(45deg);
-    }
-    
-    @keyframes floatingHeadphone {
-        0% {
-            transform: translate(-15%, 15%) rotate(45deg);
-        }
-        50% {
-            transform: translate(-13%, 13%) rotate(43deg);
-        }
-        100% {
-            transform: translate(-15%, 15%) rotate(45deg);
-        }
     }
 }
