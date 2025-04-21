@@ -106,51 +106,7 @@ header .header-right {
 }
 
 header .nav-buttons {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-
-header .nav-buttons a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 8px 0;
-    position: relative;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-header .nav-buttons a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #fff;
-    transition: width 0.3s ease;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-header .nav-buttons a:hover {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-header .nav-buttons a:hover::after {
-    width: 100%;
-}
-
-header .nav-buttons a.active {
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
-}
-
-header .nav-buttons a.active::after {
-    width: 100%;
-    background: #fff;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    display: none; /* Hide the navigation buttons */
 }
 
 header .header-social-icons {
