@@ -45,6 +45,9 @@
                 loginButton.addEventListener('click', function(e) {
                     e.preventDefault();
                     console.log('Login button clicked');
+                    console.log('Current URL:', window.location.href);
+                    console.log('Redirect URI:', SPOTIFY_REDIRECT_URI);
+                    
                     if (typeof initializeSpotify === 'function') {
                         console.log('initializeSpotify function exists');
                         initializeSpotify();

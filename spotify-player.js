@@ -1,6 +1,6 @@
 // Spotify Player Configuration
 const SPOTIFY_CLIENT_ID = '03a516285448453cba1b56fb1feccaf7';
-const SPOTIFY_REDIRECT_URI = window.location.origin + '/callback';
+const SPOTIFY_REDIRECT_URI = 'https://www.s9k.online/callback';
 const SPOTIFY_SCOPES = 'streaming user-read-email user-read-private';
 
 let accessToken = null;
