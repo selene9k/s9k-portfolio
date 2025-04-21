@@ -2027,18 +2027,15 @@ footer {
     position: fixed;
     bottom: 40px;
     left: 60px;
-    z-index: 0;
-    pointer-events: auto;
+    z-index: 2;
+    pointer-events: none;
     transform-origin: bottom left;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: grab;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: none;
 }
 
-.headphone-container:active {
-    cursor: grabbing;
+.music-page .headphone-container {
+    z-index: 2;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
 }
 
 .headphone-wire {
@@ -2048,17 +2045,12 @@ footer {
     opacity: 0.95;
     filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
     transition: filter 0.3s ease;
-    will-change: transform;
 }
 
-/* Hover and active states */
+/* Hover effect */
 .headphone-container:hover .headphone-wire {
     filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
     opacity: 1;
-}
-
-.headphone-container:active .headphone-wire {
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
 }
 
 /* Floating animation */
@@ -2074,7 +2066,7 @@ footer {
     }
 }
 
-.headphone-container:hover .headphone-wire:not(:active) {
+.headphone-container .headphone-wire {
     animation: floatingHeadphone 2.5s ease-in-out infinite;
 }
 
