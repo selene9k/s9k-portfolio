@@ -518,7 +518,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Optional parameters
         direction: 'horizontal',
         loop: true,
-        speed: 500, // Faster transition speed
+        speed: 2000, // Slower transition speed for smooth movement
         effect: 'slide',
         grabCursor: true,
         
