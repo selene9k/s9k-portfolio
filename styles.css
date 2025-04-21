@@ -1111,50 +1111,37 @@ footer {
 .ipod-container {
     width: 280px;
     height: 480px;
-    background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
-    border-radius: 30px;
+    background: #121212;
+    border-radius: 20px;
     padding: 20px;
     margin: 40px auto;
     position: relative;
-    box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.4),
-        0 0 50px rgba(0, 0, 0, 0.3);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    transform: translateZ(0);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
     z-index: 1;
 }
 
 .ipod-container:hover {
     transform: translateY(-20px) scale(1.05);
-    box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.6),
-        0 0 70px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     z-index: 2;
 }
 
 .ipod-screen {
-    width: 240px;
-    height: 180px;
+    width: 100%;
+    height: 240px;
     background: #000;
-    border-radius: 8px;
+    border-radius: 10px;
     overflow: hidden;
-    margin: 0 auto 40px;
-    position: relative;
-    box-shadow: 
-        inset 0 0 10px rgba(0, 0, 0, 0.8),
-        0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 20px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-#spotify-player {
+.ipod-screen iframe {
     width: 100%;
     height: 100%;
     border: none;
     background: #000;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: scale(1.1);
 }
 
 /* Spotify player customizations */
@@ -1235,24 +1222,21 @@ footer {
 .ipod-wheel {
     width: 200px;
     height: 200px;
-    background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
+    background: #282828;
     border-radius: 50%;
     margin: 0 auto;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 
-        -5px -5px 10px rgba(255, 255, 255, 0.7),
-        5px 5px 10px rgba(0, 0, 0, 0.15),
-        inset 2px 2px 5px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 5px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    margin-top: 20px;
 }
 
 .wheel-center {
     width: 70px;
     height: 70px;
-    background: linear-gradient(145deg, #e6e6e6, #f0f0f0);
+    background: #1DB954;
     border-radius: 50%;
     position: absolute;
     box-shadow: 
@@ -1260,11 +1244,12 @@ footer {
         3px 3px 6px rgba(0, 0, 0, 0.15),
         inset 1px 1px 3px rgba(255, 255, 255, 0.5),
         inset -1px -1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 .wheel-button {
     position: absolute;
-    color: #666;
+    color: #1DB954;
     font-size: 14px;
     font-weight: 600;
     text-transform: uppercase;
@@ -1272,8 +1257,8 @@ footer {
 }
 
 .wheel-button:hover {
-    color: #333;
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+    color: #1ed760;
+    transform: scale(1.1);
 }
 
 .menu {
