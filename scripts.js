@@ -544,5 +544,31 @@ document.addEventListener('DOMContentLoaded', function() {
             enabled: true,
             onlyInViewport: true,
         },
+
+        // Auto-sliding configuration
+        autoplay: {
+            delay: 5000, // 5 seconds between slides
+            disableOnInteraction: false, // Continue autoplay after user interaction
+            pauseOnMouseEnter: true, // Pause when mouse hovers over slider
+            waitForTransition: true, // Wait for transition to complete
+        },
+        
+        // Smooth easing
+        easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
     });
+
+    // Pause autoplay when user interacts with navigation
+    const nextButton = document.querySelector('.swiper-button-next');
+    const prevButton = document.querySelector('.swiper-button-prev');
+    
+    if (nextButton && prevButton) {
+        [nextButton, prevButton].forEach(button => {
+            button.addEventListener('click', () => {
+                swiper.autoplay.stop();
+                setTimeout(() => {
+                    swiper.autoplay.start();
+                }, 5000); // Resume autoplay after 5 seconds of inactivity
+            });
+        });
+    }
 });
