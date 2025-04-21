@@ -518,7 +518,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Optional parameters
         direction: 'horizontal',
         loop: true,
-        speed: 2000, // Slower transition speed for smooth movement
+        speed: 3000, // Even slower transition speed for smoother movement
         effect: 'slide',
         grabCursor: true,
         
@@ -547,13 +547,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Auto-sliding configuration
         autoplay: {
-            delay: 0, // No delay between slides
-            disableOnInteraction: true, // Stop autoplay on user interaction
-            pauseOnMouseEnter: true, // Pause when mouse hovers over slider
-            waitForTransition: true, // Wait for transition to complete
+            delay: 0,
+            disableOnInteraction: true,
+            pauseOnMouseEnter: true,
+            waitForTransition: true,
         },
         
         // Smooth easing
         easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
     });
+
+    // Start autoplay immediately
+    swiper.autoplay.start();
 });
