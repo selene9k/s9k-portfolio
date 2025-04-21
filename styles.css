@@ -2163,16 +2163,17 @@ footer {
 
 .marquee {
     display: flex;
-    animation: marquee 15s linear infinite;
+    animation: marquee 25s linear infinite;
     white-space: nowrap;
     width: max-content;
     position: relative;
     right: 0;
     gap: 0;
+    will-change: transform;
 }
 
 .marquee span {
-    color: #fff;
+    color: rgb(255, 255, 255);
     font-family: 'Alumni Sans Pinstripe', sans-serif;
     font-weight: 400;
     font-size: 0.9rem;
@@ -2182,6 +2183,7 @@ footer {
     flex-shrink: 0;
     display: inline-block;
     margin: 0;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 @keyframes marquee {
