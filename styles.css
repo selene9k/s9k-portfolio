@@ -2173,17 +2173,17 @@ footer {
 }
 
 .marquee span {
-    color: #39FF14;
+    color: rgb(255, 255, 255);
     font-family: 'Alumni Sans Pinstripe', sans-serif;
     font-weight: 400;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     padding: 0 12px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     flex-shrink: 0;
     display: inline-block;
     margin: 0;
-    text-shadow: 0 0 2px rgba(57, 255, 20, 0.5);
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
 }
 
 @keyframes marquee {
