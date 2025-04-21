@@ -1160,155 +1160,103 @@ footer {
     position: absolute;
     top: 0;
     left: 0;
-    transform: scale(1.1); /* Slightly larger to ensure full coverage */
+    transform: scale(1.1);
 }
 
-/* Adjust the Spotify player's internal elements */
+/* Spotify player customizations */
 #spotify-player iframe {
     width: 100%;
     height: 100%;
     border: none;
     background: #000;
-    transform: scale(1.1); /* Match parent scale */
+    transform: scale(1.1);
 }
 
-/* Ensure the Spotify player's content is properly scaled */
-#spotify-player .Root__now-playing-bar {
-    display: none;
+/* Hide unnecessary elements */
+#spotify-player .Root__now-playing-bar,
+#spotify-player .Root__top-bar,
+#spotify-player .Root__nav-bar,
+#spotify-player .Root__right-sidebar {
+    display: none !important;
 }
 
-#spotify-player .Root__top-container {
-    height: 100%;
-    overflow: hidden;
-}
-
+/* Style the playlist view */
 #spotify-player .main-view-container {
-    height: 100%;
-    overflow: hidden;
+    height: 100% !important;
+    overflow: hidden !important;
+    background: #000 !important;
 }
 
-.ipod-wheel {
-    width: 200px;
-    height: 200px;
-    background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
-    border-radius: 50%;
-    margin: 0 auto;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 
-        -5px -5px 10px rgba(255, 255, 255, 0.7),
-        5px 5px 10px rgba(0, 0, 0, 0.15),
-        inset 2px 2px 5px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 5px rgba(0, 0, 0, 0.1);
+#spotify-player .main-view-container__scroll-node {
+    background: #000 !important;
 }
 
-.wheel-center {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(145deg, #e6e6e6, #f0f0f0);
-    border-radius: 50%;
-    position: absolute;
-    box-shadow: 
-        -3px -3px 6px rgba(255, 255, 255, 0.7),
-        3px 3px 6px rgba(0, 0, 0, 0.15),
-        inset 1px 1px 3px rgba(255, 255, 255, 0.5),
-        inset -1px -1px 3px rgba(0, 0, 0, 0.1);
+#spotify-player .main-view-container__scroll-node-child {
+    background: #000 !important;
 }
 
-.wheel-button {
-    position: absolute;
-    color: #666;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
+/* Style the playlist items */
+#spotify-player .tracklist-row {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 4px !important;
+    margin: 2px 0 !important;
 }
 
-.wheel-button:hover {
-    color: #333;
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+#spotify-player .tracklist-row:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
 }
 
-.menu {
-    top: 20px;
+/* Style the play button */
+#spotify-player .play-button {
+    background: #1DB954 !important;
+    border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
-.prev {
-    left: 20px;
+#spotify-player .play-button:hover {
+    transform: scale(1.05) !important;
 }
 
-.next {
-    right: 20px;
+/* Style the track info */
+#spotify-player .track-info {
+    color: #fff !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
 }
 
-.play {
-    bottom: 20px;
+#spotify-player .track-info__name {
+    font-size: 14px !important;
+    font-weight: 500 !important;
 }
 
-/* Responsive adjustments for iPod */
+#spotify-player .track-info__artists {
+    font-size: 12px !important;
+    color: #b3b3b3 !important;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    .ipod-container {
-        width: 260px;
-        height: 440px;
-        padding: 15px;
-    }
-
     .ipod-screen {
         width: 220px;
         height: 165px;
-        margin-bottom: 30px;
     }
 
     #spotify-player {
-        transform: scale(1.15); /* Slightly larger scale for mobile */
-    }
-
-    .ipod-wheel {
-        width: 180px;
-        height: 180px;
-    }
-
-    .wheel-center {
-        width: 60px;
-        height: 60px;
-    }
-
-    .wheel-button {
-        font-size: 12px;
+        transform: scale(1.15);
     }
 }
 
 @media (max-width: 480px) {
-    .ipod-container {
-        width: 240px;
-        height: 400px;
-        padding: 12px;
-    }
-
     .ipod-screen {
         width: 200px;
         height: 150px;
-        margin-bottom: 25px;
     }
 
     #spotify-player {
-        transform: scale(1.2); /* Even larger scale for smaller screens */
-    }
-
-    .ipod-wheel {
-        width: 160px;
-        height: 160px;
-    }
-
-    .wheel-center {
-        width: 50px;
-        height: 50px;
-    }
-
-    .wheel-button {
-        font-size: 11px;
+        transform: scale(1.2);
     }
 }
 
