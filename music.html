@@ -12,6 +12,19 @@
     <script>
         console.log('Page loading...');
         
+        function handleSpotifyLogin(e) {
+            console.log('Direct onclick handler called');
+            if (e) {
+                e.preventDefault();
+            }
+            if (typeof initializeSpotify === 'function') {
+                console.log('Calling initializeSpotify from onclick');
+                initializeSpotify();
+            } else {
+                console.error('initializeSpotify function not found in onclick');
+            }
+        }
+
         // Add click handler for the login button
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM Content Loaded');
@@ -20,12 +33,12 @@
                 console.log('Login button found');
                 loginButton.addEventListener('click', function(e) {
                     e.preventDefault();
-                    console.log('Login button clicked');
+                    console.log('Login button clicked via event listener');
                     if (typeof initializeSpotify === 'function') {
-                        console.log('Calling initializeSpotify()');
+                        console.log('Calling initializeSpotify from event listener');
                         initializeSpotify();
                     } else {
-                        console.error('initializeSpotify function not found');
+                        console.error('initializeSpotify function not found in event listener');
                         document.getElementById('player-status').textContent = 'Error: Player initialization failed';
                     }
                 });
@@ -196,7 +209,7 @@
                         </div>
                     </div>
                     <div id="login-container">
-                        <button onclick="initializeSpotify()" id="login-button" class="spotify-login-button">
+                        <button onclick="handleSpotifyLogin(event)" id="login-button" class="spotify-login-button">
                             <i class="fab fa-spotify"></i> Connect with Spotify
                         </button>
                     </div>

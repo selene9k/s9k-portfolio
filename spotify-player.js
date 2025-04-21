@@ -148,14 +148,29 @@ function setVolume(volume) {
 
 // Initialize Spotify authentication
 function initializeSpotify() {
-    debug('Initializing Spotify authentication...');
-    console.log('Current origin:', window.location.origin);
-    console.log('Redirect URI:', SPOTIFY_REDIRECT_URI);
-    
-    const url = `https://accounts.spotify.com/authorize?client_id=${SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(SPOTIFY_REDIRECT_URI)}&scope=${encodeURIComponent(SPOTIFY_SCOPES)}&show_dialog=true`;
-    console.log('Auth URL:', url);
-    
-    window.location.href = url;
+    try {
+        debug('Initializing Spotify authentication...');
+        console.log('Function called:', 'initializeSpotify');
+        console.log('Client ID:', SPOTIFY_CLIENT_ID);
+        console.log('Current URL:', window.location.href);
+        console.log('Redirect URI:', SPOTIFY_REDIRECT_URI);
+        
+        const authUrl = new URL('https://accounts.spotify.com/authorize');
+        authUrl.searchParams.append('client_id', SPOTIFY_CLIENT_ID);
+        authUrl.searchParams.append('response_type', 'token');
+        authUrl.searchParams.append('redirect_uri', SPOTIFY_REDIRECT_URI);
+        authUrl.searchParams.append('scope', SPOTIFY_SCOPES);
+        authUrl.searchParams.append('show_dialog', 'true');
+        
+        console.log('Auth URL:', authUrl.toString());
+        debug('Redirecting to Spotify login...');
+        
+        // Use window.location.assign instead of window.location.href
+        window.location.assign(authUrl.toString());
+    } catch (error) {
+        console.error('Error in initializeSpotify:', error);
+        debug('Error initializing Spotify: ' + error.message);
+    }
 }
 
 // Handle authentication callback
