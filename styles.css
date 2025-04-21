@@ -1675,17 +1675,31 @@ footer {
     transform: translateY(-8px) rotate(-45deg);
 }
 
-/* Enhanced Mobile Responsive Styles */
+/* Mobile Responsive Styles */
 @media (max-width: 768px) {
-    /* Header Mobile Optimization */
+    /* Base Layout */
+    body {
+        min-height: 100vh;
+        height: 100%;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    main {
+        min-height: 0;
+        height: auto;
+        flex: 1 0 auto;
+    }
+    
+    /* Header */
     header {
         padding: 15px 20px;
     }
-
+    
     .mobile-menu-toggle {
         display: flex;
     }
-
+    
     .header-right {
         position: fixed;
         top: 0;
@@ -1703,16 +1717,16 @@ footer {
         gap: 30px;
         box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
     }
-
+    
     .header-right.active {
         right: 0;
     }
-
+    
     .nav-buttons {
         flex-direction: column;
         gap: 20px;
     }
-
+    
     .nav-buttons a {
         font-size: 20px;
         padding: 12px 0;
@@ -1720,296 +1734,74 @@ footer {
         text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         letter-spacing: 1.5px;
     }
-
-    .header-social-icons {
-        margin-top: 20px;
-    }
-
-    /* Home Page Mobile Optimization */
+    
+    /* Logo Container */
     .logo-container {
-        padding: 60px 15px;
+        min-height: calc(100vh - 120px);
+        height: auto;
+        padding: 60px 20px;
     }
-
-    .home-logo-link {
-        width: 280px;
+    
+    /* Music Content */
+    .music-content {
+        min-height: calc(100vh - 120px);
+        height: auto;
+        padding: 60px 20px;
     }
-
-    .home-cta {
-        margin-top: 20px;
+    
+    /* About Page */
+    .about-page {
+        padding-top: 80px;
     }
-
-    .submit-button {
-        padding: 12px 25px;
-        font-size: 14px;
-    }
-
-    /* About Page Mobile Optimization */
+    
     .about-container {
+        min-height: calc(100vh - 120px);
+        height: auto;
+        padding: 60px 20px;
         margin: 72px auto 20px;
-        padding: 20px;
     }
-
+    
     .about-content {
         padding: 30px 20px;
         margin-bottom: 0;
     }
-
-    .about-content h1 {
-        font-size: 2.2em;
-    }
-
-    .about-content h2 {
-        font-size: 1em;
-        margin-bottom: 20px;
-    }
-
-    .about-content p {
-        font-size: 0.95em;
-        margin-bottom: 15px;
-    }
-
-    .social-links {
-        gap: 15px;
-        margin: 25px 0;
-    }
-
-    .social-icon {
-        width: 40px;
-        height: 40px;
-    }
-
-    /* Portfolio Page Mobile Optimization */
-    .portfolio-content {
-        padding: 15px;
-    }
-
-    .video-grid {
-        gap: 40px;
-    }
-
-    .video-row {
-        flex-direction: column;
-        gap: 30px;
-        padding: 20px 0;
-    }
-
-    .video-item {
-        max-width: 100%;
-        margin: 0 15px;
-    }
-
-    /* Music Page Mobile Optimization */
-    .music-content {
-        padding: 60px 0 40px;
-    }
-
-    #vinyl-gallery {
-        padding: 15px;
-        gap: 15px;
-    }
-
-    .vinyl {
-        flex: 0 0 120px;
-        margin-bottom: 20px;
-    }
-
-    .vinyl img {
-        width: 120px;
-        height: 120px;
-    }
-
-    .vinyl .title {
-        width: 110px;
-        font-size: 0.7em;
-        bottom: -20px;
-    }
-
-    .music-player-section {
-        padding: 0 15px;
-    }
-    }
-
-    .ipod-container {
-        width: 240px;
-        height: 380px;
-        padding: 12px;
-    }
-
-    .ipod-screen {
-        width: 200px;
-        height: 140px;
-        margin-bottom: 20px;
-    }
-
-    .ipod-wheel {
-        width: 150px;
-        height: 150px;
-    }
-
-    .wheel-center {
-        width: 45px;
-        height: 45px;
-    }
-
-    .wheel-button {
-        font-size: 10px;
-    }
-
-    /* Footer Mobile Optimization */
+    
+    /* Footer */
     footer {
+        position: relative;
+        margin-top: auto;
         padding: 10px 0;
     }
-
+    
     .footer-content {
         gap: 8px;
     }
-
+    
     .footer-contact {
         flex-direction: column;
         gap: 8px;
     }
-
+    
     .footer-contact-item {
         font-size: 0.8em;
     }
-
+    
     .footer-content p {
         font-size: 0.75em;
     }
 }
 
 @media (max-width: 480px) {
-    /* Further Mobile Optimizations */
+    /* Header */
     header {
         padding: 8px 12px;
     }
-
+    
     .logo {
         width: 80px;
     }
-
-    .home-logo-link {
-        width: 240px;
-    }
-
-    .about-content h1 {
-        font-size: 2em;
-    }
-
-    .about-content h2 {
-        font-size: 0.9em;
-    }
-
-    .about-content p {
-        font-size: 0.9em;
-    }
-
-    .social-icon {
-        width: 35px;
-        height: 35px;
-    }
-
-    .social-icon i {
-        font-size: 16px;
-    }
-
-    .vinyl {
-        flex: 0 0 100px;
-    }
-
-    .vinyl img {
-        width: 100px;
-        height: 100px;
-    }
-
-    .vinyl .title {
-        width: 90px;
-        font-size: 0.65em;
-        bottom: -18px;
-    }
-
-    .ipod-container {
-        width: 220px;
-        height: 360px;
-    }
-
-    .ipod-screen {
-        width: 180px;
-        height: 130px;
-    }
-
-    .ipod-wheel {
-        width: 140px;
-        height: 140px;
-    }
-
-    .wheel-center {
-        width: 40px;
-        height: 40px;
-    }
-
-    .wheel-button {
-        font-size: 9px;
-    }
-}
-
-/* Mobile Responsive Fixes */
-@media (max-width: 768px) {
-    body {
-        min-height: 100vh;
-        height: 100%;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }
     
-    main {
-        min-height: 0;
-        height: auto;
-        flex: 1 0 auto;
-    }
-    
-    .logo-container {
-        min-height: calc(100vh - 120px);
-        height: auto;
-        padding: 60px 20px;
-    }
-    
-    .music-content {
-        min-height: calc(100vh - 120px);
-        height: auto;
-        padding: 60px 20px;
-    }
-    
-    .about-container {
-        min-height: calc(100vh - 120px);
-        height: auto;
-        padding: 60px 20px;
-    }
-    
-    footer {
-        position: relative;
-        margin-top: auto;
-    }
-}
-
-/* Mobile Responsive Fixes for About Page */
-@media (max-width: 768px) {
-    .about-page {
-        padding-top: 80px;
-    }
-    
-    .about-container {
-        margin: 72px auto 20px;
-        padding: 20px;
-    }
-    
-    .about-content {
-        padding: 30px 20px;
-        margin-bottom: 0;
-    }
-}
-
-@media (max-width: 480px) {
+    /* About Page */
     .about-page {
         padding-top: 70px;
     }
@@ -2022,6 +1814,18 @@ footer {
     .about-content {
         padding: 25px 15px;
         margin-bottom: 0;
+    }
+    
+    .about-content h1 {
+        font-size: 2em;
+    }
+    
+    .about-content h2 {
+        font-size: 0.9em;
+    }
+    
+    .about-content p {
+        font-size: 0.9em;
     }
 }
 
