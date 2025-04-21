@@ -515,31 +515,34 @@ document.addEventListener('DOMContentLoaded', function() {
 // Initialize Swiper for portfolio gallery
 document.addEventListener('DOMContentLoaded', function() {
     const swiper = new Swiper('.swiper', {
-        // Basic configuration
+        // Optional parameters
         direction: 'horizontal',
         loop: true,
-        speed: 3000,
+        speed: 500, // Faster transition speed
+        effect: 'slide',
+        grabCursor: true,
         
-        // Navigation
+        // Navigation arrows
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
         
-        // Autoplay
-        autoplay: {
-            delay: 0,
-            disableOnInteraction: true,
-            pauseOnMouseEnter: true,
-        },
-        
-        // Touch interaction
+        // Smooth transitions
+        cssMode: true,
+        followFinger: true,
         touchRatio: 1,
+        touchAngle: 45,
         resistanceRatio: 0.5,
+        
+        // Performance optimizations
+        watchSlidesProgress: true,
+        preventInteractionOnTransition: true,
         
         // Keyboard control
         keyboard: {
             enabled: true,
+            onlyInViewport: true,
         },
     });
 });

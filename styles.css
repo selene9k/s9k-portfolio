@@ -1876,52 +1876,80 @@ footer {
 
 .swiper {
     width: 100%;
-    height: 100vh;
-    position: relative;
+    height: auto;
+    max-height: 80vh;
     overflow: hidden;
+    padding: 20px 0;
+    transform-style: preserve-3d;
 }
 
 .swiper-wrapper {
-    display: flex;
-    width: 100%;
-    height: 100%;
-}
-
-.swiper-slide {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
+    transform-style: preserve-3d;
+}
+
+.swiper-slide {
+    width: 100%;
+    height: auto;
+    display: flex;
     justify-content: center;
-    flex-shrink: 0;
+    align-items: center;
+    overflow: hidden;
+    padding: 0 10px;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .swiper-slide img {
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: auto;
+    max-width: 90%;
+    max-height: 70vh;
     object-fit: contain;
-    transition: transform 0.3s ease;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    transform: translateZ(0);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: brightness(1);
 }
 
+.swiper-slide-active img {
+    transform: translateZ(50px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(255, 255, 255, 0.1);
+    filter: brightness(1.1);
+}
+
+.swiper-slide-prev img,
+.swiper-slide-next img {
+    transform: translateZ(20px);
+    filter: brightness(0.95);
+}
+
+/* Navigation buttons */
 .swiper-button-next,
 .swiper-button-prev {
-    color: white;
-    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
     width: 40px;
     height: 40px;
     border-radius: 50%;
     transition: all 0.3s ease;
-}
-
-.swiper-button-next:hover,
-.swiper-button-prev:hover {
-    background: rgba(0, 0, 0, 0.5);
-    transform: scale(1.1);
+    transform: translateZ(100px);
 }
 
 .swiper-button-next:after,
 .swiper-button-prev:after {
-    font-size: 20px;
+    font-size: 18px;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background: rgba(0, 0, 0, 0.7);
+    transform: translateZ(100px) scale(1.1);
 }
 
 /* Mobile Responsive Adjustments */
