@@ -144,13 +144,14 @@ header .nav-buttons a:hover::after {
 }
 
 header .nav-buttons a.active {
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    color: #00f2ff; /* Electric blue color */
+    text-shadow: 0 0 15px rgba(0, 242, 255, 0.7);
 }
 
 header .nav-buttons a.active::after {
     width: 100%;
-    background: #fff;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    background: #00f2ff; /* Electric blue color */
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.7);
 }
 
 header .header-social-icons {
@@ -580,38 +581,6 @@ footer {
     .footer-content p {
         font-size: 12px;
     }
-}
-
-/* Footer Navigation Styles */
-.footer-nav {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-bottom: 20px;
-}
-
-.footer-nav a {
-    color: #00f2ff; /* Electric blue color */
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 8px 0;
-    position: relative;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
-}
-
-.footer-nav a:hover {
-    transform: translateY(-5px) scale(1.1);
-    text-shadow: 0 0 15px rgba(0, 242, 255, 0.8);
-}
-
-.footer-nav a.active {
-    color: #00f2ff;
-    text-shadow: 0 0 15px rgba(0, 242, 255, 0.8);
-    transform: translateY(-5px) scale(1.1);
 }
 
 /* Portfolio Page Styles */
