@@ -518,7 +518,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Optional parameters
         direction: 'horizontal',
         loop: true,
-        speed: 500, // Faster transition speed
+        speed: 300, // Faster transition speed (reduced from 500)
         effect: 'slide',
         grabCursor: true,
         
@@ -544,5 +544,24 @@ document.addEventListener('DOMContentLoaded', function() {
             enabled: true,
             onlyInViewport: true,
         },
+
+        // Additional smoothness settings
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        easing: 'cubic-bezier(0.4, 0, 0.2, 1)', // Smoother easing function
+        threshold: 10, // Lower threshold for touch detection
+        touchStartPreventDefault: false, // Better touch handling
+        watchOverflow: true, // Better handling of slides overflow
+        preventClicks: true, // Prevent unwanted clicks during transition
+        preventClicksPropagation: true,
+        
+        // Lazy loading for better performance
+        lazy: {
+            loadPrevNext: true,
+            loadPrevNextAmount: 2,
+            loadOnTransitionStart: true,
+        }
     });
 });
