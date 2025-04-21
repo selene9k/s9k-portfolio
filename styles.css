@@ -1108,172 +1108,209 @@ footer {
     }
 }
 
-/* iPod Container */
+/* iPod Container Styles */
 .ipod-container {
-    width: 280px;
-    height: 480px;
-    background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
-    border-radius: 30px;
+    width: 300px;
+    background: #e4e4e4;
+    border-radius: 20px;
     padding: 20px;
-    margin: 40px auto;
-    position: relative;
-    box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.4),
-        0 0 50px rgba(0, 0, 0, 0.3);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    transform: translateZ(0);
-    z-index: 1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.ipod-container:hover {
-    transform: translateY(-20px) scale(1.05);
-    box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.6),
-        0 0 70px rgba(0, 0, 0, 0.4);
-    z-index: 2;
-}
-
-.ipod-screen {
-    width: 240px;
-    height: 180px;
-    background: #000;
-    border-radius: 8px;
+/* Player Container */
+#player-container {
+    background: #fff;
+    border-radius: 10px;
+    margin-bottom: 20px;
     overflow: hidden;
-    margin: 0 auto 40px;
+}
+
+.player-header {
+    padding: 10px;
+    background: #f8f8f8;
+    border-bottom: 1px solid #eee;
+}
+
+.player-content {
     position: relative;
-    box-shadow: 
-        inset 0 0 10px rgba(0, 0, 0, 0.8),
-        0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    height: 200px;
 }
 
-.ipod-container:hover .ipod-screen {
-    box-shadow: 
-        inset 0 0 15px rgba(0, 0, 0, 0.9),
-        0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-#spotify-player {
+#youtube-player {
     width: 100%;
     height: 100%;
-    border: none;
 }
 
+/* Track Info */
+.track-info {
+    padding: 10px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+#track-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+#artist-name {
+    font-size: 12px;
+    color: #ccc;
+}
+
+/* Progress Bar */
+.progress-container {
+    height: 4px;
+    background: #ddd;
+    width: 100%;
+}
+
+#progress-bar {
+    height: 100%;
+    background: #ff0000;
+    width: 0;
+    transition: width 0.1s linear;
+}
+
+/* iPod Wheel */
 .ipod-wheel {
     width: 200px;
     height: 200px;
-    background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
+    background: #e4e4e4;
     border-radius: 50%;
-    margin: 0 auto;
+    margin: 20px auto;
     position: relative;
     display: flex;
-    align-items: center;
     justify-content: center;
-    box-shadow: 
-        -5px -5px 10px rgba(255, 255, 255, 0.7),
-        5px 5px 10px rgba(0, 0, 0, 0.15),
-        inset 2px 2px 5px rgba(255, 255, 255, 0.5),
-        inset -2px -2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.wheel-center {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(145deg, #e6e6e6, #f0f0f0);
-    border-radius: 50%;
-    position: absolute;
-    box-shadow: 
-        -3px -3px 6px rgba(255, 255, 255, 0.7),
-        3px 3px 6px rgba(0, 0, 0, 0.15),
-        inset 1px 1px 3px rgba(255, 255, 255, 0.5),
-        inset -1px -1px 3px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .wheel-button {
     position: absolute;
-    color: #666;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 20px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
 }
 
 .wheel-button:hover {
-    color: #333;
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+    color: #ff0000;
 }
 
-.menu {
-    top: 20px;
+.wheel-button.menu {
+    top: 10px;
 }
 
-.prev {
-    left: 20px;
+.wheel-button.prev {
+    left: 10px;
 }
 
-.next {
-    right: 20px;
+.wheel-button.next {
+    right: 10px;
 }
 
-.play {
-    bottom: 20px;
+.wheel-button.play {
+    bottom: 10px;
 }
 
-/* Responsive adjustments for iPod */
-@media (max-width: 768px) {
-    .ipod-container {
-        width: 260px;
-        height: 440px;
-        padding: 15px;
-    }
-
-    .ipod-screen {
-        width: 220px;
-        height: 165px;
-        margin-bottom: 30px;
-    }
-
-    .ipod-wheel {
-        width: 180px;
-        height: 180px;
-    }
-
-    .wheel-center {
-        width: 60px;
-        height: 60px;
-    }
-
-    .wheel-button {
-        font-size: 12px;
-    }
+.center-button {
+    width: 80px;
+    height: 80px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 480px) {
-    .ipod-container {
-        width: 240px;
-        height: 400px;
-        padding: 12px;
-    }
+/* Enhanced Player Status */
+#player-status {
+    font-size: 0.9em;
+    color: #666;
+    text-align: center;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
 
-    .ipod-screen {
-        width: 200px;
-        height: 150px;
-        margin-bottom: 25px;
-    }
+#player-status.loading {
+    color: #2196F3;
+}
 
-    .ipod-wheel {
-        width: 160px;
-        height: 160px;
-    }
+#player-status.error {
+    color: #f44336;
+}
 
-    .wheel-center {
-        width: 50px;
-        height: 50px;
-    }
+/* Volume Indicator */
+.volume-indicator {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 4px;
+    background: #ddd;
+    border-radius: 2px;
+    overflow: hidden;
+}
 
-    .wheel-button {
-        font-size: 11px;
-    }
+.volume-level {
+    height: 100%;
+    background: #2196F3;
+    transition: width 0.1s ease;
+}
+
+/* Improved Control Buttons */
+.control-button {
+    background: linear-gradient(145deg, #f0f0f0, #ffffff);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin: 0 10px;
+    cursor: pointer;
+    box-shadow: 4px 4px 8px #d1d1d1,
+                -4px -4px 8px #ffffff;
+    transition: all 0.2s ease;
+}
+
+.control-button:hover {
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+}
+
+.control-button:active {
+    box-shadow: inset 4px 4px 8px #d1d1d1,
+                inset -4px -4px 8px #ffffff;
+}
+
+#play-pause {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2em;
+}
+
+/* Track Info Animation */
+.track-info {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Music Player Section */
@@ -2215,7 +2252,8 @@ footer {
 }
 
 .player-header {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
 #player-status {
@@ -2242,33 +2280,32 @@ footer {
 
 .track-info {
     text-align: center;
-    margin-bottom: 15px;
+    margin: 15px 0;
 }
 
 .track-name {
-    font-size: 16px;
+    font-size: 1.2em;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
 .artist-name {
-    font-size: 14px;
+    font-size: 1em;
     color: #888;
 }
 
 .progress-container {
     width: 100%;
     height: 4px;
-    background: rgba(255, 255, 255, 0.1);
+    background-color: #333;
     border-radius: 2px;
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .progress-bar {
+    background-color: #1DB954;
     height: 100%;
-    background: #1DB954;
-    border-radius: 2px;
-    width: 0%;
+    width: 0;
     transition: width 0.1s linear;
 }
 
@@ -2285,13 +2322,22 @@ footer {
     color: white;
     font-size: 20px;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 10px;
     border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: background-color 0.2s;
 }
 
 .control-button:hover {
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+.control-button:active {
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 #play-pause {
@@ -2326,4 +2372,444 @@ footer {
     justify-content: center;
     align-items: center;
     height: 100%;
+}
+
+#youtube-player {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    background-color: #000;
+}
+
+/* YouTube Player Styles */
+.player-container {
+    background: #1a1a1a;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#youtube-player {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.video-info {
+    color: #ffffff;
+    margin: 15px 0;
+    text-align: left;
+}
+
+#video-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#channel-name {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.progress-container {
+    background: #333;
+    height: 4px;
+    border-radius: 2px;
+    margin: 15px 0;
+    cursor: pointer;
+    position: relative;
+}
+
+#youtube-progress {
+    background: #1db954;
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.1s linear;
+}
+
+.player-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.control-button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.control-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.control-button:active {
+    transform: scale(0.95);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .player-container {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    .control-button {
+        font-size: 1.2em;
+        padding: 8px;
+    }
+}
+
+.spotify-player {
+    background: linear-gradient(to bottom, #1e1e1e, #121212);
+    border-radius: 12px;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.spotify-player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.spotify-player-status {
+    font-size: 14px;
+    color: #b3b3b3;
+}
+
+.spotify-player-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.spotify-album-cover {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.spotify-album-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.spotify-track-info {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.spotify-track-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.spotify-artist-name {
+    font-size: 14px;
+    color: #b3b3b3;
+}
+
+.spotify-progress-container {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+}
+
+.spotify-progress-bar {
+    height: 100%;
+    background: #1db954;
+    border-radius: 2px;
+    transition: width 0.1s linear;
+}
+
+.spotify-player-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.spotify-control-button {
+    background: none;
+    border: none;
+    color: #b3b3b3;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.spotify-control-button:hover {
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.spotify-control-button.play-pause {
+    background: #1db954;
+    color: #ffffff;
+    width: 48px;
+    height: 48px;
+}
+
+.spotify-control-button.play-pause:hover {
+    background: #1ed760;
+    transform: scale(1.1);
+}
+
+.spotify-volume-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.spotify-volume-slider {
+    -webkit-appearance: none;
+    width: 100px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    outline: none;
+}
+
+.spotify-volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #1db954;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.spotify-volume-slider::-webkit-slider-thumb:hover {
+    background: #1ed760;
+    transform: scale(1.2);
+}
+
+.spotify-login-container {
+    text-align: center;
+    padding: 40px;
+}
+
+.spotify-login-button {
+    background: #1db954;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.spotify-login-button:hover {
+    background: #1ed760;
+    transform: scale(1.05);
+}
+
+.spotify-login-button i {
+    font-size: 20px;
+}
+
+@media (max-width: 768px) {
+    .spotify-player {
+        max-width: 100%;
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .spotify-album-cover {
+        width: 150px;
+        height: 150px;
+    }
+
+    .spotify-track-name {
+        font-size: 16px;
+    }
+
+    .spotify-artist-name {
+        font-size: 12px;
+    }
+
+    .spotify-control-button {
+        font-size: 20px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .spotify-control-button.play-pause {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+@media (max-width: 480px) {
+    .spotify-player {
+        padding: 10px;
+    }
+
+    .spotify-album-cover {
+        width: 120px;
+        height: 120px;
+    }
+
+    .spotify-player-controls {
+        gap: 15px;
+    }
+
+    .spotify-control-button {
+        font-size: 18px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .spotify-control-button.play-pause {
+        width: 38px;
+        height: 38px;
+    }
+
+    .spotify-volume-control {
+        display: none;
+    }
+}
+
+/* YouTube Music Player Styles */
+.player-container {
+    background: #1a1a1a;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.player-header {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+#youtube-player {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: #000;
+}
+
+.video-info {
+    color: #ffffff;
+    margin: 15px 0;
+    text-align: center;
+}
+
+#video-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+#channel-name {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.progress-container {
+    background: #333;
+    height: 4px;
+    border-radius: 2px;
+    margin: 15px 0;
+    cursor: pointer;
+    position: relative;
+}
+
+#youtube-progress {
+    height: 100%;
+    background: #ff0000;
+    width: 0;
+    transition: width 0.1s linear;
+}
+
+.player-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.control-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.control-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
+.control-button:active {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(0.95);
+}
+
+#play-pause-button {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    background: #ff0000;
+}
+
+#play-pause-button:hover {
+    background: #ff3333;
 }
