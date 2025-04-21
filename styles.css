@@ -2163,7 +2163,7 @@ footer {
 
 .marquee {
     display: flex;
-    animation: marquee 25s linear infinite;
+    animation: marquee 35s linear infinite;
     white-space: nowrap;
     width: max-content;
     position: relative;
@@ -2174,8 +2174,8 @@ footer {
 
 .marquee span {
     color: rgb(255, 255, 255);
-    font-family: 'Alumni Sans Pinstripe', sans-serif;
-    font-weight: 400;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
     font-size: 1.1rem;
     padding: 0 12px;
     text-transform: uppercase;
