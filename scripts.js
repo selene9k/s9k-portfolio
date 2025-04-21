@@ -512,12 +512,15 @@ document.addEventListener('DOMContentLoaded', function() {
     updateUI(currentIndex);
 });
 
-// Initialize Swiper
+// Initialize Swiper for portfolio gallery
 document.addEventListener('DOMContentLoaded', function() {
     const swiper = new Swiper('.swiper', {
         // Optional parameters
         direction: 'horizontal',
         loop: true,
+        speed: 500, // Faster transition speed
+        effect: 'slide',
+        grabCursor: true,
         
         // Navigation arrows
         navigation: {
@@ -525,29 +528,21 @@ document.addEventListener('DOMContentLoaded', function() {
             prevEl: '.swiper-button-prev',
         },
         
-        // Pagination
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
+        // Smooth transitions
+        cssMode: true,
+        followFinger: true,
+        touchRatio: 1,
+        touchAngle: 45,
+        resistanceRatio: 0.5,
         
-        // Responsive breakpoints
-        breakpoints: {
-            // when window width is >= 320px
-            320: {
-                slidesPerView: 1,
-                spaceBetween: 20
-            },
-            // when window width is >= 768px
-            768: {
-                slidesPerView: 1,
-                spaceBetween: 30
-            },
-            // when window width is >= 1024px
-            1024: {
-                slidesPerView: 1,
-                spaceBetween: 40
-            }
-        }
+        // Performance optimizations
+        watchSlidesProgress: true,
+        preventInteractionOnTransition: true,
+        
+        // Keyboard control
+        keyboard: {
+            enabled: true,
+            onlyInViewport: true,
+        },
     });
 });
