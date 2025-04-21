@@ -7,49 +7,22 @@
     <link rel="icon" type="image/png" href="/images/s9k-logo.png.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Load spotify-player.js first -->
+    <script src="spotify-player.js"></script>
     <script>
-        // Check if SDK is already loaded
-        if (typeof Spotify !== 'undefined') {
-            console.log('Spotify SDK already loaded');
-            window.onSpotifyWebPlaybackSDKReady();
-        }
-
-        // Set up SDK ready callback
-        window.onSpotifyWebPlaybackSDKReady = () => {
-            console.log('Spotify SDK is ready!');
-            // Check if we have an access token
-            if (window.location.hash) {
-                const hash = window.location.hash.substring(1);
-                const params = new URLSearchParams(hash);
-                const accessToken = params.get('access_token');
-                if (accessToken) {
-                    console.log('Access token found, initializing player...');
-                    // Remove the hash from URL without refreshing
-                    history.replaceState(null, null, ' ');
-                }
-            }
-        };
+        console.log('Page loading...');
         
-        // Check if SDK loaded after a delay
-        setTimeout(() => {
-            if (typeof Spotify === 'undefined') {
-                console.error('Spotify SDK failed to load');
-                document.getElementById('player-status').textContent = 'Failed to load Spotify SDK. Please refresh the page.';
-            }
-        }, 5000);
-
         // Add click handler for the login button
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded');
             const loginButton = document.getElementById('login-button');
             if (loginButton) {
+                console.log('Login button found');
                 loginButton.addEventListener('click', function(e) {
                     e.preventDefault();
                     console.log('Login button clicked');
-                    console.log('Current URL:', window.location.href);
-                    console.log('Redirect URI:', SPOTIFY_REDIRECT_URI);
-                    
                     if (typeof initializeSpotify === 'function') {
-                        console.log('initializeSpotify function exists');
+                        console.log('Calling initializeSpotify()');
                         initializeSpotify();
                     } else {
                         console.error('initializeSpotify function not found');
@@ -60,7 +33,21 @@
                 console.error('Login button not found');
             }
         });
+
+        // Set up SDK ready callback
+        window.onSpotifyWebPlaybackSDKReady = () => {
+            console.log('Spotify SDK is ready!');
+            if (window.location.hash) {
+                const hash = window.location.hash.substring(1);
+                const params = new URLSearchParams(hash);
+                const accessToken = params.get('access_token');
+                if (accessToken) {
+                    console.log('Access token found, initializing player...');
+                }
+            }
+        };
     </script>
+    <!-- Load Spotify SDK after our scripts -->
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
 </head>
 <body class="music-page">
@@ -237,7 +224,6 @@
         </div>
     </footer>
 
-    <script src="spotify-player.js"></script>
     <script type="module" src="/scripts.js"></script>
 </body>
 </html> 

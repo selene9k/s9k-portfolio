@@ -1,6 +1,6 @@
 // Spotify Player Configuration
 const SPOTIFY_CLIENT_ID = '03a516285448453cba1b56fb1feccaf7';
-const SPOTIFY_REDIRECT_URI = 'https://www.s9k.online/callback';
+const SPOTIFY_REDIRECT_URI = 'https://www.s9k.online/music.html';
 const SPOTIFY_SCOPES = 'streaming user-read-email user-read-private';
 
 let accessToken = null;
@@ -152,7 +152,7 @@ function initializeSpotify() {
     console.log('Current origin:', window.location.origin);
     console.log('Redirect URI:', SPOTIFY_REDIRECT_URI);
     
-    const url = `https://accounts.spotify.com/authorize?client_id=${SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(SPOTIFY_REDIRECT_URI)}&scope=${encodeURIComponent(SPOTIFY_SCOPES)}`;
+    const url = `https://accounts.spotify.com/authorize?client_id=${SPOTIFY_CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(SPOTIFY_REDIRECT_URI)}&scope=${encodeURIComponent(SPOTIFY_SCOPES)}&show_dialog=true`;
     console.log('Auth URL:', url);
     
     window.location.href = url;
