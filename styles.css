@@ -2126,7 +2126,7 @@ footer {
         position: absolute;
         bottom: 50%;
         left: 50%;
-        transform: translate(-120%, 50%);
+        transform: translate(20%, 50%);
         z-index: 3;
     }
 
@@ -2139,7 +2139,7 @@ footer {
 
 @media (max-width: 480px) {
     .headphone-container {
-        transform: translate(-110%, 50%);
+        transform: translate(30%, 50%);
     }
 
     .headphone-wire {
