@@ -7,6 +7,38 @@
     <link rel="icon" type="image/png" href="/images/s9k-logo.png.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        // Check if SDK is already loaded
+        if (typeof Spotify !== 'undefined') {
+            console.log('Spotify SDK already loaded');
+            window.onSpotifyWebPlaybackSDKReady();
+        }
+
+        // Set up SDK ready callback
+        window.onSpotifyWebPlaybackSDKReady = () => {
+            console.log('Spotify SDK is ready!');
+            // Check if we have an access token
+            if (window.location.hash) {
+                const hash = window.location.hash.substring(1);
+                const params = new URLSearchParams(hash);
+                const accessToken = params.get('access_token');
+                if (accessToken) {
+                    console.log('Access token found, initializing player...');
+                    // Remove the hash from URL without refreshing
+                    history.replaceState(null, null, ' ');
+                }
+            }
+        };
+        
+        // Check if SDK loaded after a delay
+        setTimeout(() => {
+            if (typeof Spotify === 'undefined') {
+                console.error('Spotify SDK failed to load');
+                document.getElementById('player-status').textContent = 'Failed to load Spotify SDK. Please refresh the page.';
+            }
+        }, 5000);
+    </script>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
 </head>
 <body class="music-page">
     <header>
@@ -133,19 +165,37 @@
             </div>
             <div class="ipod-container">
                 <div class="ipod-screen">
-                    <iframe id="spotify-player"
-                        src="https://open.spotify.com/embed/playlist/3erFYpgBZvqvpOMJYYk8zW?utm_source=generator&theme=0"
-                        frameborder="0"
-                        allowtransparency="true"
-                        allow="encrypted-media; autoplay"
-                        loading="lazy">
-                    </iframe>
+                    <div id="player-container" style="display: none;">
+                        <div class="player-header">
+                            <div id="player-status">Connecting...</div>
+                        </div>
+                        <div class="player-content">
+                            <img id="album-cover" src="" alt="Album Cover" class="album-cover">
+                            <div class="track-info">
+                                <div id="track-name" class="track-name">No track playing</div>
+                                <div id="artist-name" class="artist-name">No artist</div>
+                            </div>
+                            <div class="progress-container">
+                                <div id="progress-bar" class="progress-bar"></div>
+                            </div>
+                            <div class="player-controls">
+                                <button onclick="previousTrack()" class="control-button">◀◀</button>
+                                <button onclick="togglePlay()" id="play-pause" class="control-button">▶</button>
+                                <button onclick="nextTrack()" class="control-button">▶▶</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="login-container">
+                        <button onclick="initializeSpotify()" id="login-button" class="spotify-login-button">
+                            <i class="fab fa-spotify"></i> Connect with Spotify
+                        </button>
+                    </div>
                 </div>
                 <div class="ipod-wheel">
                     <div class="wheel-button menu">MENU</div>
-                    <div class="wheel-button prev">◀◀</div>
-                    <div class="wheel-button next">▶▶</div>
-                    <div class="wheel-button play">▶❚❚</div>
+                    <div class="wheel-button prev" onclick="previousTrack()">◀◀</div>
+                    <div class="wheel-button next" onclick="nextTrack()">▶▶</div>
+                    <div class="wheel-button play" onclick="togglePlay()">▶❚❚</div>
                     <div class="wheel-center"></div>
                 </div>
             </div>
@@ -164,6 +214,7 @@
         </div>
     </footer>
 
+    <script src="spotify-player.js"></script>
     <script type="module" src="/scripts.js"></script>
 </body>
 </html> 
