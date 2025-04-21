@@ -565,3 +565,58 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Spotify Player Controls
+document.addEventListener('DOMContentLoaded', function() {
+    const spotifyPlayer = document.getElementById('spotify-player');
+    const playButton = document.querySelector('.wheel-button.play');
+    const prevButton = document.querySelector('.wheel-button.prev');
+    const nextButton = document.querySelector('.wheel-button.next');
+    const menuButton = document.querySelector('.wheel-button.menu');
+
+    // Function to send message to Spotify iframe
+    function sendMessageToSpotify(action) {
+        if (spotifyPlayer && spotifyPlayer.contentWindow) {
+            spotifyPlayer.contentWindow.postMessage({
+                command: action
+            }, 'https://open.spotify.com');
+        }
+    }
+
+    // Play/Pause button
+    if (playButton) {
+        playButton.addEventListener('click', function() {
+            sendMessageToSpotify('togglePlay');
+            this.textContent = this.textContent === '▶❚❚' ? '❚❚' : '▶❚❚';
+        });
+    }
+
+    // Previous track button
+    if (prevButton) {
+        prevButton.addEventListener('click', function() {
+            sendMessageToSpotify('previousTrack');
+        });
+    }
+
+    // Next track button
+    if (nextButton) {
+        nextButton.addEventListener('click', function() {
+            sendMessageToSpotify('nextTrack');
+        });
+    }
+
+    // Menu button (can be used for additional controls if needed)
+    if (menuButton) {
+        menuButton.addEventListener('click', function() {
+            // Add any menu functionality here
+            console.log('Menu button clicked');
+        });
+    }
+
+    // Listen for messages from Spotify iframe
+    window.addEventListener('message', function(event) {
+        if (event.origin === 'https://open.spotify.com') {
+            console.log('Message from Spotify:', event.data);
+        }
+    });
+});
