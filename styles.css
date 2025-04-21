@@ -2039,7 +2039,7 @@ footer {
 }
 
 .headphone-wire {
-    width: 800px;
+    width: 1000px;
     height: auto;
     transform: translate(-15%, 15%) rotate(55deg);
     opacity: 0.95;
@@ -2073,14 +2073,14 @@ footer {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .headphone-wire {
-        width: 600px;
+        width: 800px;
         transform: translate(-15%, 15%) rotate(50deg);
     }
 }
 
 @media (max-width: 480px) {
     .headphone-wire {
-        width: 400px;
+        width: 600px;
         transform: translate(-15%, 15%) rotate(45deg);
     }
 }
