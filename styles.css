@@ -2163,9 +2163,12 @@ footer {
 
 .marquee {
     display: flex;
-    animation: marquee 10s linear infinite;
+    animation: marquee 6s linear infinite;
     white-space: nowrap;
-    width: fit-content;
+    width: max-content;
+    position: relative;
+    right: 0;
+    gap: 0;
 }
 
 .marquee span {
@@ -2173,17 +2176,19 @@ footer {
     font-family: 'Alumni Sans Pinstripe', sans-serif;
     font-weight: 400;
     font-size: 0.7rem;
-    padding: 0 10px;
+    padding: 0 5px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     flex-shrink: 0;
+    display: inline-block;
+    margin: 0;
 }
 
 @keyframes marquee {
     0% {
-        transform: translateX(0);
+        transform: translateX(100vw);
     }
     100% {
-        transform: translateX(-50%);
+        transform: translateX(-100%);
     }
 }
