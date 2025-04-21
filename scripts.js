@@ -518,7 +518,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Optional parameters
         direction: 'horizontal',
         loop: true,
-        speed: 3000, // Even slower transition speed for smoother movement
+        speed: 3000, // Slow transition speed
         effect: 'slide',
         grabCursor: true,
         
@@ -529,7 +529,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         
         // Smooth transitions
-        cssMode: true,
+        cssMode: false, // Disable CSS mode for better interaction
         followFinger: true,
         touchRatio: 1,
         touchAngle: 45,
@@ -537,7 +537,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Performance optimizations
         watchSlidesProgress: true,
-        preventInteractionOnTransition: true,
+        preventInteractionOnTransition: false, // Allow interaction during transition
         
         // Keyboard control
         keyboard: {
@@ -557,6 +557,8 @@ document.addEventListener('DOMContentLoaded', function() {
         easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
     });
 
-    // Start autoplay immediately
-    swiper.autoplay.start();
+    // Start autoplay
+    if (swiper.autoplay) {
+        swiper.autoplay.start();
+    }
 });
