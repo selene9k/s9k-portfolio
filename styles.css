@@ -1160,6 +1160,7 @@ footer {
     position: absolute;
     top: 0;
     left: 0;
+    transform: scale(1.1); /* Slightly larger to ensure full coverage */
 }
 
 /* Adjust the Spotify player's internal elements */
@@ -1168,11 +1169,12 @@ footer {
     height: 100%;
     border: none;
     background: #000;
+    transform: scale(1.1); /* Match parent scale */
 }
 
 /* Ensure the Spotify player's content is properly scaled */
 #spotify-player .Root__now-playing-bar {
-    display: none; /* Hide the now playing bar if it appears */
+    display: none;
 }
 
 #spotify-player .Root__top-container {
@@ -1259,6 +1261,10 @@ footer {
         margin-bottom: 30px;
     }
 
+    #spotify-player {
+        transform: scale(1.15); /* Slightly larger scale for mobile */
+    }
+
     .ipod-wheel {
         width: 180px;
         height: 180px;
@@ -1285,6 +1291,10 @@ footer {
         width: 200px;
         height: 150px;
         margin-bottom: 25px;
+    }
+
+    #spotify-player {
+        transform: scale(1.2); /* Even larger scale for smaller screens */
     }
 
     .ipod-wheel {
