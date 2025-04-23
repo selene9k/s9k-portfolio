@@ -32,8 +32,8 @@ class ASCIIArtGenerator {
         document.addEventListener('mousemove', drag);
         document.addEventListener('mouseup', stopDragging);
 
-        sliderHandle.addEventListener('touchstart', startDragging);
-        document.addEventListener('touchmove', drag);
+        sliderHandle.addEventListener('touchstart', startDragging, { passive: false });
+        document.addEventListener('touchmove', drag, { passive: false });
         document.addEventListener('touchend', stopDragging);
 
         function startDragging(e) {
