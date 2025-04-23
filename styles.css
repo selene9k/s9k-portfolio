@@ -1026,13 +1026,25 @@ footer {
 .music-page {
     position: relative;
     min-height: 100vh;
-    padding-top: 80px;
+    padding-top: 100px;
     background-color: transparent;
-    overflow-x: hidden;
+}
+
+.music-page::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('/images/snowflake-bg.jpg') no-repeat center center;
+    background-size: cover;
+    z-index: -1;
+    pointer-events: none;
 }
 
 .music-content {
-    padding: 20px 0 40px;
+    padding: 100px 0 80px;
     display: flex;
     flex-direction: column;
     min-height: calc(100vh - 160px);
@@ -1041,33 +1053,49 @@ footer {
 .vinyl-container {
     width: 100%;
     overflow: hidden;
-    padding: 20px 0;
+    padding: 40px 0;
     position: relative;
 }
 
 #vinyl-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    width: 100%;
-    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: fit-content;
     margin: 0 auto;
+    padding: 0;
+    position: relative;
+    transition: transform 0.3s ease-out;
 }
 
 .vinyl {
+    flex: 0 0 180px;
+    text-align: center;
     position: relative;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
-    margin: 0;
+    margin-right: -90px;
     transform-origin: center center;
     z-index: 1;
 }
 
+.vinyl:last-child {
+    margin-right: 0;
+}
+
+.vinyl:hover {
+    transform: translateY(-15px) scale(1.1);
+    z-index: 2;
+}
+
+.vinyl:hover ~ .vinyl {
+    transform: translateX(45px);
+}
+
 .vinyl img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1/1;
+    width: 180px;
+    height: 180px;
     object-fit: cover;
     border-radius: 10px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
@@ -1080,12 +1108,12 @@ footer {
 
 .vinyl .title {
     position: absolute;
-    bottom: -25px;
+    bottom: -30px;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%;
+    width: 160px;
     color: #fff;
-    font-size: 0.75em;
+    font-size: 0.85em;
     font-weight: 500;
     letter-spacing: 0.5px;
     opacity: 0;
@@ -1096,90 +1124,124 @@ footer {
     text-overflow: ellipsis;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     background: rgba(0, 0, 0, 0.7);
-    padding: 4px 8px;
-    border-radius: 4px;
+    padding: 5px 10px;
+    border-radius: 5px;
     pointer-events: none;
 }
 
-/* Mobile Responsive Styles */
-@media (max-width: 768px) {
-    .music-page {
-        padding-top: 60px;
-    }
-
-    .music-content {
-        padding: 10px 0 20px;
-    }
-
-    #vinyl-gallery {
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-        gap: 15px;
-        padding: 15px;
-    }
-
-    .vinyl img {
-        border-radius: 8px;
-    }
-
-    .vinyl .title {
-        font-size: 0.7em;
-        bottom: -20px;
-        padding: 3px 6px;
-    }
+.vinyl:hover .title {
+    opacity: 1;
+    bottom: -40px;
 }
 
-@media (max-width: 480px) {
-    .music-page {
-        padding-top: 50px;
-    }
-
-    #vinyl-gallery {
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 10px;
-        padding: 10px;
-    }
-
-    .vinyl img {
-        border-radius: 6px;
-    }
-
-    .vinyl .title {
-        font-size: 0.65em;
-        bottom: -18px;
-        padding: 2px 4px;
-    }
-}
-
-/* Active states for both desktop and mobile */
-.vinyl.active img,
 .vinyl:hover img {
     box-shadow: 
         0 15px 30px rgba(0, 0, 0, 0.4),
         0 0 30px rgba(255, 255, 255, 0.1);
     filter: brightness(1.1);
     border-color: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
 }
 
-.vinyl.active .title,
-.vinyl:hover .title {
-    opacity: 1;
-}
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .vinyl-container {
+        overflow: visible;
+        padding: 20px 0;
+        width: 100%;
+        position: relative;
+        touch-action: pan-x;
+    }
 
-/* Touch device optimizations */
-@media (hover: none) {
+    #vinyl-gallery {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        width: 100%;
+        padding: 20px;
+        transform: none !important;
+        margin: 0 auto;
+        max-width: 400px;
+    }
+
     .vinyl {
+        flex: none;
+        margin-right: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: none !important;
+    }
+
+    .vinyl img {
+        width: 160px;
+        height: 160px;
+        margin: 0 auto;
+    }
+
+    .vinyl .title {
+        position: relative;
+        bottom: 0;
+        opacity: 1;
+        margin-top: 10px;
+        font-size: 0.7em;
+        width: 140px;
+    }
+
+    .vinyl:hover {
+        transform: translateY(-10px) scale(1.05) !important;
+    }
+
+    .vinyl:hover ~ .vinyl {
         transform: none !important;
     }
 
     .vinyl.active {
+        transform: translateY(-10px) scale(1.05) !important;
+    }
+
+    .vinyl.active ~ .vinyl {
+        transform: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    #vinyl-gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        padding: 15px;
+        max-width: 340px;
+    }
+
+    .vinyl img {
+        width: 140px;
+        height: 140px;
+    }
+
+    .vinyl .title {
+        font-size: 0.65em;
+        width: 120px;
+        margin-top: 8px;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+    #vinyl-gallery {
+        touch-action: pan-x;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .vinyl:active {
+        transform: translateY(-10px) scale(1.05) !important;
+    }
+
+    .vinyl:active ~ .vinyl {
         transform: none !important;
     }
 
     .vinyl .title {
         opacity: 1;
-        font-size: 0.6em;
-        bottom: -16px;
     }
 }
 
