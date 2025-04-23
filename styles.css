@@ -183,13 +183,17 @@ header .header-social-icon:active {
 /* Homepage Logo */
 .logo-container {
     height: 100vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 80px 20px;
     perspective: 1000px;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
 }
 
 .home-logo-link {
@@ -209,78 +213,21 @@ header .header-social-icon:active {
     width: 100%;
     height: auto;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 20px;
-    padding: 20px;
-    background: transparent;
-    filter: none;
-    -webkit-filter: none;
-    box-shadow: none;
-    transform: translateZ(0);
 }
 
-.home-logo-link:hover img {
-    background: transparent;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-}
-
-/* Responsive adjustments for home logo */
-@media (max-width: 768px) {
-    .home-logo-link {
-        width: 400px;
-    }
-    .home-logo-link img {
-        padding: 15px;
-        border-radius: 15px;
-    }
-    .home-logo-link:hover {
-        transform: scale(1.05) translateZ(30px);
-    }
-}
-
-@media (max-width: 480px) {
-    .home-logo-link {
-        width: 300px;
-    }
-    .home-logo-link img {
-        padding: 12px;
-        border-radius: 12px;
-    }
-    .home-logo-link:hover {
-        transform: scale(1.05) translateZ(20px);
-    }
-}
-
-/* Explicitly remove all effects */
-.logo-container,
-.home-logo-link,
-.home-logo-link img {
-    box-shadow: none !important;
-    text-shadow: none !important;
-    filter: none !important;
-    -webkit-filter: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    transform-style: flat;
-    -webkit-transform-style: flat;
-    background: transparent;
-}
-
-/* Logo in header */
-header .logo {
-    width: 120px;
-    height: auto;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-header .logo:hover {
-    transform: scale(1.05) translateZ(0);
-}
-
-header .logo img {
-    width: 100%;
-    height: auto;
+/* Neon Card */
+.neon-card {
+    background-color: #9eff00;
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 90%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(158, 255, 0, 0.5);
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 10;
 }
 
 /* Update other text elements to use DM Sans */
@@ -2126,5 +2073,145 @@ footer {
     }
     100% {
         transform: translateX(-100%);
+    }
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0;
+    position: relative;
+}
+
+.neon-card {
+    background-color: #9eff00;
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 90%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(158, 255, 0, 0.5);
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 10;
+}
+
+.main-nav {
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.main-nav a {
+    color: #000;
+    text-decoration: none;
+    text-transform: lowercase;
+    padding: 0 0.3rem;
+    transition: opacity 0.3s ease;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.8rem;
+    margin: 1.5rem 0;
+}
+
+.social-links a {
+    color: #000;
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+}
+
+.barcode {
+    margin: 1.5rem 0;
+}
+
+.barcode img {
+    max-width: 160px;
+    height: auto;
+}
+
+.footer-links {
+    margin: 1.5rem 0;
+    font-size: 0.75rem;
+}
+
+.footer-links a {
+    color: #000;
+    text-decoration: none;
+    margin: 0 0.4rem;
+    text-transform: lowercase;
+}
+
+.footer-links p {
+    margin-top: 0.8rem;
+    font-size: 0.7rem;
+}
+
+.credits {
+    font-size: 0.7rem;
+    color: #000;
+    margin-top: 0.8rem;
+}
+
+.credits p {
+    margin: 0.15rem 0;
+}
+
+/* Make the card responsive */
+@media (max-width: 600px) {
+    .neon-card {
+        width: 95%;
+        padding: 1.2rem;
+        margin: 0 auto;
+    }
+
+    .main-nav {
+        font-size: 0.85rem;
+        gap: 3px;
+    }
+
+    .social-links {
+        gap: 1.5rem;
+    }
+
+    .social-links a {
+        font-size: 1.2rem;
+    }
+
+    .barcode img {
+        max-width: 140px;
+    }
+}
+
+@media (max-width: 380px) {
+    .neon-card {
+        width: 98%;
+        padding: 1rem;
+    }
+
+    .main-nav {
+        font-size: 0.8rem;
+    }
+
+    .social-links {
+        gap: 1.2rem;
+    }
+
+    .social-links a {
+        font-size: 1.1rem;
+    }
+
+    .barcode img {
+        max-width: 120px;
     }
 }
