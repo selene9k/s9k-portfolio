@@ -650,3 +650,161 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Rhythm Game Logic
+class RhythmGame {
+    constructor() {
+        this.score = 0;
+        this.combo = 0;
+        this.isPlaying = false;
+        this.notes = [];
+        this.lanes = ['A', 'S', 'D', 'F'];
+        this.keyStates = {};
+        this.noteSpeed = 2; // seconds to fall
+        this.spawnInterval = 1000; // milliseconds
+        this.hitWindow = 100; // milliseconds
+        this.gameArea = document.querySelector('.game-area');
+        this.scoreElement = document.getElementById('score');
+        this.comboElement = document.getElementById('combo');
+        this.startButton = document.getElementById('start-game');
+        this.pauseButton = document.getElementById('pause-game');
+        
+        this.initializeGame();
+    }
+
+    initializeGame() {
+        // Initialize key states
+        this.lanes.forEach(key => {
+            this.keyStates[key] = false;
+        });
+
+        // Event listeners
+        document.addEventListener('keydown', (e) => this.handleKeyDown(e));
+        document.addEventListener('keyup', (e) => this.handleKeyUp(e));
+        this.startButton.addEventListener('click', () => this.startGame());
+        this.pauseButton.addEventListener('click', () => this.togglePause());
+    }
+
+    startGame() {
+        if (this.isPlaying) return;
+        this.isPlaying = true;
+        this.score = 0;
+        this.combo = 0;
+        this.updateScore();
+        this.spawnNotes();
+    }
+
+    togglePause() {
+        this.isPlaying = !this.isPlaying;
+        if (this.isPlaying) {
+            this.spawnNotes();
+        }
+    }
+
+    spawnNotes() {
+        if (!this.isPlaying) return;
+
+        const randomLane = this.lanes[Math.floor(Math.random() * this.lanes.length)];
+        this.createNote(randomLane);
+
+        setTimeout(() => this.spawnNotes(), this.spawnInterval);
+    }
+
+    createNote(lane) {
+        const note = document.createElement('div');
+        note.className = 'note';
+        note.dataset.lane = lane;
+        note.style.left = `${this.getLanePosition(lane)}px`;
+        
+        this.gameArea.appendChild(note);
+        this.notes.push({
+            element: note,
+            lane: lane,
+            hit: false
+        });
+
+        setTimeout(() => {
+            if (!note.classList.contains('hit') && !note.classList.contains('miss')) {
+                this.missNote(note);
+            }
+        }, (this.noteSpeed * 1000) + this.hitWindow);
+    }
+
+    getLanePosition(lane) {
+        const laneIndex = this.lanes.indexOf(lane);
+        const laneWidth = this.gameArea.offsetWidth / this.lanes.length;
+        return (laneIndex * laneWidth) + (laneWidth / 2) - 20;
+    }
+
+    handleKeyDown(e) {
+        const key = e.key.toUpperCase();
+        if (this.lanes.includes(key) && !this.keyStates[key]) {
+            this.keyStates[key] = true;
+            this.checkNoteHit(key);
+        }
+    }
+
+    handleKeyUp(e) {
+        const key = e.key.toUpperCase();
+        if (this.lanes.includes(key)) {
+            this.keyStates[key] = false;
+        }
+    }
+
+    checkNoteHit(key) {
+        const currentTime = Date.now();
+        let hitNote = false;
+
+        this.notes.forEach(note => {
+            if (note.hit) return;
+            
+            const noteElement = note.element;
+            const noteBottom = noteElement.getBoundingClientRect().bottom;
+            const keyBottom = this.gameArea.getBoundingClientRect().bottom;
+            const distance = Math.abs(noteBottom - keyBottom);
+
+            if (note.lane === key && distance < 50) {
+                this.hitNote(noteElement);
+                hitNote = true;
+                this.combo++;
+                this.score += 100 * this.combo;
+                this.updateScore();
+            }
+        });
+
+        if (!hitNote) {
+            this.combo = 0;
+            this.updateScore();
+        }
+    }
+
+    hitNote(note) {
+        note.classList.add('hit');
+        note.hit = true;
+        setTimeout(() => {
+            note.remove();
+            this.notes = this.notes.filter(n => n.element !== note);
+        }, 300);
+    }
+
+    missNote(note) {
+        note.classList.add('miss');
+        note.hit = true;
+        this.combo = 0;
+        this.updateScore();
+        setTimeout(() => {
+            note.remove();
+            this.notes = this.notes.filter(n => n.element !== note);
+        }, 300);
+    }
+
+    updateScore() {
+        this.scoreElement.textContent = this.score;
+        this.comboElement.textContent = this.combo;
+    }
+}
+
+// Initialize the game when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    const game = new RhythmGame();
+});

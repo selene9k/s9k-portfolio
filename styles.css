@@ -1,5 +1,6 @@
 /* Global Styles */
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 * {
     margin: 0;
@@ -2470,5 +2471,401 @@ footer {
 
     .coming-soon-container p {
         font-size: 0.9rem;
+    }
+}
+
+/* Rhythm Game Styles */
+.rhythm-game-section {
+    margin-top: 50px;
+    padding: 30px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    position: relative;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(103, 232, 249, 0.1);
+}
+
+.rhythm-game-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(90deg, transparent 0%, rgba(103, 232, 249, 0.03) 50%, transparent 100%),
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(103, 232, 249, 0.02) 10px,
+            rgba(103, 232, 249, 0.02) 20px
+        );
+    pointer-events: none;
+}
+
+.game-container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.game-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(103, 232, 249, 0.5);
+}
+
+.game-title h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, #67e8f9, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 8px rgba(103, 232, 249, 0.3));
+}
+
+.game-title h2 {
+    font-size: 1em;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: normal;
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(103, 232, 249, 0.2);
+}
+
+.score-container, .combo-container {
+    text-align: center;
+    padding: 10px 20px;
+    background: rgba(103, 232, 249, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(103, 232, 249, 0.2);
+    min-width: 150px;
+}
+
+.score-label, .combo-label {
+    font-size: 0.8em;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 5px;
+    font-family: 'Press Start 2P', monospace;
+    text-transform: uppercase;
+}
+
+.score, .combo {
+    font-size: 2em;
+    color: #67e8f9;
+    font-family: 'Press Start 2P', monospace;
+    text-shadow: 0 0 10px rgba(103, 232, 249, 0.5);
+}
+
+.game-area {
+    height: 600px;
+    background: rgba(26, 26, 46, 0.95);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid rgba(103, 232, 249, 0.2);
+    box-shadow: 0 0 20px rgba(103, 232, 249, 0.1);
+}
+
+.lanes-container {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    gap: 15px;
+    padding: 20px;
+    background: 
+        linear-gradient(0deg, 
+            rgba(103, 232, 249, 0.1) 0%, 
+            transparent 20%, 
+            transparent 80%, 
+            rgba(103, 232, 249, 0.1) 100%
+        );
+}
+
+.lane {
+    flex: 0 0 80px;
+    position: relative;
+    background: linear-gradient(to bottom,
+        rgba(103, 232, 249, 0.05) 0%,
+        rgba(103, 232, 249, 0.02) 50%,
+        rgba(103, 232, 249, 0.05) 100%
+    );
+    border-radius: 10px;
+    border: 1px solid rgba(103, 232, 249, 0.1);
+}
+
+.arrow-receptor {
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    color: rgba(255, 255, 255, 0.2);
+    transition: all 0.15s ease;
+    line-height: 1;
+    filter: drop-shadow(0 0 5px rgba(103, 232, 249, 0.3));
+}
+
+.arrow-receptor[data-direction] {
+    color: rgba(103, 232, 249, 0.7);
+    text-shadow: 0 0 10px rgba(103, 232, 249, 0.5);
+}
+
+.note {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    transition: all 0.15s ease;
+    line-height: 1;
+    color: #67e8f9;
+    text-shadow: 0 0 10px rgba(103, 232, 249, 0.7);
+    filter: drop-shadow(0 0 5px rgba(103, 232, 249, 0.5));
+}
+
+.note.hit {
+    transform: scale(1.5);
+    opacity: 0;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.9);
+}
+
+.note.miss {
+    opacity: 0.3;
+    filter: none;
+}
+
+.game-controls {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.arcade-button {
+    background: rgba(103, 232, 249, 0.1);
+    border: 2px solid rgba(103, 232, 249, 0.3);
+    border-radius: 10px;
+    color: #67e8f9;
+    text-shadow: 0 0 10px rgba(103, 232, 249, 0.5);
+    padding: 12px 25px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.arcade-button:hover {
+    background: rgba(103, 232, 249, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(103, 232, 249, 0.3);
+}
+
+.arcade-button:active {
+    transform: translateY(1px);
+}
+
+.song-selection {
+    background: rgba(103, 232, 249, 0.05);
+    border: 2px solid rgba(103, 232, 249, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.song-option {
+    background: rgba(103, 232, 249, 0.05);
+    border: 1px solid rgba(103, 232, 249, 0.2);
+    border-radius: 10px;
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    cursor: pointer;
+    padding: 15px;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.song-option:hover {
+    background: rgba(103, 232, 249, 0.1);
+    transform: translateX(5px);
+}
+
+.song-option.selected {
+    background: rgba(103, 232, 249, 0.15);
+    border-color: rgba(103, 232, 249, 0.4);
+}
+
+.song-title {
+    display: block;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    color: #67e8f9;
+}
+
+.song-artist {
+    display: block;
+    font-size: 0.7em;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Perfect/Good/Miss Indicators */
+.hit-indicator {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2em;
+    font-family: 'Press Start 2P', monospace;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    animation: hitAnimation 0.5s ease-out;
+}
+
+.hit-indicator.perfect {
+    color: #67e8f9;
+    text-shadow: 0 0 10px rgba(103, 232, 249, 0.7);
+}
+
+.hit-indicator.good {
+    color: #4ade80;
+    text-shadow: 0 0 10px rgba(74, 222, 128, 0.7);
+}
+
+.hit-indicator.miss {
+    color: #f43f5e;
+    text-shadow: 0 0 10px rgba(244, 63, 94, 0.7);
+}
+
+@keyframes hitAnimation {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -30px);
+    }
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .rhythm-game-section {
+        padding: 20px;
+        margin-top: 30px;
+    }
+
+    .game-title h1 {
+        font-size: 1.8em;
+    }
+
+    .game-title h2 {
+        font-size: 0.8em;
+    }
+
+    .game-area {
+        height: 500px;
+    }
+
+    .lane {
+        flex: 0 0 60px;
+    }
+
+    .arrow-receptor {
+        height: 60px;
+        font-size: 36px;
+    }
+
+    .note {
+        width: 60px;
+        height: 60px;
+        font-size: 36px;
+    }
+
+    .score, .combo {
+        font-size: 1.5em;
+    }
+
+    .arcade-button {
+        padding: 10px 20px;
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    .rhythm-game-section {
+        padding: 15px;
+        margin-top: 20px;
+    }
+
+    .game-title h1 {
+        font-size: 1.5em;
+    }
+
+    .game-area {
+        height: 400px;
+    }
+
+    .lane {
+        flex: 0 0 50px;
+    }
+
+    .arrow-receptor {
+        height: 50px;
+        font-size: 30px;
+    }
+
+    .note {
+        width: 50px;
+        height: 50px;
+        font-size: 30px;
+    }
+
+    .score, .combo {
+        font-size: 1.2em;
+    }
+
+    .game-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .score-container, .combo-container {
+        width: 100%;
+    }
+}
+
+/* Animation for note movement */
+@keyframes noteMove {
+    from {
+        transform: translateY(-100px);
+    }
+    to {
+        transform: translateY(600px);
     }
 }
