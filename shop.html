@@ -56,12 +56,14 @@
         .nav-container {
             position: fixed;
             bottom: 20px;
-            right: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             padding: 15px 25px;
             border-radius: 8px;
             z-index: 3;
+            text-align: center;
         }
 
         .nav-container a {
@@ -71,6 +73,7 @@
             font-size: 14px;
             opacity: 0.8;
             transition: opacity 0.3s;
+            text-transform: capitalize;
         }
 
         .nav-container a:hover {
@@ -91,10 +94,10 @@
         </div>
         
         <nav class="nav-container">
-            <a href="./index.html">home</a> -
-            <a href="./portfolio.html">portfolio</a> -
-            <a href="./info.html">info</a> -
-            <a href="./shop.html" class="active">shop</a>
+            <a href="./index.html">Home Page</a> -
+            <a href="./portfolio.html">Portfolio Page</a> -
+            <a href="./info.html">About Me Page</a> -
+            <a href="./shop.html" class="active">Shop Page</a>
         </nav>
     </div>
 
