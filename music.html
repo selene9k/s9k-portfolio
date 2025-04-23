@@ -152,58 +152,34 @@
             </div>
         </div>
 
-        <!-- Rhythm Game Section -->
-        <section class="rhythm-game-section">
-            <div class="game-container">
-                <div class="game-title">
-                    <h1>リズムゲーム</h1>
-                    <h2>RHYTHM GAME</h2>
-                    <p class="game-subtitle">音楽のリズムに合わせてプレイ<br>Play along with the music</p>
+        <!-- ASCII Art Generator Section -->
+        <section class="ascii-art-section">
+            <div class="ascii-container">
+                <div class="ascii-title">
+                    <h1>MAKE YOUR ASCII ART</h1>
+                    <p class="ascii-subtitle">Transform your images into ASCII art</p>
                 </div>
                 
-                <div class="game-info">
-                    <div class="score-container">
-                        <div class="score-label">スコア<br>SCORE</div>
-                        <div class="score">0</div>
-                    </div>
-                    <div class="combo-container">
-                        <div class="combo-label">コンボ<br>COMBO</div>
-                        <div class="combo">0</div>
-                    </div>
-                </div>
-
-                <div class="game-area">
-                    <div class="lanes-container">
-                        <div class="lane">
-                            <div class="arrow-receptor" data-direction="left">⮜</div>
-                            <div class="note-container"></div>
-                        </div>
-                        <div class="lane">
-                            <div class="arrow-receptor" data-direction="down">⮟</div>
-                            <div class="note-container"></div>
-                        </div>
-                        <div class="lane">
-                            <div class="arrow-receptor" data-direction="up">⮝</div>
-                            <div class="note-container"></div>
-                        </div>
-                        <div class="lane">
-                            <div class="arrow-receptor" data-direction="right">⮞</div>
-                            <div class="note-container"></div>
+                <div class="ascii-content">
+                    <div class="slider-container">
+                        <input type="file" id="image-upload" accept="image/*" class="image-input" style="display: none;">
+                        <div class="slide-to-generate">
+                            <div class="slider-track">
+                                <div class="slider-handle">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                                <span class="slider-text">SLIDE TO GENERATE</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="game-controls">
-                    <button id="start-button" class="arcade-button">スタート<br>START</button>
-                    <button id="pause-button" class="arcade-button">ポーズ<br>PAUSE</button>
-                </div>
+                    <div class="preview-container">
+                        <img id="image-preview" alt="Preview" style="display: none;">
+                    </div>
 
-                <div class="song-selection">
-                    <div class="selection-title">曲を選択<br>SELECT A SONG</div>
-                    <button class="song-option" data-song="song1">
-                        <span class="song-title">8 Bit Dream</span>
-                        <span class="song-artist">Tristan Lohengrin</span>
-                    </button>
+                    <div class="output-container">
+                        <pre id="ascii-output" class="ascii-output"></pre>
+                    </div>
                 </div>
             </div>
         </section>
@@ -223,5 +199,6 @@
 
     <script type="module" src="scripts.js"></script>
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script src="ascii-art.js"></script>
 </body>
 </html> 
