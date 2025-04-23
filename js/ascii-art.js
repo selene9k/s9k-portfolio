@@ -1,130 +1,89 @@
-// ASCII Art Generator
-class ASCIIArtGenerator {
-    constructor() {
-        console.log('ASCIIArtGenerator initialized');
-        this.canvas = document.createElement('canvas');
-        this.ctx = this.canvas.getContext('2d');
-        this.asciiCharacters = '@%#*+=-:. ';
-        this.initializeEventListeners();
-    }
+document.addEventListener('DOMContentLoaded', function() {
+    const generateButton = document.getElementById('generate-ascii');
+    const imageInput = document.getElementById('image-upload');
+    const imagePreview = document.getElementById('image-preview');
+    const asciiOutput = document.getElementById('ascii-output');
 
-    initializeEventListeners() {
-        console.log('Initializing event listeners');
-        const fileInput = document.getElementById('image-upload');
-        const fingerprintIcon = document.getElementById('generate-ascii');
-        
-        console.log('File input found:', !!fileInput);
-        console.log('Fingerprint icon found:', !!fingerprintIcon);
-        
-        if (fileInput) {
-            fileInput.addEventListener('change', (e) => {
-                console.log('File input changed');
-                this.handleImageUpload(e);
-            });
-        }
-        
-        if (fingerprintIcon) {
-            fingerprintIcon.addEventListener('click', () => {
-                console.log('Fingerprint icon clicked');
-                if (fileInput) {
-                    fileInput.click();
-                }
-            });
-        }
-    }
+    // Add click event to the fingerprint icon to trigger file input
+    generateButton.addEventListener('click', function() {
+        imageInput.click();
+    });
 
-    handleImageUpload(event) {
-        console.log('Handling image upload');
-        const file = event.target.files[0];
-        if (!file) {
-            console.log('No file selected');
-            return;
-        }
-
-        console.log('File selected:', file.name);
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            console.log('File read successfully');
-            const img = new Image();
-            img.onload = () => {
-                console.log('Image loaded successfully');
-                this.processImage(img);
-                this.generateASCII();
+    // Handle file selection
+    imageInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+                generateASCII(e.target.result);
             };
-            img.onerror = (error) => {
-                console.error('Error loading image:', error);
-            };
-            img.src = e.target.result;
-        };
-        reader.onerror = (error) => {
-            console.error('Error reading file:', error);
-        };
-        reader.readAsDataURL(file);
-    }
-
-    processImage(img) {
-        console.log('Processing image');
-        const preview = document.getElementById('image-preview');
-        if (preview) {
-            preview.src = img.src;
-            preview.style.display = 'block';
-            console.log('Preview updated');
+            reader.readAsDataURL(file);
         }
-    }
+    });
 
-    generateASCII() {
-        console.log('Generating ASCII art');
-        const img = document.getElementById('image-preview');
-        if (!img || !img.src) {
-            console.error('No image available for ASCII generation');
-            alert('Please upload an image first!');
-            return;
-        }
-
-        try {
-            const width = Math.min(img.width, window.innerWidth > 768 ? 100 : 50);
-            const scale = width / img.width;
-            const height = Math.floor(img.height * scale);
-
-            this.canvas.width = width;
-            this.canvas.height = height;
-            this.ctx.drawImage(img, 0, 0, width, height);
-
-            const pixels = this.ctx.getImageData(0, 0, width, height).data;
-            let ascii = '';
-
-            for (let i = 0; i < height; i++) {
-                for (let j = 0; j < width; j++) {
-                    const idx = (i * width + j) * 4;
-                    const brightness = Math.floor(
-                        (pixels[idx] + pixels[idx + 1] + pixels[idx + 2]) / 3
-                    );
-                    const character = this.getASCIICharacter(brightness);
-                    ascii += character;
+    // Function to generate ASCII art
+    function generateASCII(imageData) {
+        const img = new Image();
+        img.onload = function() {
+            // Create a canvas to process the image
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size (adjust for better ASCII art quality)
+            const maxWidth = 100;
+            const maxHeight = 100;
+            let width = img.width;
+            let height = img.height;
+            
+            if (width > height) {
+                if (width > maxWidth) {
+                    height *= maxWidth / width;
+                    width = maxWidth;
                 }
-                ascii += '\n';
+            } else {
+                if (height > maxHeight) {
+                    width *= maxHeight / height;
+                    height = maxHeight;
+                }
             }
-
-            const output = document.getElementById('ascii-output');
-            if (output) {
-                output.textContent = ascii;
-                output.style.display = 'block';
-                console.log('ASCII art generated successfully');
+            
+            canvas.width = width;
+            canvas.height = height;
+            
+            // Draw image on canvas
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            // Get image data
+            const imageData = ctx.getImageData(0, 0, width, height);
+            const data = imageData.data;
+            
+            // ASCII characters from darkest to lightest
+            const asciiChars = '@%#*+=-:. ';
+            
+            // Generate ASCII art
+            let asciiArt = '';
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const offset = (y * width + x) * 4;
+                    const r = data[offset];
+                    const g = data[offset + 1];
+                    const b = data[offset + 2];
+                    
+                    // Calculate brightness
+                    const brightness = (r + g + b) / 3;
+                    
+                    // Map brightness to ASCII character
+                    const charIndex = Math.floor((brightness / 255) * (asciiChars.length - 1));
+                    asciiArt += asciiChars[charIndex];
+                }
+                asciiArt += '\n';
             }
-        } catch (error) {
-            console.error('Error generating ASCII art:', error);
-        }
+            
+            // Display ASCII art
+            asciiOutput.textContent = asciiArt;
+        };
+        img.src = imageData;
     }
-
-    getASCIICharacter(brightness) {
-        const len = this.asciiCharacters.length;
-        const index = Math.floor((brightness / 255) * (len - 1));
-        return this.asciiCharacters[index];
-    }
-}
-
-// Initialize the ASCII Art Generator when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded');
-    new ASCIIArtGenerator();
-}); 
+});
