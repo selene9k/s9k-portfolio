@@ -620,3 +620,33 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Video background handling
+document.addEventListener('DOMContentLoaded', function() {
+    const video = document.getElementById('bg-video');
+    
+    if (video) {
+        // Ensure video plays
+        function playVideo() {
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(function(error) {
+                    console.error('Error playing video:', error);
+                    // Try again after a short delay
+                    setTimeout(playVideo, 1000);
+                });
+            }
+        }
+
+        // Start playing when video is ready
+        video.addEventListener('canplay', playVideo);
+        
+        // Also try to play immediately
+        playVideo();
+        
+        // Handle any errors
+        video.addEventListener('error', function(e) {
+            console.error('Video error:', video.error);
+        });
+    }
+});
