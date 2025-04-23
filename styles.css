@@ -116,7 +116,7 @@ header .nav-buttons a {
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
-    text-transform: lowercase;
+    text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
 }
@@ -470,13 +470,43 @@ footer {
 }
 
 .footer-content {
-    text-align: right;
-    font-size: 12px;
-    color: black;
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    grid-column: 2;
+    align-items: center;
+    gap: 15px;
+    color: #fff;
+    text-align: center;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.footer-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.footer-contact-item i {
+    color: #fff;
+}
+
+.footer-contact-item a,
+.footer-contact-item span {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-content p {
+    color: #fff;
+    font-size: 12px;
+    margin: 0;
 }
 
 .footer-links {
@@ -1733,20 +1763,20 @@ footer {
     }
     
     .footer-content {
-        gap: 8px;
+        gap: 12px;
     }
     
     .footer-contact {
-        flex-direction: column;
-        gap: 8px;
+        flex-direction: row;
+        gap: 20px;
     }
     
     .footer-contact-item {
-        font-size: 0.8em;
+        font-size: 12px;
     }
     
     .footer-content p {
-        font-size: 0.75em;
+        font-size: 11px;
     }
 }
 
