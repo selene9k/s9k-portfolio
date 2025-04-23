@@ -194,10 +194,11 @@ header .header-social-icon:active {
     height: auto;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
+    filter: none;
 }
 
 .logo:hover img {
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+    filter: none;
 }
 
 /* Homepage Logo */
@@ -233,6 +234,7 @@ header .header-social-icon:active {
     width: 100%;
     height: auto;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: none;
 }
 
 /* Neon Card */
@@ -379,42 +381,43 @@ p, span, a {
 }
 
 /* Social Links */
-.social-links {
+.about-content .social-links {
     padding: 0.2rem 0;
     display: flex;
     justify-content: center;
     gap: 24px;
 }
 
-.social-links a {
-    color: #000000;
-    font-size: 20px;
-    margin: 0 10px;
+.about-content .social-links a {
+    color: #ffffff;
+    font-size: 24px;
+    margin: 0 15px;
     transition: all 0.3s ease;
+    position: relative;
 }
 
-.social-links a:hover {
-    transform: scale(1.1);
-    color: #000000;
+.about-content .social-links a:hover {
+    transform: translateY(-3px);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
 }
 
-.social-links a i {
-    color: #000000;
+.about-content .social-links a i {
+    color: inherit;
 }
 
-.social-links a::after {
+.about-content .social-links a::after {
     display: none;
 }
 
-.social-links a:hover::after {
+.about-content .social-links a:hover::after {
     display: none;
 }
 
-.social-links a.active {
+.about-content .social-links a.active {
     transform: translateY(-2px);
 }
 
-.social-links a.active i {
+.about-content .social-links a.active i {
     transform: scale(1.1);
     font-weight: 900;
 }

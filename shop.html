@@ -58,31 +58,28 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 15px 25px;
-            border-radius: 8px;
             z-index: 3;
             text-align: center;
         }
 
-        .nav-container a {
+        .return-button {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             color: #fff;
             text-decoration: none;
-            margin: 0 10px;
-            font-size: 14px;
-            opacity: 0.8;
-            transition: opacity 0.3s;
-            text-transform: capitalize;
-        }
-
-        .nav-container a:hover {
-            opacity: 1;
-        }
-
-        .nav-container a.active {
-            opacity: 1;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
             font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .return-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
@@ -94,10 +91,7 @@
         </div>
         
         <nav class="nav-container">
-            <a href="./index.html">Home Page</a> -
-            <a href="./portfolio.html">Portfolio Page</a> -
-            <a href="./info.html">About Me Page</a> -
-            <a href="./shop.html" class="active">Shop Page</a>
+            <a href="./index.html" class="return-button">Return to Homepage</a>
         </nav>
     </div>
 
