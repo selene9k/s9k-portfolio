@@ -3,24 +3,15 @@ let gameActive = false;
 let score = 0;
 let combo = 0;
 let notes = [];
+let audioContext = null;
+let audioBuffer = null;
+let gameLoop = null;
 let lastNoteTime = 0;
+const NOTE_SPEED = 2; // Seconds to travel from top to bottom
+const PERFECT_WINDOW = 0.1; // Timing window in seconds
+const SPAWN_INTERVAL = 1.0; // Time between notes in seconds
 
-// Define available songs
-const songs = {
-    song1: {
-        title: "8 Bit Dream",
-        artist: "Tristan Lohengrin",
-        url: "https://freemusicarchive.org/music/Tristan_Lohengrin/8_Bit_Dream/8_Bit_Dream"
-    }
-};
-
-let selectedSong = null;
-let audioContext;
-let audioBuffer;
-let noteTiming = [];
-let currentNoteIndex = 0;
-
-// Key mapping
+// Key mappings
 const keyMap = {
     'ArrowLeft': 'left',
     'ArrowDown': 'down',
@@ -28,248 +19,234 @@ const keyMap = {
     'ArrowRight': 'right'
 };
 
-// Add event listeners for song selection
-document.querySelectorAll('.song-option').forEach(button => {
-    button.addEventListener('click', function() {
-        // Remove selected class from all buttons
-        document.querySelectorAll('.song-option').forEach(btn => {
-            btn.classList.remove('selected');
-        });
-        
-        // Add selected class to clicked button
-        this.classList.add('selected');
-        
-        // Get the selected song
-        const songId = this.dataset.song;
-        selectedSong = songs[songId];
-        
-        // Load the selected song
-        loadSong(selectedSong.url);
-    });
-});
-
-// Add event listeners for game controls
-document.getElementById('start-button').addEventListener('click', startGame);
-document.getElementById('pause-button').addEventListener('click', pauseGame);
-
-// Add touch support for mobile devices
-document.querySelectorAll('.arrow-receptor').forEach((receptor, index) => {
-    receptor.addEventListener('touchstart', function(e) {
-        e.preventDefault(); // Prevent default touch behavior
-        if (!gameActive) return;
-        
-        const direction = Object.values(keyMap)[index];
-        receptor.style.transform = 'scale(1.2)';
-        
-        if (!hitNote(index, direction)) {
-            missNote();
-        }
-    });
-    
-    receptor.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        receptor.style.transform = '';
-    });
-});
-
-// Detect device type
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-// Adjust game settings based on device
-function adjustForDevice() {
-    if (isMobile) {
-        // Make arrows bigger and more spaced for touch
-        document.querySelectorAll('.lane').forEach(lane => {
-            lane.style.flex = '0 0 70px';
-        });
-        
-        document.querySelectorAll('.arrow-receptor, .note').forEach(arrow => {
-            arrow.style.fontSize = '36px';
-        });
-        
-        // Adjust note speed for mobile
-        document.documentElement.style.setProperty('--note-speed', '2.5s');
+// Available songs
+const songs = {
+    'song1': {
+        title: '8 Bit Dream',
+        artist: 'Tristan Lohengrin',
+        url: 'path/to/8-bit-dream.mp3'
     }
-}
+};
 
-// Call device adjustment on load
-window.addEventListener('load', adjustForDevice);
-
-// Handle orientation change
-window.addEventListener('orientationchange', function() {
-    setTimeout(adjustForDevice, 100);
-});
-
-// Prevent default touch behavior to avoid scrolling while playing
-document.querySelector('.game-area').addEventListener('touchmove', function(e) {
-    e.preventDefault();
-}, { passive: false });
-
-// Update the startGame function to include device-specific setup
-const originalStartGame = startGame;
-startGame = function() {
-    if (isMobile) {
-        // Show touch instructions
-        const instructions = document.createElement('div');
-        instructions.className = 'touch-instructions';
-        instructions.textContent = 'Tap the arrows to play!';
-        document.querySelector('.game-info').appendChild(instructions);
-        setTimeout(() => instructions.remove(), 3000);
-    }
-    originalStartGame();
-}
-
-function loadSong(url) {
-    // Create audio context if it doesn't exist
+// Initialize audio context
+function initAudio() {
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
-    
-    // Fetch and decode the audio file
-    fetch(url)
-        .then(response => response.arrayBuffer())
-        .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
-        .then(buffer => {
-            audioBuffer = buffer;
-            analyzeMusic(buffer);
-            console.log('Song loaded successfully');
-        })
-        .catch(error => {
-            console.error('Error loading song:', error);
-            alert('Error loading song. Please try again.');
-        });
 }
 
+// Load selected song
+async function loadSong(songKey) {
+    try {
+        const response = await fetch(songs[songKey].url);
+        const arrayBuffer = await response.arrayBuffer();
+        audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+    } catch (error) {
+        console.error('Error loading song:', error);
+    }
+}
+
+// Create a note
 function createNote(direction) {
+    const lane = document.querySelector(`.lane:has([data-direction="${direction}"])`);
     const note = document.createElement('div');
     note.className = 'note';
-    note.dataset.direction = direction;
     note.textContent = getArrowSymbol(direction);
-    note.style.animation = 'noteMove 2s linear';
+    note.dataset.direction = direction;
+    note.style.top = '-80px';
+    lane.appendChild(note);
     return note;
 }
 
+// Get arrow symbol based on direction
 function getArrowSymbol(direction) {
-    const arrows = {
+    const symbols = {
         'left': '⮜',
         'down': '⮟',
         'up': '⮝',
         'right': '⮞'
     };
-    return arrows[direction];
+    return symbols[direction];
 }
 
-function spawnNote(lane, direction) {
-    const laneElement = document.querySelectorAll('.lane')[lane];
-    const noteContainer = laneElement.querySelector('.note-container');
+// Spawn a new note
+function spawnNote() {
+    const directions = ['left', 'down', 'up', 'right'];
+    const direction = directions[Math.floor(Math.random() * directions.length)];
     const note = createNote(direction);
-    noteContainer.appendChild(note);
-    
-    note.addEventListener('animationend', () => {
-        if (note.parentNode) {
-            note.parentNode.removeChild(note);
-            missNote();
-        }
-    });
+    const startTime = performance.now();
+    notes.push({ element: note, direction, startTime });
 }
 
-function hitNote(lane, direction) {
-    const laneElement = document.querySelectorAll('.lane')[lane];
-    const notes = laneElement.querySelectorAll('.note');
-    const receptor = laneElement.querySelector('.arrow-receptor');
+// Handle note hit
+function hitNote(direction, isTouch = false) {
+    const receptor = document.querySelector(`[data-direction="${direction}"]`);
+    const lane = receptor.closest('.lane');
     
-    for (const note of notes) {
-        const rect = note.getBoundingClientRect();
-        const receptorRect = receptor.getBoundingClientRect();
-        
-        if (Math.abs(rect.top - receptorRect.top) < 30) {
-            note.classList.add('hit');
+    // Visual feedback for receptor
+    receptor.style.transform = 'scale(1.2)';
+    receptor.style.color = '#ffffff';
+    setTimeout(() => {
+        receptor.style.transform = '';
+        receptor.style.color = '';
+    }, 100);
+
+    // Find closest note in the lane
+    const laneNotes = notes.filter(note => 
+        note.direction === direction && 
+        note.element.closest('.lane') === lane
+    );
+
+    if (laneNotes.length > 0) {
+        const closestNote = laneNotes[0];
+        const timeDiff = Math.abs((performance.now() - closestNote.startTime) / 1000 - NOTE_SPEED);
+
+        if (timeDiff <= PERFECT_WINDOW) {
+            // Perfect hit
+            score += 100 * (combo + 1);
             combo++;
-            score += 100 * combo;
-            updateScore();
-            updateCombo();
-            setTimeout(() => {
-                if (note.parentNode) {
-                    note.parentNode.removeChild(note);
-                }
-            }, 100);
-            return true;
+            showHitIndicator('PERFECT!', 'perfect');
+            closestNote.element.classList.add('hit');
+            setTimeout(() => closestNote.element.remove(), 100);
+            notes = notes.filter(note => note !== closestNote);
         }
     }
-    return false;
+
+    updateDisplay();
 }
 
+// Show hit indicator
+function showHitIndicator(text, type) {
+    const indicator = document.createElement('div');
+    indicator.className = `hit-indicator ${type}`;
+    indicator.textContent = text;
+    document.querySelector('.game-area').appendChild(indicator);
+    setTimeout(() => indicator.remove(), 500);
+}
+
+// Update score and combo display
+function updateDisplay() {
+    document.querySelector('.score').textContent = score;
+    document.querySelector('.combo').textContent = combo;
+}
+
+// Game loop
 function updateGame() {
     if (!gameActive) return;
+
+    const currentTime = performance.now();
     
-    const currentTime = audioContext.currentTime;
-    
-    // Spawn notes based on the analyzed timing
-    while (currentNoteIndex < noteTiming.length && 
-           noteTiming[currentNoteIndex] <= currentTime + 2) { // 2 seconds ahead
-        const lane = Math.floor(Math.random() * 4);
-        const direction = Object.values(keyMap)[lane];
-        spawnNote(lane, direction);
-        currentNoteIndex++;
+    // Spawn new notes
+    if (currentTime - lastNoteTime >= SPAWN_INTERVAL * 1000) {
+        spawnNote();
+        lastNoteTime = currentTime;
     }
-    
-    requestAnimationFrame(updateGame);
+
+    // Update note positions
+    notes.forEach(note => {
+        const elapsed = (currentTime - note.startTime) / 1000;
+        const progress = elapsed / NOTE_SPEED;
+        const yPos = progress * 600; // Game area height
+        note.element.style.transform = `translateY(${yPos}px)`;
+
+        // Remove missed notes
+        if (progress > 1.2) {
+            note.element.classList.add('miss');
+            combo = 0;
+            showHitIndicator('MISS', 'miss');
+            setTimeout(() => note.element.remove(), 100);
+            notes = notes.filter(n => n !== note);
+            updateDisplay();
+        }
+    });
+
+    gameLoop = requestAnimationFrame(updateGame);
 }
 
+// Start game
+function startGame() {
+    if (!gameActive) {
+        initAudio();
+        gameActive = true;
+        score = 0;
+        combo = 0;
+        notes = [];
+        lastNoteTime = performance.now();
+        updateDisplay();
+        updateGame();
+    }
+}
+
+// Pause game
 function pauseGame() {
-    gameActive = !gameActive;
-    if (gameActive) {
-        requestAnimationFrame(updateGame);
+    gameActive = false;
+    if (gameLoop) {
+        cancelAnimationFrame(gameLoop);
+        gameLoop = null;
     }
+    // Clear existing notes
+    notes.forEach(note => note.element.remove());
+    notes = [];
 }
 
-function missNote() {
-    combo = 0;
-    updateCombo();
-}
-
-function updateScore() {
-    const scoreElement = document.querySelector('.score');
-    if (scoreElement) {
-        scoreElement.textContent = score;
-    }
-}
-
-function updateCombo() {
-    const comboElement = document.querySelector('.combo');
-    if (comboElement) {
-        comboElement.textContent = combo;
-    }
-}
-
-function analyzeMusic(buffer) {
-    // Simple beat detection algorithm
-    const sampleRate = buffer.sampleRate;
-    const channelData = buffer.getChannelData(0);
-    const blockSize = Math.floor(sampleRate / 10); // Analyze 100ms blocks
-    const threshold = 0.1; // Adjust this value based on your music
-    
-    noteTiming = [];
-    
-    for (let i = 0; i < channelData.length; i += blockSize) {
-        let sum = 0;
-        for (let j = 0; j < blockSize && i + j < channelData.length; j++) {
-            sum += Math.abs(channelData[i + j]);
+// Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // Keyboard controls
+    document.addEventListener('keydown', (event) => {
+        if (gameActive && keyMap[event.key]) {
+            event.preventDefault();
+            hitNote(keyMap[event.key]);
         }
-        const average = sum / blockSize;
+    });
+
+    // Touch controls
+    const receptors = document.querySelectorAll('.arrow-receptor');
+    receptors.forEach(receptor => {
+        receptor.addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            if (gameActive) {
+                hitNote(receptor.dataset.direction, true);
+            }
+        });
+    });
+
+    // Game controls
+    document.getElementById('start-button').addEventListener('click', startGame);
+    document.getElementById('pause-button').addEventListener('click', pauseGame);
+
+    // Song selection
+    document.querySelectorAll('.song-option').forEach(option => {
+        option.addEventListener('click', () => {
+            const songKey = option.dataset.song;
+            document.querySelectorAll('.song-option').forEach(opt => 
+                opt.classList.remove('selected'));
+            option.classList.add('selected');
+            if (audioContext) {
+                loadSong(songKey);
+            }
+        });
+    });
+});
+
+// Device detection and adjustment
+function adjustForDevice() {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        // Adjust note speed and timing for mobile
+        NOTE_SPEED = 2.5; // Slightly slower for mobile
+        PERFECT_WINDOW = 0.15; // Slightly more forgiving timing
         
-        if (average > threshold) {
-            const time = i / sampleRate;
-            noteTiming.push(time);
+        // Add touch instructions
+        const gameArea = document.querySelector('.game-area');
+        if (!document.querySelector('.touch-instructions')) {
+            const instructions = document.createElement('div');
+            instructions.className = 'touch-instructions';
+            instructions.textContent = 'Tap the arrows to play!';
+            gameArea.appendChild(instructions);
         }
     }
-    
-    console.log('Analyzed music, found', noteTiming.length, 'notes');
-    
-    // Reset game state
-    currentNoteIndex = 0;
-    score = 0;
-    combo = 0;
-    updateScore();
-    updateCombo();
-} 
+}
+
+// Call device adjustment on load and orientation change
+window.addEventListener('load', adjustForDevice);
+window.addEventListener('orientationchange', adjustForDevice); 
