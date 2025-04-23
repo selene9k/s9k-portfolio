@@ -55,6 +55,9 @@ body {
     padding: 0;
     overflow-x: hidden;
     background-color: #000;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    overscroll-behavior: contain;
 }
 
 /* Page transition overlay */
@@ -1144,73 +1147,102 @@ footer {
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
+    /* Base Layout */
+    body {
+        min-height: 100vh;
+        height: 100%;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        overscroll-behavior: contain;
+        touch-action: pan-y;
+    }
+    
+    main {
+        min-height: 0;
+        height: auto;
+        flex: 1 0 auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 15px;
+    }
+    
+    /* Header */
+    header {
+        padding: 12px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    .header-right {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 80px 20px 20px;
+        transition: right 0.3s ease;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .header-right.active {
+        right: 0;
+    }
+    
+    .nav-buttons {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .nav-buttons a {
+        font-size: 1.2rem;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .header-social-icons {
+        margin-top: 20px;
+    }
+
+    /* Music Content Spacing */
+    .music-content {
+        padding-top: 70px;
+        padding-bottom: 40px;
+    }
+
     .vinyl-container {
-        overflow: visible;
         padding: 20px 0;
-        width: 100%;
-        position: relative;
-        touch-action: pan-x;
+        margin-bottom: 30px;
     }
 
     #vinyl-gallery {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        width: 100%;
-        padding: 20px;
-        transform: none !important;
-        margin: 0 auto;
-        max-width: 400px;
+        gap: 15px;
+        padding: 15px;
     }
 
     .vinyl {
-        flex: none;
-        margin-right: 0;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        transform: none !important;
-    }
-
-    .vinyl img {
-        width: 160px;
-        height: 160px;
-        margin: 0 auto;
-    }
-
-    .vinyl .title {
-        position: relative;
-        bottom: 0;
-        opacity: 1;
-        margin-top: 10px;
-        font-size: 0.7em;
-        width: 140px;
-    }
-
-    .vinyl:hover {
-        transform: translateY(-10px) scale(1.05) !important;
-    }
-
-    .vinyl:hover ~ .vinyl {
-        transform: none !important;
-    }
-
-    .vinyl.active {
-        transform: translateY(-10px) scale(1.05) !important;
-    }
-
-    .vinyl.active ~ .vinyl {
-        transform: none !important;
-    }
-}
-
-@media (max-width: 480px) {
-    #vinyl-gallery {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-        padding: 15px;
-        max-width: 340px;
+        margin-bottom: 20px;
     }
 
     .vinyl img {
@@ -1219,9 +1251,220 @@ footer {
     }
 
     .vinyl .title {
-        font-size: 0.65em;
-        width: 120px;
+        font-size: 0.7em;
         margin-top: 8px;
+    }
+
+    /* iPod Container Spacing */
+    .music-player-section {
+        margin: 30px auto;
+        padding: 0 15px;
+    }
+
+    .ipod-container {
+        width: 260px;
+        height: 440px;
+        padding: 15px;
+        margin: 20px auto;
+    }
+
+    .ipod-screen {
+        width: 220px;
+        height: 165px;
+        margin-bottom: 30px;
+    }
+
+    .ipod-wheel {
+        width: 180px;
+        height: 180px;
+    }
+
+    /* ASCII Art Section Spacing */
+    .ascii-art-section {
+        margin-top: 30px;
+        padding: 20px 15px;
+    }
+
+    .ascii-title {
+        margin-bottom: 30px;
+    }
+
+    .ascii-title h1 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+
+    .ascii-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .ascii-content {
+        gap: 25px;
+    }
+
+    .slider-container {
+        margin-bottom: 20px;
+    }
+
+    .preview-container {
+        margin: 15px auto;
+    }
+
+    .output-container {
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    /* Footer Spacing */
+    footer {
+        padding: 15px;
+        margin-top: 30px;
+    }
+
+    .footer-content {
+        gap: 12px;
+    }
+
+    .footer-contact {
+        gap: 20px;
+    }
+
+    .footer-contact-item {
+        font-size: 0.8rem;
+    }
+
+    .footer-content p {
+        font-size: 0.7rem;
+    }
+
+    /* Vinyl Gallery Mobile Styles */
+    .vinyl-container {
+        padding: 20px 0;
+        margin-bottom: 30px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    .vinyl-container::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+
+    #vinyl-gallery {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 15px;
+        padding: 15px;
+        width: max-content;
+        min-width: 100%;
+        transform: none !important;
+        margin: 0;
+    }
+
+    .vinyl {
+        flex: 0 0 auto;
+        width: 140px;
+        margin: 0;
+        transform: none !important;
+    }
+
+    .vinyl img {
+        width: 140px;
+        height: 140px;
+        margin: 0;
+    }
+
+    .vinyl .title {
+        font-size: 0.7em;
+        margin-top: 8px;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Remove hover effects for mobile */
+    .vinyl:hover {
+        transform: none !important;
+    }
+
+    .vinyl:hover ~ .vinyl {
+        transform: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .music-content {
+        padding-top: 60px;
+        padding-bottom: 30px;
+    }
+
+    .vinyl-container {
+        padding: 15px 0;
+        margin-bottom: 25px;
+    }
+
+    #vinyl-gallery {
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .vinyl img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .vinyl .title {
+        font-size: 0.65em;
+        margin-top: 6px;
+    }
+
+    .music-player-section {
+        margin: 25px auto;
+    }
+
+    .ipod-container {
+        width: 240px;
+        height: 400px;
+        padding: 12px;
+        margin: 15px auto;
+    }
+
+    .ipod-screen {
+        width: 200px;
+        height: 150px;
+        margin-bottom: 25px;
+    }
+
+    .ipod-wheel {
+        width: 160px;
+        height: 160px;
+    }
+
+    .ascii-art-section {
+        margin-top: 25px;
+        padding: 15px 10px;
+    }
+
+    .ascii-title {
+        margin-bottom: 25px;
+    }
+
+    .ascii-title h1 {
+        font-size: 1.5rem;
+    }
+
+    .ascii-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .ascii-content {
+        gap: 20px;
+    }
+
+    footer {
+        padding: 12px;
+        margin-top: 25px;
     }
 }
 
@@ -1787,6 +2030,7 @@ footer {
     z-index: 1001;
     position: relative;
     padding: 0;
+    margin-left: auto;
 }
 
 .mobile-menu-toggle span {
@@ -1813,7 +2057,6 @@ footer {
     transform: translateY(-8px) rotate(-45deg);
 }
 
-/* Mobile Responsive Styles */
 @media (max-width: 768px) {
     /* Base Layout */
     body {
@@ -1821,17 +2064,33 @@ footer {
         height: 100%;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        overscroll-behavior: contain;
+        touch-action: pan-y;
     }
     
     main {
         min-height: 0;
         height: auto;
         flex: 1 0 auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
     }
     
     /* Header */
     header {
-        padding: 15px 20px;
+        padding: 12px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
     
     .mobile-menu-toggle {
@@ -1854,6 +2113,8 @@ footer {
         align-items: center;
         gap: 30px;
         box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     .header-right.active {
@@ -1866,99 +2127,265 @@ footer {
     }
     
     .nav-buttons a {
-        font-size: 20px;
-        padding: 12px 0;
-        font-weight: 600;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        letter-spacing: 1.5px;
+        font-size: 1.2rem;
+        -webkit-tap-highlight-color: transparent;
     }
     
-    /* Logo Container */
-    .logo-container {
-        min-height: calc(100vh - 120px);
-        height: auto;
-        padding: 60px 20px;
+    .header-social-icons {
+        margin-top: 20px;
     }
-    
-    /* Music Content */
+
+    /* Music Content Spacing */
     .music-content {
-        min-height: calc(100vh - 120px);
-        height: auto;
-        padding: 60px 20px;
+        padding-top: 70px;
+        padding-bottom: 40px;
     }
-    
-    /* About Page */
-    .about-page {
-        padding-top: 80px;
+
+    .vinyl-container {
+        padding: 20px 0;
+        margin-bottom: 30px;
     }
-    
-    .about-container {
-        min-height: calc(100vh - 120px);
-        height: auto;
-        padding: 60px 20px;
-        margin: 72px auto 20px;
+
+    #vinyl-gallery {
+        gap: 15px;
+        padding: 15px;
     }
-    
-    /* Footer */
+
+    .vinyl {
+        margin-bottom: 20px;
+    }
+
+    .vinyl img {
+        width: 140px;
+        height: 140px;
+    }
+
+    .vinyl .title {
+        font-size: 0.7em;
+        margin-top: 8px;
+    }
+
+    /* iPod Container Spacing */
+    .music-player-section {
+        margin: 30px auto;
+        padding: 0 15px;
+    }
+
+    .ipod-container {
+        width: 260px;
+        height: 440px;
+        padding: 15px;
+        margin: 20px auto;
+    }
+
+    .ipod-screen {
+        width: 220px;
+        height: 165px;
+        margin-bottom: 30px;
+    }
+
+    .ipod-wheel {
+        width: 180px;
+        height: 180px;
+    }
+
+    /* ASCII Art Section Spacing */
+    .ascii-art-section {
+        margin-top: 30px;
+        padding: 20px 15px;
+    }
+
+    .ascii-title {
+        margin-bottom: 30px;
+    }
+
+    .ascii-title h1 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+
+    .ascii-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .ascii-content {
+        gap: 25px;
+    }
+
+    .slider-container {
+        margin-bottom: 20px;
+    }
+
+    .preview-container {
+        margin: 15px auto;
+    }
+
+    .output-container {
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    /* Footer Spacing */
     footer {
-        position: relative;
-        margin-top: auto;
-        padding: 10px 0;
+        padding: 15px;
+        margin-top: 30px;
     }
-    
+
     .footer-content {
         gap: 12px;
     }
-    
+
     .footer-contact {
-        flex-direction: row;
         gap: 20px;
     }
-    
+
     .footer-contact-item {
-        font-size: 12px;
+        font-size: 0.8rem;
     }
-    
+
     .footer-content p {
-        font-size: 11px;
+        font-size: 0.7rem;
+    }
+
+    /* Vinyl Gallery Mobile Styles */
+    .vinyl-container {
+        padding: 20px 0;
+        margin-bottom: 30px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    .vinyl-container::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+
+    #vinyl-gallery {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 15px;
+        padding: 15px;
+        width: max-content;
+        min-width: 100%;
+        transform: none !important;
+        margin: 0;
+    }
+
+    .vinyl {
+        flex: 0 0 auto;
+        width: 140px;
+        margin: 0;
+        transform: none !important;
+    }
+
+    .vinyl img {
+        width: 140px;
+        height: 140px;
+        margin: 0;
+    }
+
+    .vinyl .title {
+        font-size: 0.7em;
+        margin-top: 8px;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Remove hover effects for mobile */
+    .vinyl:hover {
+        transform: none !important;
+    }
+
+    .vinyl:hover ~ .vinyl {
+        transform: none !important;
     }
 }
 
 @media (max-width: 480px) {
-    /* Header */
-    header {
-        padding: 8px 12px;
+    .music-content {
+        padding-top: 60px;
+        padding-bottom: 30px;
     }
-    
-    .logo {
-        width: 80px;
+
+    .vinyl-container {
+        padding: 15px 0;
+        margin-bottom: 25px;
     }
-    
-    /* About Page */
-    .about-page {
-        padding-top: 70px;
+
+    #vinyl-gallery {
+        gap: 12px;
+        padding: 12px;
     }
-    
-    .about-container {
-        margin: 52px auto 20px;
-        padding: 15px;
+
+    .vinyl img {
+        width: 120px;
+        height: 120px;
     }
-    
-    .about-content {
-        padding: 25px 15px;
-        margin-bottom: 0;
+
+    .vinyl .title {
+        font-size: 0.65em;
+        margin-top: 6px;
     }
-    
-    .about-content h1 {
-        font-size: 2em;
+
+    .music-player-section {
+        margin: 25px auto;
     }
-    
-    .about-content h2 {
-        font-size: 0.9em;
+
+    .ipod-container {
+        width: 240px;
+        height: 400px;
+        padding: 12px;
+        margin: 15px auto;
     }
-    
-    .about-content p {
-        font-size: 0.9em;
+
+    .ipod-screen {
+        width: 200px;
+        height: 150px;
+        margin-bottom: 25px;
+    }
+
+    .ipod-wheel {
+        width: 160px;
+        height: 160px;
+    }
+
+    .ascii-art-section {
+        margin-top: 25px;
+        padding: 15px 10px;
+    }
+
+    .ascii-title {
+        margin-bottom: 25px;
+    }
+
+    .ascii-title h1 {
+        font-size: 1.5rem;
+    }
+
+    .ascii-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .ascii-content {
+        gap: 20px;
+    }
+
+    footer {
+        padding: 12px;
+        margin-top: 25px;
+    }
+}
+
+/* Add momentum scrolling for iOS */
+@media (max-width: 768px) {
+    .header-right,
+    .music-content,
+    .vinyl-container,
+    .ascii-art-section {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
     }
 }
 
