@@ -11,120 +11,92 @@
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .coming-soon-page {
+            background-color: #000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-wrapper {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .loading-spinner {
+            width: 100px;
+            height: 100px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 30px;
+        }
+
+        .coming-soon-text {
+            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 32px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .nav-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 8px;
+            z-index: 3;
+        }
+
+        .nav-container a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .nav-container a:hover {
+            opacity: 1;
+        }
+
+        .nav-container a.active {
+            opacity: 1;
+            font-weight: 500;
+        }
+    </style>
 </head>
-<body class="shop-page">
-    <!-- Minimal Header -->
-    <header>
-        <div class="marquee-container">
-            <div class="marquee">
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-                <span>S9K.ONLINE</span>
-            </div>
+<body>
+    <div class="coming-soon-page">
+        <div class="content-wrapper">
+            <div class="loading-spinner"></div>
+            <div class="coming-soon-text">COMING SOON</div>
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Coming Soon Content -->
-        <div class="coming-soon-container">
-            <div class="construction-icon">
-                <i class="fas fa-hard-hat"></i>
-            </div>
-            <h1>SHOP COMING SOON</h1>
-            <p class="subtitle">We're crafting something special for you</p>
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress"></div>
-                </div>
-                <p class="progress-text">Launching soon</p>
-            </div>
-            <div class="countdown">
-                <div class="countdown-item">
-                    <span class="number">00</span>
-                    <span class="label">days</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="number">00</span>
-                    <span class="label">hours</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="number">00</span>
-                    <span class="label">minutes</span>
-                </div>
-            </div>
-            <div class="notify-section">
-                <p>Be the first to know when we launch</p>
-                <form class="notify-form">
-                    <input type="email" placeholder="Enter your email" required>
-                    <button type="submit">Notify Me</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Neon Card -->
-        <div class="neon-card">
-            <nav class="main-nav">
-                <a href="index.html">home</a> -
-                <a href="portfolio.html">portfolio</a> -
-                <a href="info.html">info</a> -
-                <a href="shop.html" class="active">shop</a>
-            </nav>
-            
-            <div class="social-links">
-                <a href="https://www.instagram.com/selene9k?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@selene9k" target="_blank"><i class="fab fa-youtube"></i></a>
-                <a href="https://open.spotify.com/user/31jt5k7ifsss5pn6bn2p3ecbeiea?si=f6030692ebdb46db" target="_blank"><i class="fab fa-spotify"></i></a>
-                <a href="https://soundcloud.com/selene9k" target="_blank"><i class="fab fa-soundcloud"></i></a>
-                <a href="#" target="_blank"><i class="fab fa-behance"></i></a>
-                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-
-            <div class="footer-section">
-                <div class="barcode">
-                    <img src="images/barcode.png" alt="Barcode">
-                </div>
-                <div class="footer-content">
-                    <div class="footer-links">
-                        <a href="/privacy">privacy policy</a>
-                        <a href="/terms">terms of use</a>
-                        <a href="/cookies">cookies policy</a>
-                    </div>
-                    <div class="credits">
-                        <p>creative direction by S9K</p>
-                        <p>website design by S9K</p>
-                    </div>
-                    <div class="copyright">
-                        <p>© 2024 S9K</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+        
+        <nav class="nav-container">
+            <a href="index.html">home</a> -
+            <a href="portfolio.html">portfolio</a> -
+            <a href="info.html">info</a> -
+            <a href="shop.html" class="active">shop</a>
+        </nav>
+    </div>
 
     <script type="module" src="/scripts.js"></script>
 </body>
