@@ -9,86 +9,18 @@ class ASCIIArtGenerator {
 
     initializeEventListeners() {
         const fileInput = document.getElementById('image-upload');
-        const sliderHandle = document.querySelector('.slider-handle');
-        const slideToGenerate = document.querySelector('.slide-to-generate');
+        const fingerprintIcon = document.getElementById('generate-ascii');
         
         if (fileInput) {
             fileInput.addEventListener('change', (e) => this.handleImageUpload(e));
         }
         
-        if (sliderHandle && slideToGenerate) {
-            this.setupSlider(sliderHandle, slideToGenerate, fileInput);
-        }
-    }
-
-    setupSlider(sliderHandle, slideToGenerate, fileInput) {
-        let isDragging = false;
-        let startX;
-        let sliderLeft;
-        let hasTriggeredUpload = false;
-
-        // Handle mouse/touch events for slider
-        sliderHandle.addEventListener('mousedown', startDragging);
-        document.addEventListener('mousemove', drag);
-        document.addEventListener('mouseup', stopDragging);
-
-        sliderHandle.addEventListener('touchstart', startDragging, { passive: false });
-        document.addEventListener('touchmove', drag, { passive: false });
-        document.addEventListener('touchend', stopDragging);
-
-        function startDragging(e) {
-            isDragging = true;
-            hasTriggeredUpload = false;
-            startX = e.type === 'mousedown' ? e.pageX : e.touches[0].pageX;
-            sliderLeft = sliderHandle.offsetLeft;
-
-            if (e.type === 'touchstart') {
-                e.preventDefault();
-            }
-        }
-
-        function drag(e) {
-            if (!isDragging) return;
-
-            e.preventDefault();
-            const x = e.type === 'mousemove' ? e.pageX : e.touches[0].pageX;
-            const walk = x - startX;
-            let newLeft = sliderLeft + walk;
-
-            const sliderWidth = slideToGenerate.offsetWidth;
-            newLeft = Math.max(2, Math.min(newLeft, sliderWidth - 48));
-            sliderHandle.style.left = `${newLeft}px`;
-
-            if (newLeft > (sliderWidth * 0.75) && !hasTriggeredUpload) {
-                slideToGenerate.classList.add('active');
-                triggerImageUpload();
-                hasTriggeredUpload = true;
-            }
-        }
-
-        function stopDragging() {
-            if (!isDragging) return;
-            isDragging = false;
-
-            const sliderWidth = slideToGenerate.offsetWidth;
-            if (sliderHandle.offsetLeft < (sliderWidth * 0.75)) {
-                resetSlider();
-            }
-        }
-
-        function resetSlider() {
-            sliderHandle.style.transition = 'left 0.3s ease';
-            sliderHandle.style.left = '2px';
-            slideToGenerate.classList.remove('active');
-            setTimeout(() => {
-                sliderHandle.style.transition = '';
-            }, 300);
-        }
-
-        function triggerImageUpload() {
-            if (fileInput) {
-                fileInput.click();
-            }
+        if (fingerprintIcon) {
+            fingerprintIcon.addEventListener('click', () => {
+                if (fileInput) {
+                    fileInput.click();
+                }
+            });
         }
     }
 
