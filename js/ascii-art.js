@@ -1,43 +1,70 @@
+console.log('ASCII art script starting...');
+
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded event fired');
+    
     const generateButton = document.getElementById('generate-ascii');
     const imageInput = document.getElementById('image-upload');
     const imagePreview = document.getElementById('image-preview');
     const asciiOutput = document.getElementById('ascii-output');
     const fingerprint = document.querySelector('.fingerprint-icon');
 
+    // Debug element existence
+    console.log('Elements found:', {
+        generateButton: !!generateButton,
+        imageInput: !!imageInput,
+        imagePreview: !!imagePreview,
+        asciiOutput: !!asciiOutput,
+        fingerprint: !!fingerprint
+    });
+
     // Function to handle the file input click
     function triggerFileInput(e) {
+        console.log('Triggering file input');
         e.preventDefault();
         e.stopPropagation();
         imageInput.click();
     }
 
     // Add both click and touch events to the fingerprint icon
-    fingerprint.addEventListener('click', triggerFileInput);
-    fingerprint.addEventListener('touchend', triggerFileInput, { passive: false });
+    fingerprint.addEventListener('click', function(e) {
+        console.log('Click event fired');
+        triggerFileInput(e);
+    });
+
+    fingerprint.addEventListener('touchend', function(e) {
+        console.log('Touch end event fired');
+        triggerFileInput(e);
+    }, { passive: false });
 
     // Prevent default touch behavior to avoid any conflicts
     fingerprint.addEventListener('touchstart', function(e) {
+        console.log('Touch start event fired');
         e.preventDefault();
     }, { passive: false });
 
     // Handle file selection
     imageInput.addEventListener('change', function(e) {
+        console.log('File input changed');
         const file = e.target.files[0];
         if (file) {
+            console.log('File selected:', file.name);
             // Check file type
             if (!file.type.startsWith('image/')) {
+                console.log('Invalid file type:', file.type);
                 alert('Please select an image file.');
                 return;
             }
 
             const reader = new FileReader();
             reader.onload = function(e) {
+                console.log('File read successfully');
                 imagePreview.src = e.target.result;
                 imagePreview.style.display = 'block';
                 generateASCII(e.target.result);
             };
             reader.onerror = function() {
+                console.error('Error reading file');
                 alert('Error reading file. Please try again.');
             };
             reader.readAsDataURL(file);
