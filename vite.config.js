@@ -14,6 +14,7 @@ export default defineConfig({
         about: resolve(__dirname, 'about.html'),
         portfolio: resolve(__dirname, 'portfolio.html'),
         music: resolve(__dirname, 'music.html'),
+        shop: resolve(__dirname, 'shop.html'),
       },
     },
   },
