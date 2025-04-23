@@ -106,7 +106,28 @@ header .header-right {
 }
 
 header .nav-buttons {
-    display: none; /* Hide the navigation buttons */
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+header .nav-buttons a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: lowercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+header .nav-buttons a:hover {
+    transform: translateY(-2px);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+header .nav-buttons a.active {
+    font-weight: 700;
 }
 
 header .header-social-icons {
